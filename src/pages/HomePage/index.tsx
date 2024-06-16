@@ -7,10 +7,14 @@ import ProductCardDetailed from "../../components/ProductCardDetailed";
 import ProductList from "../../components/ProductList";
 import SearchPanel from "../../components/SearchPanel";
 import TabBar from "../../components/TabBar";
-import { PRODUCTS } from "../../utils/constants";
+import { PRODUCTS, TELEGRAM } from "../../utils/constants";
 import styles from "./homePage.module.scss";
+import { useEffect } from "react";
 
 const HomePage = () => {
+  useEffect(() => {
+    TELEGRAM.BackButton.hide();
+  }, []);
   return (
     <div className={styles.container}>
       <img className={styles.banner} src={banner} alt="banner" />
