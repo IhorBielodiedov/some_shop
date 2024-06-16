@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { PRODUCTS } from "../../utils/constants";
+import { PRODUCTS, TELEGRAM } from "../../utils/constants";
 import { Product } from "../../utils/types";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Categories from "../../components/Categories";
 import Filter from "../../components/Filter";
 import LikeButton from "../../UI/LikeButton";
@@ -18,6 +18,23 @@ const ProductPage = () => {
       setProduct(PRODUCTS[parseInt(id)]);
     }
   }, [id]);
+
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
+  useEffect(() => {
+    if (window.history.length > 1) {
+      TELEGRAM.BackButton.show();
+      TELEGRAM.BackButton.onClick(goBack);
+    } else {
+      TELEGRAM.BackButton.hide();
+    }
+    return () => {
+      TELEGRAM.BackButton.offClick(goBack);
+    };
+  }, []);
+
   return (
     <>
       {product && (

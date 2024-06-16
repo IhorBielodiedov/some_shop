@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CardLayout from "../../UI/CardLayout";
 import GradientButton from "../../UI/GradientButton";
 import banner from "../../assets/img/banner2.png";
@@ -12,8 +12,20 @@ import styles from "./homePage.module.scss";
 import { useEffect } from "react";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
   useEffect(() => {
-    TELEGRAM.BackButton.hide();
+    if (window.history.length > 1) {
+      TELEGRAM.BackButton.show();
+      TELEGRAM.BackButton.onClick(goBack);
+    } else {
+      TELEGRAM.BackButton.hide();
+    }
+    return () => {
+      TELEGRAM.BackButton.offClick(goBack);
+    };
   }, []);
   return (
     <div className={styles.container}>
