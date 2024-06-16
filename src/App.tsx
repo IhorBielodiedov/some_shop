@@ -7,6 +7,7 @@ import { TELEGRAM } from "./utils/constants";
 
 function App() {
   useEffect(() => {
+    TELEGRAM.setBackgroundColor("var(--main-background-color)");
     TELEGRAM.expand();
   }, []);
   return (
