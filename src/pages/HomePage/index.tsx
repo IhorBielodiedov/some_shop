@@ -12,20 +12,8 @@ import styles from "./homePage.module.scss";
 import { useEffect } from "react";
 
 const HomePage = () => {
-  const navigate = useNavigate();
-  const goBack = () => {
-    navigate(-1);
-  };
   useEffect(() => {
-    if (window.history.length > 1) {
-      TELEGRAM.BackButton.show();
-      TELEGRAM.BackButton.onClick(goBack);
-    } else {
-      TELEGRAM.BackButton.hide();
-    }
-    return () => {
-      TELEGRAM.BackButton.offClick(goBack);
-    };
+    TELEGRAM.BackButton.hide();
   }, []);
   return (
     <div className={styles.container}>
