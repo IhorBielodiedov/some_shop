@@ -1,0 +1,15 @@
+.container {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--main-background-color);
+  padding: 15px 52px;
+  display: flex;
+  justify-content: space-between;
+  .button {
+    width: 43px;
+    height: 43px;
+  }
+}

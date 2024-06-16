@@ -1,0 +1,101 @@
+.img {
+  position: relative;
+  top: -16px;
+  left: -16px;
+  width: calc(100% + 32px);
+  min-height: 390px;
+  padding: 83px 114px 13px 114px;
+  border-radius: 0px 0px 27px 27px;
+  background-color: var(--second-background-color);
+  .colors {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    display: flex;
+    gap: 5px;
+    .color {
+      width: 53px;
+      height: 53px;
+      border-radius: 14.62px;
+      background-color: var(--main-background-color);
+    }
+  }
+  img {
+    width: 100%;
+  }
+}
+.text {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  .details {
+    text-align: left;
+    max-width: 60%;
+    .name {
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 30.47px;
+      color: var(--main-text-color);
+    }
+    .description {
+      text-wrap: wrap;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 15.23px;
+      color: var(--second-text-color);
+    }
+    .art {
+      font-size: 8px;
+      font-weight: 400;
+      line-height: 9.38px;
+      color: var(--second-text-color);
+    }
+  }
+}
+.properties {
+  margin-top: 16px;
+  text-align: left;
+  .propsTitle {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 21.78px;
+    color: var(--main-text-color);
+  }
+  .propsDesc {
+    white-space: wrap;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.41px;
+    color: var(--main-text-color);
+  }
+  .showMore {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.94px;
+    color: var(--main-button-color);
+  }
+}
+
+.footer {
+  border-top: 1px solid var(--second-background-color);
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  padding: 32px 0 24px 0;
+  width: calc(100% - 32px);
+  .fullPrice {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 17.58px;
+    text-decoration: line-through;
+  }
+  .totalPrice {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 25.78px;
+    color: var(--main-text-color);
+  }
+}

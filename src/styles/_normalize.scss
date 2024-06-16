@@ -39,8 +39,12 @@ h4 {
 
 a,
 button,
+input,
 input[type="button"],
 input[type="submit"],
 input[type="checkbox"] {
+  text-decoration: none;
+  border: none;
+  outline: none;
   cursor: pointer;
 }

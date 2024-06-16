@@ -1,0 +1,17 @@
+.container {
+  position: relative;
+  background-color: var(--second-background-color);
+  border-radius: 18px;
+  .button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 8px 7px;
+    border-radius: 50%;
+    background-color: var(--main-background-color);
+    .icon {
+      width: 19px;
+      height: 18px;
+    }
+  }
+}

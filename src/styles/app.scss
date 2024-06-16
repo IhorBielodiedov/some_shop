@@ -4,5 +4,8 @@
 .App {
   text-align: center;
   min-height: 100vh;
-  background: var(--gradient-diagonal-right);
+  background: var(--main-background-color);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }

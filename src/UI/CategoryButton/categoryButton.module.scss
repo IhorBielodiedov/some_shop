@@ -1,0 +1,31 @@
+.big_button {
+  height: 52px;
+  border: 2px solid var(--main-button-color);
+  border-radius: 15px;
+  padding: 13px;
+  background: none;
+  .title {
+    font-size: 18px;
+    line-height: 21px;
+  }
+}
+.small_button {
+  height: 27px;
+  border: 1px solid var(--main-button-color);
+  border-radius: 10px;
+  padding: 4px 22px;
+  background: none;
+  .title {
+    font-size: 13px;
+    line-height: 15px;
+  }
+}
+p {
+  color: var(--main-hint-color);
+  white-space: nowrap;
+}
+
+.active {
+  background-color: var(--main-button-color);
+  color: var(--button-text-color) !important;
+}
