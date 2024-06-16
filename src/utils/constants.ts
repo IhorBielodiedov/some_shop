@@ -1,6 +1,8 @@
 import { Product } from "./types";
 import prod from "../assets/img/product.png";
 
+export const TELEGRAM = window.Telegram.WebApp;
+
 export const PRODUCTS: Product[] = [
   {
     id: 1,
