@@ -13,6 +13,7 @@ const SearchPage = () => {
     navigate(-1);
   };
   useEffect(() => {
+    console.log(window.history);
     if (window.history.length > 1) {
       TELEGRAM.BackButton.show();
       TELEGRAM.BackButton.onClick(goBack);
