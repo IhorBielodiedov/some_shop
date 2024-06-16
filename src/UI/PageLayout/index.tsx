@@ -23,7 +23,7 @@ const PageLayout = ({ children, withTabs = false }: Props) => {
     return () => {
       TELEGRAM.BackButton.offClick(goBack);
     };
-  }, [window.history.length]);
+  }, [window.history.length, window.location]);
 
   return (
     <div className={styles.container}>
