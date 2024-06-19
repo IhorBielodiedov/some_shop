@@ -63,6 +63,7 @@ const GradientButton = ({
         borderRadius: borderRadius ? `${borderRadius}px` : "8px",
       }}
     >
+      {img && <img src={img} alt="product" className={styles.img} />}
       <p className={styles.text} style={{ textDecoration: "none" }}>
         {title}
       </p>

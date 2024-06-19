@@ -10,6 +10,7 @@ import TabBar from "../../components/TabBar";
 import { PRODUCTS, TELEGRAM } from "../../utils/constants";
 import styles from "./homePage.module.scss";
 import { useEffect } from "react";
+import img from "../../assets/img/buttonImg.png";
 
 const HomePage = () => {
   useEffect(() => {
@@ -28,7 +29,7 @@ const HomePage = () => {
             paddingTop={37}
             paddingBottom={31}
             gradientDirection="horizontal"
-            img={""}
+            img={img}
           />
         </Link>
         <div className={styles.buttonRow}>
