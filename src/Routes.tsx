@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import SearchPage from "./pages/SearchPage";
 import PageLayout from "./UI/PageLayout";
 import ProductPage from "./pages/ProductPage";
+import CartPage from "./pages/CartPage";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,15 @@ const router = createBrowserRouter([
     element: (
       <PageLayout>
         <ProductPage />
+      </PageLayout>
+    ),
+    errorElement: <ErrorBoundary />,
+  },
+  {
+    path: "/cart",
+    element: (
+      <PageLayout>
+        <CartPage />
       </PageLayout>
     ),
     errorElement: <ErrorBoundary />,

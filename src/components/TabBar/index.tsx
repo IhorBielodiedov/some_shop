@@ -17,7 +17,7 @@ const TabBar = () => {
           <HomeSVG />
         </div>
       </Link>
-      <Link to="/">
+      <Link to="/cart">
         <div className={styles.button}>
           <CartSVG />
         </div>
