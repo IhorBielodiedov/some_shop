@@ -1,9 +1,26 @@
+import { useNavigate } from "react-router-dom";
 import GradientButton from "../../UI/GradientButton";
 import CartItem from "../../components/CartItem";
-import { PRODUCTS } from "../../utils/constants";
+import { PRODUCTS, TELEGRAM } from "../../utils/constants";
 import styles from "./cartPage.module.scss";
+import { useEffect } from "react";
 
 const CartPage = () => {
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
+  useEffect(() => {
+    if (window.history.length > 1) {
+      TELEGRAM.BackButton.show();
+      TELEGRAM.BackButton.onClick(goBack);
+    } else {
+      TELEGRAM.BackButton.hide();
+    }
+    return () => {
+      TELEGRAM.BackButton.offClick(goBack);
+    };
+  }, []);
   return (
     <div>
       <p className={styles.title}>Корзина</p>
