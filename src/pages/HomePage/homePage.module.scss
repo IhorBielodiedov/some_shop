@@ -3,13 +3,14 @@
   flex-direction: column;
   .banner {
     width: 100%;
+    padding: 0;
   }
   .buttons {
-    margin: 26px 0 16px 0;
+    margin: 18px 0 16px 0;
   }
   .buttonRow {
-    margin: 8px 0;
+    margin: 4px 0 4px 0;
     display: flex;
-    gap: 8px;
+    gap: 4px;
   }
 }

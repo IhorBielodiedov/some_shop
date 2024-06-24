@@ -24,7 +24,7 @@ const CartPage = () => {
   return (
     <div>
       <p className={styles.title}>Корзина</p>
-      <div>
+      <div className={styles.items}>
         {PRODUCTS.map((item) => (
           <CartItem product={item} />
         ))}

@@ -1,12 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
-import CardLayout from "../../UI/CardLayout";
+import { Link } from "react-router-dom";
 import GradientButton from "../../UI/GradientButton";
-import banner from "../../assets/img/banner2.png";
-import Categories from "../../components/Categories";
+import banner from "../../assets/img/banner3.png";
 import ProductCardDetailed from "../../components/ProductCardDetailed";
-import ProductList from "../../components/ProductList";
-import SearchPanel from "../../components/SearchPanel";
-import TabBar from "../../components/TabBar";
 import { PRODUCTS, TELEGRAM } from "../../utils/constants";
 import styles from "./homePage.module.scss";
 import { useEffect } from "react";
