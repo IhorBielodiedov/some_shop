@@ -70,11 +70,11 @@
   text-align: right;
 }
 .buyButton {
-  padding: 16px;
+  padding: 0 16px;
   width: 100%;
   position: fixed;
   left: 0;
-  bottom: 0;
+  bottom: 4px;
 }
 .items {
   display: flex;
