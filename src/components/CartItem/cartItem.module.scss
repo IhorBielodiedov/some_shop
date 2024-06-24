@@ -1,4 +1,5 @@
 .container {
+  height: 135px;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -23,8 +24,9 @@
   padding: 0 0 15px 0;
 }
 img {
+  padding: 10px 10px 0 10px;
   margin: 0 0 7px 0;
-  width: 113px;
+  max-width: 113px;
 }
 .name {
   font-size: 14px;
