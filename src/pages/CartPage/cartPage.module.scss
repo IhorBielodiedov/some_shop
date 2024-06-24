@@ -1,5 +1,5 @@
 .title {
-  margin: 29px 0 15px 0;
+  margin: 5px 0 15px 0;
   font-size: 31.05px;
   font-weight: 400;
   line-height: 36.39px;
@@ -30,6 +30,8 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  height: 17px;
+  margin-bottom: 4px;
 }
 .line {
   border-bottom: 1px dashed var(--main-hint-color);
@@ -60,7 +62,7 @@
   gap: 3px;
 }
 .totalPrice {
-  margin-top: 10px;
+  margin-top: 6px;
   color: var(--main-text-color);
   font-size: 15px;
   font-weight: 500;
