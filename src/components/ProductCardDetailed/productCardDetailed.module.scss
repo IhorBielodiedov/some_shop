@@ -2,7 +2,7 @@
   max-height: 174px;
   display: flex;
   justify-content: space-between;
-  padding: 24px 38px 18px 18px;
+  padding: 24px 35px 18px 18px;
   .content {
     max-width: 50%;
     display: flex;
@@ -37,6 +37,7 @@
   .imgWrapper {
     width: calc(50% - 56px);
     img {
+      padding: 0;
       width: 100%;
     }
   }
