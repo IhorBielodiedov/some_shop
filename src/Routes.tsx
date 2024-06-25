@@ -20,7 +20,7 @@ const router = createBrowserRouter([
   {
     path: "/products",
     element: (
-      <PageLayout withTabs>
+      <PageLayout>
         <SearchPage />
       </PageLayout>
     ),

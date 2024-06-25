@@ -7,11 +7,11 @@ interface Props {
 }
 
 const ProductCard = ({ product }: Props) => {
-  const { id, name, price, colors } = product;
+  const { id, name, price, colors, img } = product;
   return (
     <CardLayout id={id}>
       <div className={styles.container}>
-        <img src={productImg} alt="product" className={styles.img} />
+        <img src={img} alt="product" className={styles.img} />
         <div className={styles.colorList}>
           {colors.map(() => (
             <div className={styles.circle} />

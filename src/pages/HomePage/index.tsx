@@ -1,19 +1,28 @@
 import { Link } from "react-router-dom";
 import GradientButton from "../../UI/GradientButton";
-import banner from "../../assets/img/banner3.png";
+import banner1 from "../../assets/img/banner1.png";
+import banner2 from "../../assets/img/banner2.png";
 import ProductCardDetailed from "../../components/ProductCardDetailed";
 import { PRODUCTS, TELEGRAM } from "../../utils/constants";
 import styles from "./homePage.module.scss";
 import { useEffect } from "react";
 import img from "../../assets/img/buttonImg.png";
+import ReactSwipe from "react-swipe";
 
 const HomePage = () => {
+  let reactSwipeEl;
   useEffect(() => {
     TELEGRAM.BackButton.hide();
   }, []);
   return (
     <div className={styles.container}>
-      <img className={styles.banner} src={banner} alt="banner" />
+      <ReactSwipe
+        swipeOptions={{ continuous: true }}
+        ref={(el) => (reactSwipeEl = el)}
+      >
+        <img className={styles.banner} src={banner1} alt="banner" />
+        <img className={styles.banner} src={banner2} alt="banner" />
+      </ReactSwipe>
       <div className={styles.buttons}>
         <Link to="/products">
           <GradientButton
