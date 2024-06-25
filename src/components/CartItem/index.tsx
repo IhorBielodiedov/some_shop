@@ -24,7 +24,12 @@ const CartItem = ({ product }: Props) => {
           <div className={styles.count}>
             <button
               className={styles.countButton}
-              onClick={() => setCount((state) => state - 1)}
+              onClick={() =>
+                setCount((state) => {
+                  if (state > 1) return state - 1;
+                  return state;
+                })
+              }
             >
               <MinusSVG />
             </button>
