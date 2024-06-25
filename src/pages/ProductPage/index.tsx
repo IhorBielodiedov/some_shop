@@ -15,7 +15,7 @@ const ProductPage = () => {
 
   useEffect(() => {
     if (id) {
-      setProduct(PRODUCTS[parseInt(id)]);
+      setProduct(PRODUCTS[parseInt(id) - 1]);
     }
   }, [id]);
 
