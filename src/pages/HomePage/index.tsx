@@ -17,9 +17,13 @@ const HomePage = () => {
   return (
     <div className={styles.container}>
       <ReactSwipe
-        swipeOptions={{ continuous: true, auto: 3000 }}
+        swipeOptions={{ continuous: true, auto: 3000, speed: 800 }}
         ref={(el) => (reactSwipeEl = el)}
       >
+        <img className={styles.banner} src={banner1} alt="banner" />
+        <img className={styles.banner} src={banner2} alt="banner" />
+        <img className={styles.banner} src={banner1} alt="banner" />
+        <img className={styles.banner} src={banner2} alt="banner" />
         <img className={styles.banner} src={banner1} alt="banner" />
         <img className={styles.banner} src={banner2} alt="banner" />
       </ReactSwipe>
