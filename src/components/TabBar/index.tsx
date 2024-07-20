@@ -25,7 +25,7 @@ const TabBar = () => {
       </Link>
       <Link to="/">
         <div className={styles.button}>
-          <MenuSVG />
+          <MenuSVG color={"var(--main-text-color)"} />
         </div>
       </Link>
     </div>

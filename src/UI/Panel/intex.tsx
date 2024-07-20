@@ -3,9 +3,11 @@ import styles from "./panel.module.scss";
 
 interface Props {
   title: string;
+  icon?: JSX.Element;
+  color: string;
   withBottom?: boolean;
 }
-const Panel = ({ title, withBottom = false }: Props) => {
+const Panel = ({ title, icon, color, withBottom = false }: Props) => {
   return (
     <div
       className={styles.container}
@@ -15,7 +17,12 @@ const Panel = ({ title, withBottom = false }: Props) => {
           : "none",
       }}
     >
-      <p className={styles.title}>{title}</p>
+      <div className={styles.wrapper}>
+        {icon ? <div className={styles.icon}>{icon}</div> : <></>}
+        <p className={styles.title} style={{ color: color }}>
+          {title}
+        </p>
+      </div>
       <ArrowSVG />
     </div>
   );

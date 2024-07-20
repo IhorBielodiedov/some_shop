@@ -3,11 +3,14 @@ import { PRODUCTS, TELEGRAM } from "../../utils/constants";
 import { Product } from "../../utils/types";
 import { useNavigate, useParams } from "react-router-dom";
 import Categories from "../../components/Categories";
-import Filter from "../../components/Filter";
 import LikeButton from "../../UI/LikeButton";
-import ComparisonPanel from "../../components/ComparisonPanel";
 import styles from "./productPage.module.scss";
 import GradientButton from "../../UI/GradientButton";
+import MarketplaceButton from "../../components/MarketplaceButton";
+import ozon from "../../assets/img/ozon.png";
+import Panel from "../../UI/Panel/intex";
+import MenuSVG from "../../UI/icons/MenuSVG";
+import StarSVG from "../../UI/icons/StarSVG";
 
 const ProductPage = () => {
   const { id } = useParams();
@@ -38,7 +41,7 @@ const ProductPage = () => {
   return (
     <>
       {product && (
-        <div>
+        <div className={styles.container}>
           <div className={styles.img}>
             <img src={product.img} alt="product" />
             <div className={styles.colors}>
@@ -51,22 +54,33 @@ const ProductPage = () => {
             <div className={styles.details}>
               <p className={styles.name}>{product.name}</p>
               <p className={styles.description}>{product.properties}</p>
-              <p className={styles.art}>арт. {product.art}</p>
             </div>
             <LikeButton />
           </div>
           <Categories list={product.colors} wrap />
-          <ComparisonPanel />
+          <p className={styles.propsTitle}>Купить на маркетплейсах:</p>
+          <div className={styles.marketWrapper}>
+            <MarketplaceButton img={ozon} title="OZON" />
+            <MarketplaceButton img={ozon} title="OZON" />
+          </div>
           <div className={styles.properties}>
-            <p className={styles.propsTitle}>Описание</p>
             <p className={styles.propsDesc}>
-              {/* {product.description} */}
-              Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру
-              сгенерировать несколько абзацев более осмысленного текста и
-              нетоль...
-              <span className={styles.showMore}>Показать еще</span>
+              Умная колонка Яндекс Станция 2 с Алисой на YaGPT, 30 Вт. Умная
+              колонка второго поколения — новый дизайн, звук, центр управления
+              умным домом и Алиса.
             </p>
           </div>
+          <Panel
+            title="Характеристики"
+            color="var(--main-text-color)"
+            icon={<MenuSVG color={"var(--main-button-color)"} />}
+          />
+          <Panel
+            title="Отзывы"
+            color="var(--main-text-color)"
+            withBottom
+            icon={<StarSVG color={"var(--main-button-color)"} />}
+          />
           <div className={styles.footer}>
             <div>
               <p className={styles.fullPrice}>{product.price}р.</p>

@@ -1,7 +1,4 @@
-import { Link } from "react-router-dom";
-import GradientButton from "../../UI/GradientButton";
 import banner from "../../assets/img/banner.png";
-
 import alise from "../../assets/img/alise.png";
 import tv from "../../assets/img/tv.png";
 import smartlamp from "../../assets/img/smartLamp.png";
@@ -14,15 +11,13 @@ import promo3 from "../../assets/img/promo3.png";
 import promo4 from "../../assets/img/promo4.png";
 import alise2 from "../../assets/img/alise2.png";
 import ProductCardDetailed from "../../components/ProductCardDetailed";
-import { PRODUCTS, TELEGRAM } from "../../utils/constants";
+import { TELEGRAM } from "../../utils/constants";
 import styles from "./homePage.module.scss";
 import { useEffect } from "react";
-import img from "../../assets/img/buttonImg.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "./swiper.scss";
-import { Pagination } from "swiper/modules";
 import BigImgCard from "../../UI/BigImgCard";
 import BigBanner from "../../UI/BigBanner";
 import PromoCard from "../../UI/PromoCard";
@@ -49,17 +44,30 @@ const HomePage = () => {
         <h1 className={styles.title}>Каталог</h1>
         <div className={styles.categories}>
           <div className={styles.categoriesRow}>
-            <BigImgCard title={"Яндекс Станции"} img={alise} />
-            <BigImgCard title={"Телевизоры"} img={tv} />
-            <BigImgCard title={"Станции Дуо макс"} img={station} />
+            <BigImgCard
+              title={"Яндекс Станции"}
+              img={alise}
+              link={"/products"}
+            />
+            <BigImgCard title={"Телевизоры"} img={tv} link={"/products"} />
+            <BigImgCard
+              title={"Станции Дуо макс"}
+              img={station}
+              link={"/products"}
+            />
           </div>
           <div className={styles.categoriesRow}>
-            <BigImgCard title={"Умный дом"} img={smartlamp} />
-            <BigImgCard title={"Новинки"} img={star} />
+            <BigImgCard
+              title={"Умный дом"}
+              img={smartlamp}
+              link={"/products"}
+            />
+            <BigImgCard title={"Новинки"} img={star} link={"/products"} />
             <BigImgCard
               title={"Весь каталог устройств"}
               img={banner}
               withImg={false}
+              link={"/products"}
             />
           </div>
         </div>
@@ -94,10 +102,14 @@ const HomePage = () => {
         }}
       />
       <section>
-        <Panel title="Доставка" />
-        <Panel title="Оплата" />
-        <Panel title="Гарантия" />
-        <Panel title="Пользовательское соглашение" withBottom />
+        <Panel title="Доставка" color="var(--main-button-color)" />
+        <Panel title="Оплата" color="var(--main-button-color)" />
+        <Panel title="Гарантия" color="var(--main-button-color)" />
+        <Panel
+          title="Пользовательское соглашение"
+          color="var(--main-button-color)"
+          withBottom
+        />
       </section>
     </div>
   );

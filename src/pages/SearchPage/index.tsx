@@ -6,6 +6,7 @@ import SearchPanel from "../../components/SearchPanel";
 import { CATEGORIES, PRODUCTS, TELEGRAM } from "../../utils/constants";
 import styles from "./searchPage.module.scss";
 import { useEffect } from "react";
+import alise2 from "../../assets/img/alise2.png";
 
 const SearchPage = () => {
   const navigate = useNavigate();
@@ -27,7 +28,18 @@ const SearchPage = () => {
     <div>
       <SearchPanel />
       <Categories big list={CATEGORIES} />
-      <ProductCardDetailed product={PRODUCTS[0]} />
+      <ProductCardDetailed
+        product={{
+          id: 1,
+          name: "Станция 2",
+          description: "Яндекс станция",
+          price: 13497,
+          art: 1111,
+          properties: "",
+          colors: ["red"],
+          img: alise2,
+        }}
+      />
       <div className={styles.lists}>
         <ProductList
           products={PRODUCTS.filter((item, index) => !(index % 2))}

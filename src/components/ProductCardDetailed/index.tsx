@@ -21,7 +21,7 @@ const ProductCardDetailed = ({ product }: Props) => {
           </div>
         </div>
         <div className={styles.imgWrapper}>
-          <img src={img} className={styles.img} />
+          <img src={img} className={styles.img} alt="img" />
         </div>
       </div>
     </CardLayout>

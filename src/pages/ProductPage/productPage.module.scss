@@ -1,104 +1,115 @@
-.img {
-  position: relative;
-  top: -16px;
-  left: -16px;
-  width: calc(100% + 32px);
-  min-height: 390px;
-  padding: 83px 114px 13px 114px;
-  border-radius: 0px 0px 27px 27px;
-  background-color: var(--second-background-color);
-  .colors {
-    position: absolute;
-    top: 8px;
-    left: 16px;
-    display: flex;
-    gap: 5px;
-    .color {
-      width: 53px;
-      height: 53px;
-      border-radius: 14.62px;
-      background-color: var(--main-background-color);
+.container {
+  display: flex;
+  flex-direction: column;
+  .img {
+    position: relative;
+    top: -16px;
+    left: -16px;
+    margin-bottom: -16px;
+    width: calc(100% + 32px);
+    padding: 62px 75px 8px 75px;
+    border-radius: 0px 0px 27px 27px;
+    background-color: var(--second-background-color);
+    .colors {
+      position: absolute;
+      top: 8px;
+      left: 16px;
+      display: flex;
+      gap: 5px;
+      .color {
+        width: 53px;
+        height: 53px;
+        border-radius: 14.62px;
+        background-color: var(--main-background-color);
+      }
+    }
+    img {
+      width: 100%;
     }
   }
-  img {
-    width: 100%;
+  .text {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 12px;
+    .details {
+      text-align: left;
+      max-width: 75%;
+      .name {
+        font-size: 26px;
+        font-weight: 400;
+        line-height: 30.47px;
+        color: var(--main-text-color);
+      }
+      .description {
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 17.58px;
+        margin-top: 4px;
+        color: var(--second-text-color);
+      }
+      .art {
+        font-size: 8px;
+        font-weight: 400;
+        line-height: 9.38px;
+        color: var(--second-text-color);
+      }
+    }
   }
-}
-.text {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  .details {
+  .propsTitle {
+    margin-top: 10px;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 19.92px;
     text-align: left;
-    max-width: 60%;
-    .name {
-      font-size: 26px;
+    color: var(--main-text-color);
+  }
+  .marketWrapper {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+  }
+  .properties {
+    margin-top: 16px;
+    margin-bottom: 20px;
+    text-align: left;
+    padding: 16px 14px 14px 15px;
+    border-radius: 10.08px;
+    background-color: var(--second-background-color);
+    .propsDesc {
+      white-space: wrap;
+      font-size: 15px;
       font-weight: 400;
-      line-height: 30.47px;
+      line-height: 17.58px;
+      text-align: left;
+      color: var(--acent-black);
+    }
+  }
+
+  .footer {
+    background-color: var(--main-background-color);
+    border-top: 1px solid var(--second-background-color);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    padding: 8px 16px 8px 16px;
+    width: 100%;
+    .fullPrice {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 17.58px;
+      text-decoration: line-through;
+    }
+    .totalPrice {
+      font-size: 22px;
+      font-weight: 500;
+      line-height: 25.78px;
       color: var(--main-text-color);
     }
-    .description {
-      text-wrap: wrap;
-      font-size: 13px;
-      font-weight: 400;
-      line-height: 15.23px;
-      color: var(--second-text-color);
-    }
-    .art {
-      font-size: 8px;
-      font-weight: 400;
-      line-height: 9.38px;
-      color: var(--second-text-color);
-    }
-  }
-}
-.properties {
-  margin-top: 16px;
-  text-align: left;
-  .propsTitle {
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 21.78px;
-    color: var(--main-text-color);
-  }
-  .propsDesc {
-    white-space: wrap;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 16.41px;
-    color: var(--main-text-color);
-  }
-  .showMore {
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 16.94px;
-    color: var(--main-button-color);
-  }
-}
-
-.footer {
-  background-color: var(--main-background-color);
-  border-top: 1px solid var(--second-background-color);
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-align: left;
-  padding: 8px 16px 8px 16px;
-  width: 100%;
-  .fullPrice {
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 17.58px;
-    text-decoration: line-through;
-  }
-  .totalPrice {
-    font-size: 22px;
-    font-weight: 500;
-    line-height: 25.78px;
-    color: var(--main-text-color);
   }
 }
