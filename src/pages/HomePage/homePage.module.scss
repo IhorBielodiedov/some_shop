@@ -1,17 +1,25 @@
 .container {
   display: flex;
   flex-direction: column;
+  gap: 20px;
   .banner {
-    float: left;
-    width: 100%;
-    padding: 0;
+    width: calc(100vw - 36px);
   }
-  .buttons {
-    margin: 11px 0 16px 0;
+  .title {
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 32.81px;
+    text-align: left;
+    margin: -1px 0 16px 0;
   }
-  .buttonRow {
-    margin: 4px 0 4px 0;
+  .categories {
     display: flex;
-    gap: 4px;
+    flex-direction: column;
+    gap: 5px;
+    .categoriesRow {
+      width: 100%;
+      display: flex;
+      gap: 5px;
+    }
   }
 }

@@ -8,6 +8,10 @@
     font-size: 18px;
     line-height: 21px;
   }
+  p {
+    color: var(--main-hint-color);
+    white-space: nowrap;
+  }
 }
 .small_button {
   height: 27px;
@@ -19,10 +23,10 @@
     font-size: 13px;
     line-height: 15px;
   }
-}
-p {
-  color: var(--main-hint-color);
-  white-space: nowrap;
+  p {
+    color: var(--main-hint-color);
+    white-space: nowrap;
+  }
 }
 
 .active {

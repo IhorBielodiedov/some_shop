@@ -1,0 +1,19 @@
+.container {
+  border-radius: 10px;
+  background-color: var(--second-background-color);
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  .image {
+    width: 100%;
+    border-radius: 12.88px;
+  }
+  .title {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 14.06px;
+    text-align: center;
+    margin: 8px 0 10px 0;
+  }
+}

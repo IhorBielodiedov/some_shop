@@ -1,13 +1,12 @@
 import CardLayout from "../../UI/CardLayout";
 import styles from "./productCardDetailed.module.scss";
-import img from "../../assets/img/product.png";
 import { Product } from "../../utils/types";
 import MediumButton from "../../UI/MediumButton";
 interface Props {
   product: Product;
 }
 const ProductCardDetailed = ({ product }: Props) => {
-  const { id, name, description, price } = product;
+  const { id, name, description, price, img } = product;
   return (
     <CardLayout id={id}>
       <div className={styles.container}>
