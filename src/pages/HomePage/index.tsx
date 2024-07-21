@@ -3,7 +3,7 @@ import alise from "../../assets/img/alise.png";
 import tv from "../../assets/img/tv.png";
 import smartlamp from "../../assets/img/smartLamp.png";
 import station from "../../assets/img/duoMax.png";
-import star from "../../assets/img/star.png";
+import star from "../../assets/img/star.svg";
 import aliseLogo from "../../assets/img/aliseLogo.png";
 import promo1 from "../../assets/img/promo.png";
 import promo2 from "../../assets/img/promo2.png";
