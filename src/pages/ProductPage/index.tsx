@@ -65,7 +65,9 @@ const ProductPage = () => {
           <div className={styles.text}>
             <div className={styles.details}>
               <p className={styles.name}>{product.name}</p>
-              <p className={styles.description}>{product.description}</p>
+              <p className={styles.description}>
+                Умная колонка Яндекс станция Макс с Алисой, антрацит, 65B
+              </p>
             </div>
             <LikeButton />
           </div>

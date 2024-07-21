@@ -36,24 +36,17 @@ export const PRODUCTS: Product[] = [
     count_variants: 1,
   },
   {
-    name: "Станция 2",
+    name: "Станция Лайт",
     description:
       "Умная колонка Яндекс Станция 2 с Алисой  на YaGPT, 30 Вт. Умная колонка второго поколения — новый дизайн, звук, центр управления умным домом и Алиса.",
     category_id: 1,
     variants: [
       {
-        color: "black",
+        color: "Розовый",
         price: 132.99,
-        photos: ["photo1", "photo2", "photo3"],
+        photos: [prod4],
         stock_quantity: 10,
         id: 0,
-      },
-      {
-        color: "red",
-        price: 100.99,
-        photos: ["photo1", "photo2", "photo3"],
-        stock_quantity: 10,
-        id: 1,
       },
     ],
     id: 2,

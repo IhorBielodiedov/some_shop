@@ -13,7 +13,7 @@ const ProductCardDetailed = ({ product }: Props) => {
         <div className={styles.content}>
           <div className={styles.text}>
             <p className={styles.title}>{name}</p>
-            <p className={styles.description}>{description}</p>
+            <p className={styles.description}>Яндекс станция</p>
           </div>
           <div className={styles.action}>
             <MediumButton title={"Купить"} />
