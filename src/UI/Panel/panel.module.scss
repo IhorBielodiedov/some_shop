@@ -8,10 +8,10 @@
   .wrapper {
     display: flex;
     align-items: center;
-    gap: 13px;
     .icon {
       width: 20px;
       height: 20px;
+      margin-right: 13px;
     }
     .title {
       color: var(--main-button-color);
@@ -19,6 +19,14 @@
       font-weight: 400;
       line-height: 19.92px;
       text-align: left;
+    }
+    .additionalText {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 16.94px;
+      text-align: left;
+      margin-right: 25px;
+      color: var(--main-button-color);
     }
   }
 }

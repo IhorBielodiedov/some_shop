@@ -80,6 +80,7 @@ const ProductPage = () => {
             color="var(--main-text-color)"
             withBottom
             icon={<StarSVG color={"var(--main-button-color)"} />}
+            additionalText={"150 отзывов"}
           />
           <div className={styles.footer}>
             <div>

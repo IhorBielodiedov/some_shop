@@ -50,6 +50,7 @@
   font-weight: 500;
   line-height: 14.06px;
   text-align: left;
+  white-space: nowrap;
   color: var(--main-text-color);
 }
 .light {
@@ -79,5 +80,5 @@
 .items {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 17px;
 }

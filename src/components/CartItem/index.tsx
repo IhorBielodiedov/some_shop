@@ -4,7 +4,7 @@ import styles from "./cartItem.module.scss";
 import PlusSVG from "../../UI/icons/PlusSVG";
 import MinusSVG from "../../UI/icons/MinusSVG";
 import CloseSVG from "../../UI/icons/CloseSVG";
-
+import station from "../../assets/img/station.png";
 interface Props {
   product: Product;
 }
@@ -14,12 +14,12 @@ const CartItem = ({ product }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.product}>
-        <img src={product.img} alt="product" />
+        <img src={station} alt="product" />
         <div className={styles.info}>
           <div>
             <p className={styles.name}>{product.name}</p>
             <p className={styles.properties}>{product.properties}</p>
-            <p className={styles.art}>{product.art}</p>
+            <p className={styles.art}>арт. {product.art}</p>
           </div>
           <div className={styles.count}>
             <button
@@ -43,7 +43,10 @@ const CartItem = ({ product }: Props) => {
           </div>
         </div>
       </div>
-      <p className={styles.price}>{product.price}р.</p>
+      <div>
+        <p className={styles.sale}>27 000р.</p>
+        <p className={styles.price}>13 497р.</p>
+      </div>
       <button className={styles.close}>
         <CloseSVG />
       </button>

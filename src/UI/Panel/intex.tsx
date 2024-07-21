@@ -1,13 +1,30 @@
 import ArrowSVG from "../icons/ArrowSVG";
 import styles from "./panel.module.scss";
 
+/**
+ * Description placeholder
+ *
+ * @interface Props
+ * @property {string} title - заголовок
+ * @property {JSX.Element} icon - иконка (если есть)
+ * @property {string} color - цвет
+ * @property {string} additionalText - дополнительный текст
+ * @property {boolean} withBottom - нижняя граница
+ */
 interface Props {
   title: string;
   icon?: JSX.Element;
   color: string;
+  additionalText?: string;
   withBottom?: boolean;
 }
-const Panel = ({ title, icon, color, withBottom = false }: Props) => {
+const Panel = ({
+  title,
+  icon,
+  color,
+  additionalText,
+  withBottom = false,
+}: Props) => {
   return (
     <div
       className={styles.container}
@@ -23,7 +40,10 @@ const Panel = ({ title, icon, color, withBottom = false }: Props) => {
           {title}
         </p>
       </div>
-      <ArrowSVG />
+      <div className={styles.wrapper}>
+        <p className={styles.additionalText}>{additionalText}</p>
+        <ArrowSVG />
+      </div>
     </div>
   );
 };
