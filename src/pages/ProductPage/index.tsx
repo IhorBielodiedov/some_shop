@@ -62,7 +62,7 @@ const ProductPage = () => {
           <p className={styles.propsTitle}>Купить на маркетплейсах:</p>
           <div className={styles.marketWrapper}>
             <MarketplaceButton img={ozon} title="OZON" />
-            <MarketplaceButton img={ozon} title="Яндекс маркет" />
+            <MarketplaceButton img={yandex} title="Яндекс маркет" />
           </div>
           <div className={styles.properties}>
             <p className={styles.propsDesc}>
