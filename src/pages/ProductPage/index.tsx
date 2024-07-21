@@ -8,6 +8,7 @@ import styles from "./productPage.module.scss";
 import GradientButton from "../../UI/GradientButton";
 import MarketplaceButton from "../../components/MarketplaceButton";
 import ozon from "../../assets/img/ozon.png";
+import yandex from "../../assets/img/yandex.png";
 import Panel from "../../UI/Panel/intex";
 import MenuSVG from "../../UI/icons/MenuSVG";
 import StarSVG from "../../UI/icons/StarSVG";
@@ -61,7 +62,7 @@ const ProductPage = () => {
           <p className={styles.propsTitle}>Купить на маркетплейсах:</p>
           <div className={styles.marketWrapper}>
             <MarketplaceButton img={ozon} title="OZON" />
-            <MarketplaceButton img={ozon} title="OZON" />
+            <MarketplaceButton img={ozon} title="Яндекс маркет" />
           </div>
           <div className={styles.properties}>
             <p className={styles.propsDesc}>
