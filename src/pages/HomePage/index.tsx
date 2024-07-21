@@ -11,7 +11,7 @@ import promo3 from "../../assets/img/promo3.png";
 import promo4 from "../../assets/img/promo4.png";
 import alise2 from "../../assets/img/alise2.png";
 import ProductCardDetailed from "../../components/ProductCardDetailed";
-import { TELEGRAM } from "../../utils/constants";
+import { PRODUCTS, TELEGRAM } from "../../utils/constants";
 import styles from "./homePage.module.scss";
 import { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -89,18 +89,7 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      <ProductCardDetailed
-        product={{
-          id: 1,
-          name: "Станция 2",
-          description: "Яндекс станция",
-          price: 13497,
-          art: 1111,
-          properties: "",
-          colors: ["red"],
-          img: alise2,
-        }}
-      />
+      <ProductCardDetailed product={PRODUCTS[0]} />
       <section>
         <Panel title="Доставка" color="var(--main-button-color)" />
         <Panel title="Оплата" color="var(--main-button-color)" />

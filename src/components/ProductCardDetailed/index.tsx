@@ -6,7 +6,7 @@ interface Props {
   product: Product;
 }
 const ProductCardDetailed = ({ product }: Props) => {
-  const { id, name, description, price, img } = product;
+  const { id, name, description, variants } = product;
   return (
     <CardLayout id={id}>
       <div className={styles.container}>
@@ -17,11 +17,11 @@ const ProductCardDetailed = ({ product }: Props) => {
           </div>
           <div className={styles.action}>
             <MediumButton title={"Купить"} />
-            <p className={styles.price}>{price}р.</p>
+            <p className={styles.price}>{variants[0].price}р.</p>
           </div>
         </div>
         <div className={styles.imgWrapper}>
-          <img src={img} className={styles.img} alt="img" />
+          <img src={variants[0].photos[0]} className={styles.img} alt="img" />
         </div>
       </div>
     </CardLayout>

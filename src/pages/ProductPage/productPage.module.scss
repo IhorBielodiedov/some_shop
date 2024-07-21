@@ -16,12 +16,6 @@
       left: 16px;
       display: flex;
       gap: 5px;
-      .color {
-        width: 53px;
-        height: 53px;
-        border-radius: 14.62px;
-        background-color: var(--main-background-color);
-      }
     }
     img {
       width: 100%;
@@ -85,7 +79,11 @@
       color: var(--acent-black);
     }
   }
-
+  .categories {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
   .footer {
     background-color: var(--main-background-color);
     border-top: 1px solid var(--second-background-color);

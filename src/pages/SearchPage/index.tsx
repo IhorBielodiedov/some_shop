@@ -28,18 +28,7 @@ const SearchPage = () => {
     <div>
       <SearchPanel />
       <Categories big list={CATEGORIES} />
-      <ProductCardDetailed
-        product={{
-          id: 1,
-          name: "Станция 2",
-          description: "Яндекс станция",
-          price: 13497,
-          art: 1111,
-          properties: "",
-          colors: ["red"],
-          img: alise2,
-        }}
-      />
+      <ProductCardDetailed product={PRODUCTS[0]} />
       <div className={styles.lists}>
         <ProductList
           products={PRODUCTS.filter((item, index) => !(index % 2))}

@@ -6,13 +6,13 @@ interface Props {
 }
 
 const ProductCard = ({ product }: Props) => {
-  const { id, name, price, img } = product;
+  const { id, name, variants } = product;
   return (
     <CardLayout id={id}>
       <div className={styles.container}>
-        <img src={img} alt="product" className={styles.img} />
+        <img src={variants[0].photos[0]} alt="product" className={styles.img} />
         <p className={styles.name}>{name}</p>
-        <p className={styles.price}>{price}р.</p>
+        <p className={styles.price}>{variants[0].price}р.</p>
       </div>
     </CardLayout>
   );

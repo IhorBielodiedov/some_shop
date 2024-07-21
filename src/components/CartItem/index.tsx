@@ -18,8 +18,8 @@ const CartItem = ({ product }: Props) => {
         <div className={styles.info}>
           <div>
             <p className={styles.name}>{product.name}</p>
-            <p className={styles.properties}>{product.properties}</p>
-            <p className={styles.art}>арт. {product.art}</p>
+            <p className={styles.properties}>{product.description}</p>
+            <p className={styles.art}>арт. {product.id}</p>
           </div>
           <div className={styles.count}>
             <button
