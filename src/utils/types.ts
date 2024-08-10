@@ -13,3 +13,8 @@ export type Variant = {
   stock_quantity: number;
   id: number;
 };
+export type Category = {
+  id: number | null;
+  name: string;
+  alias?: string;
+};

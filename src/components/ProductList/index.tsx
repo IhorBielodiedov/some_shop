@@ -6,6 +6,7 @@ interface Props {
   products: Product[];
 }
 const ProductList = ({ products }: Props) => {
+  // console.log(products);
   return (
     <div className={styles.container}>
       {products.map((item, index) => (

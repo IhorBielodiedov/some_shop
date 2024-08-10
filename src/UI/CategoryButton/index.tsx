@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import styles from "./categoryButton.module.scss";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -11,8 +12,20 @@ const CategoryButton = ({
   big = false,
   ...attrs
 }: Props) => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (active && buttonRef.current) {
+      buttonRef.current.scrollIntoView({
+        // behavior: "smooth",
+        inline: "center",
+      });
+    }
+  }, [active]);
+
   return (
     <button
+      ref={buttonRef}
       className={`${big ? styles.big_button : styles.small_button} ${
         active && styles.active
       }`}

@@ -1,13 +1,21 @@
 import CategoryButton from "../../UI/CategoryButton";
+import { useProductsStore } from "../../stores/useProductsStore";
+import { Category } from "../../utils/types";
+
 import styles from "./categories.module.scss";
 
 interface Props {
-  list: string[];
+  list: Category[];
   big?: boolean;
   wrap?: boolean;
 }
 
 const Categories = ({ big = false, list, wrap = false }: Props) => {
+  const activeCategory = useProductsStore((state) => state.activeCategory);
+  const setActiveCategory = useProductsStore(
+    (state) => state.setActiveCategory
+  );
+
   return (
     <>
       <div
@@ -16,10 +24,11 @@ const Categories = ({ big = false, list, wrap = false }: Props) => {
       >
         {list.map((item, index) => (
           <CategoryButton
-            title={item}
+            title={item.alias ? item.alias : item.name}
             key={index}
-            active={index === 0}
+            active={activeCategory?.name === item.name}
             big={big}
+            onClick={() => setActiveCategory(item)}
           />
         ))}
       </div>

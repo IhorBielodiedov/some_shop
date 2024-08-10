@@ -11,7 +11,7 @@ import promo3 from "../../assets/img/promo3.png";
 import promo4 from "../../assets/img/promo4.png";
 import alise2 from "../../assets/img/alise2.png";
 import ProductCardDetailed from "../../components/ProductCardDetailed";
-import { PRODUCTS, TELEGRAM } from "../../utils/constants";
+import { CATEGORIES, PRODUCTS, TELEGRAM } from "../../utils/constants";
 import styles from "./homePage.module.scss";
 import { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -22,8 +22,12 @@ import BigImgCard from "../../UI/BigImgCard";
 import BigBanner from "../../UI/BigBanner";
 import PromoCard from "../../UI/PromoCard";
 import Panel from "../../UI/Panel/intex";
+import { useProductsStore } from "../../stores/useProductsStore";
+
 const HomePage = () => {
-  // let reactSwipeEl;
+  const setActiveCategory = useProductsStore(
+    (state) => state.setActiveCategory
+  );
   useEffect(() => {
     TELEGRAM.BackButton.hide();
   }, []);
@@ -48,12 +52,19 @@ const HomePage = () => {
               title={"Яндекс Станции"}
               img={alise}
               link={"/products"}
+              onClick={() => setActiveCategory(CATEGORIES[3])}
             />
-            <BigImgCard title={"Телевизоры"} img={tv} link={"/products"} />
+            <BigImgCard
+              title={"Телевизоры"}
+              img={tv}
+              link={"/products"}
+              onClick={() => setActiveCategory(CATEGORIES[2])}
+            />
             <BigImgCard
               title={"Станции Дуо макс"}
               img={station}
               link={"/products"}
+              onClick={() => setActiveCategory(CATEGORIES[4])}
             />
           </div>
           <div className={styles.categoriesRow}>
@@ -61,13 +72,20 @@ const HomePage = () => {
               title={"Умный дом"}
               img={smartlamp}
               link={"/products"}
+              onClick={() => setActiveCategory(CATEGORIES[1])}
             />
-            <BigImgCard title={"Новинки"} img={star} link={"/products"} />
+            <BigImgCard
+              title={"Новинки"}
+              img={star}
+              link={"/products"}
+              onClick={() => setActiveCategory(CATEGORIES[5])}
+            />
             <BigImgCard
               title={"Весь каталог устройств"}
               img={banner}
               withImg={false}
               link={"/products"}
+              onClick={() => setActiveCategory(CATEGORIES[0])}
             />
           </div>
         </div>

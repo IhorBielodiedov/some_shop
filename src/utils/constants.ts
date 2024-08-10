@@ -1,12 +1,12 @@
-import { Product } from "./types";
+import { Category, Product } from "./types";
 import black from "../assets/img/product.png";
 import black_side from "../assets/img/product1_1.png";
 import red from "../assets/img/product2.png";
 import red_side from "../assets/img/product2_1.png";
 import prod3 from "../assets/img/product3.png";
 import prod4 from "../assets/img/product4.png";
-import prod5 from "../assets/img/product5.png";
-import prod6 from "../assets/img/product6.png";
+import aliseModule from "../assets/img/product5.png";
+import smartLamp from "../assets/img/smartLamp.png";
 
 export const TELEGRAM = window.Telegram.WebApp;
 
@@ -15,18 +15,18 @@ export const PRODUCTS: Product[] = [
     name: "Станция 2",
     description:
       "Умная колонка Яндекс Станция 2 с Алисой  на YaGPT, 30 Вт. Умная колонка второго поколения — новый дизайн, звук, центр управления умным домом и Алиса.",
-    category_id: 1,
+    category_id: 3,
     variants: [
       {
         color: "Красный рубин",
-        price: 132.99,
+        price: 13999,
         photos: [red, red_side],
         stock_quantity: 10,
         id: 0,
       },
       {
         color: "Антрацит",
-        price: 100.99,
+        price: 13497,
         photos: [black, black_side],
         stock_quantity: 10,
         id: 1,
@@ -39,11 +39,11 @@ export const PRODUCTS: Product[] = [
     name: "Станция Лайт",
     description:
       "Умная колонка Яндекс Станция 2 с Алисой  на YaGPT, 30 Вт. Умная колонка второго поколения — новый дизайн, звук, центр управления умным домом и Алиса.",
-    category_id: 1,
+    category_id: 3,
     variants: [
       {
-        color: "Розовый",
-        price: 132.99,
+        color: "Белый",
+        price: 13445,
         photos: [prod4],
         stock_quantity: 10,
         id: 0,
@@ -52,5 +52,46 @@ export const PRODUCTS: Product[] = [
     id: 2,
     count_variants: 1,
   },
+  {
+    name: "Умная лампочка",
+    description:
+      "Умная колонка Яндекс Станция 2 с Алисой  на YaGPT, 30 Вт. Умная колонка второго поколения — новый дизайн, звук, центр управления умным домом и Алиса.",
+    category_id: 1,
+    variants: [
+      {
+        color: "Белый",
+        price: 1465,
+        photos: [smartLamp],
+        stock_quantity: 10,
+        id: 0,
+      },
+    ],
+    id: 3,
+    count_variants: 1,
+  },
+  {
+    name: "Модуль с Алисой",
+    description:
+      "Умная колонка Яндекс Станция 2 с Алисой  на YaGPT, 30 Вт. Умная колонка второго поколения — новый дизайн, звук, центр управления умным домом и Алиса.",
+    category_id: 1,
+    variants: [
+      {
+        color: "Белый",
+        price: 7299,
+        photos: [aliseModule],
+        stock_quantity: 10,
+        id: 0,
+      },
+    ],
+    id: 4,
+    count_variants: 1,
+  },
 ];
-export const CATEGORIES = ["Умный дом", "ТВ", "Станции Алисы", "Что-то еще"];
+export const CATEGORIES: Category[] = [
+  { name: "Весь каталог устройств", alias: "Все", id: 0 },
+  { name: "Умный дом", id: 1 },
+  { name: "ТВ", id: 2 },
+  { name: "Станции Алисы", id: 3 },
+  { name: "Станция Дуо Макс", id: 4 },
+  { name: "Новинки", id: 5 },
+];
