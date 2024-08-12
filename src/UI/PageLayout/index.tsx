@@ -10,6 +10,10 @@ interface Props extends PropsWithChildren {
 
 const PageLayout = ({ children, withTabs = false }: Props) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [navigate]);
   const goBack = () => {
     navigate(-1);
   };
