@@ -18,7 +18,11 @@ const FavouriteProductsPage = () => {
     <div className={styles.container}>
       {favouriteProducts &&
         favouriteProducts.map((item) => (
-          <FavouriteCard product={item.product} variant={item.variant} />
+          <FavouriteCard
+            product={item.product}
+            variant={item.variant}
+            info={item.info}
+          />
         ))}
     </div>
   );

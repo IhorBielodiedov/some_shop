@@ -25,13 +25,19 @@ export const useProductsStore = create<State & Actions>()((set, get) => ({
   getFavouriteProducts: (favouriteProducts: Favourite[]) => {
     const arr: { info: Favourite; variant: Variant; product: Product }[] =
       favouriteProducts
-        .map((item, index) => {
-          if (item.product_id === PRODUCTS[index].id) {
-            return {
-              info: item,
-              variant: PRODUCTS[index].variants[item.variant_id],
-              product: PRODUCTS[index],
-            };
+        .map((item) => {
+          const product = PRODUCTS.find((p) => p.id === item.product_id);
+          if (product) {
+            const variant = product.variants.find(
+              (v) => v.id === item.variant_id
+            );
+            if (variant) {
+              return {
+                info: item,
+                variant: variant,
+                product: product,
+              };
+            }
           }
           return null;
         })

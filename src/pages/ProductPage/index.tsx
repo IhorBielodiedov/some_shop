@@ -34,6 +34,7 @@ const ProductPage = () => {
     navigate(-1);
   };
   useEffect(() => {
+    window.scrollTo({ top: 0 });
     if (window.history.length > 1) {
       TELEGRAM.BackButton.show();
       TELEGRAM.BackButton.onClick(goBack);

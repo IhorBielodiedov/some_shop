@@ -17,7 +17,6 @@ const CategoryButton = ({
   useEffect(() => {
     if (active && buttonRef.current) {
       buttonRef.current.scrollIntoView({
-        // behavior: "smooth",
         inline: "center",
       });
     }

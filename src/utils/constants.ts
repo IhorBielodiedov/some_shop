@@ -143,4 +143,20 @@ export const FAVOURITES: Favourite[] = [
     in_stock: 10,
     price: 1999,
   },
+  {
+    id: 3,
+    product_id: 3,
+    variant_id: 0,
+    quantity: 0,
+    in_stock: 10,
+    price: 1999,
+  },
+  {
+    id: 4,
+    product_id: 1,
+    variant_id: 0,
+    quantity: 1,
+    in_stock: 10,
+    price: 1999,
+  },
 ];
