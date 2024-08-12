@@ -79,7 +79,6 @@ const ProductPage = () => {
                 active={variant === item.id}
                 onClick={() => {
                   setVariant(item.id);
-                  navigate(`/product/${id}/${item.id}`);
                   setSide(0);
                 }}
               />
