@@ -29,6 +29,7 @@ const Categories = ({ big = false, list, wrap = false }: Props) => {
             active={activeCategory?.name === item.name}
             big={big}
             onClick={() => setActiveCategory(item)}
+            doFocus
           />
         ))}
       </div>

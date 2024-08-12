@@ -5,17 +5,19 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
   active?: boolean;
   big?: boolean;
+  doFocus?: boolean;
 }
 const CategoryButton = ({
   title,
   active = false,
   big = false,
+  doFocus = false,
   ...attrs
 }: Props) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    if (active && buttonRef.current) {
+    if (active && buttonRef.current && doFocus) {
       buttonRef.current.scrollIntoView({
         inline: "center",
       });
