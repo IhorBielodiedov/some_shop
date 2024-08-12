@@ -8,11 +8,12 @@ import styles from "./searchPage.module.scss";
 import { useEffect, useState } from "react";
 import alise2 from "../../assets/img/alise2.png";
 import { useProductsStore } from "../../stores/useProductsStore";
+import { Product } from "../../utils/types";
 
 const SearchPage = () => {
   const activeCategory = useProductsStore((state) => state.activeCategory);
   const [products, setProducts] = useState(
-    PRODUCTS.filter((item) => {
+    PRODUCTS.filter((item, index) => {
       if (
         activeCategory &&
         activeCategory.id !== null &&
@@ -24,7 +25,7 @@ const SearchPage = () => {
       return true;
     })
   );
-
+  const [firstProduct, setFirstProduct] = useState<Product | null>(null);
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
@@ -42,7 +43,7 @@ const SearchPage = () => {
   }, []);
   useEffect(() => {
     setProducts(
-      PRODUCTS.filter((item) => {
+      PRODUCTS.filter((item, index) => {
         if (
           activeCategory &&
           activeCategory.id !== null &&
@@ -55,16 +56,23 @@ const SearchPage = () => {
       })
     );
   }, [activeCategory]);
+  useEffect(() => {
+    setFirstProduct(products[0]);
+  }, [products]);
   return (
     <div>
       <SearchPanel />
       <Categories big list={CATEGORIES} />
-      {/* <ProductCardDetailed product={products[0]} /> */}
+      {firstProduct && <ProductCardDetailed product={firstProduct} />}
       <div className={styles.lists}>
         <ProductList
-          products={products.filter((item, index) => !(index % 2))}
+          products={products.filter((item, index) => index !== 0 && index % 2)}
         />
-        <ProductList products={products.filter((item, index) => index % 2)} />
+        <ProductList
+          products={products.filter(
+            (item, index) => index !== 0 && !(index % 2)
+          )}
+        />
       </div>
     </div>
   );

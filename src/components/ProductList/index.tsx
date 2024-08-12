@@ -1,6 +1,7 @@
 import CardLayout from "../../UI/CardLayout";
 import { Product } from "../../utils/types";
 import ProductCard from "../ProductCard";
+import ProductCardDetailed from "../ProductCardDetailed";
 import styles from "./productList.module.scss";
 interface Props {
   products: Product[];

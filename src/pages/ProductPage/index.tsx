@@ -16,20 +16,19 @@ import CategoryButton from "../../UI/CategoryButton";
 import SidePicker from "../../UI/SidePicker";
 
 const ProductPage = () => {
-  const { id } = useParams();
+  const { id, variantId } = useParams();
   const [product, setProduct] = useState<Product>();
-  const [variant, setVariant] = useState(0);
+  const [variant, setVariant] = useState(
+    variantId !== undefined ? +variantId : 0
+  );
   const [side, setSide] = useState(0);
-
   const colors = product?.variants.map((item) => item.color);
   useEffect(() => {
     if (id) {
       setProduct(PRODUCTS[parseInt(id) - 1]);
     }
   }, [id]);
-  useEffect(() => {
-    console.log(variant);
-  }, [variant]);
+
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
@@ -79,6 +78,7 @@ const ProductPage = () => {
                 active={variant === item.id}
                 onClick={() => {
                   setVariant(item.id);
+                  navigate(`/product/${id}/${item.id}`);
                   setSide(0);
                 }}
               />
@@ -119,7 +119,7 @@ const ProductPage = () => {
             </div>
             <div style={{ width: "233px" }}>
               <GradientButton
-                title="КУПИТЬ"
+                title="В КОРЗИНУ"
                 titleSize={15}
                 height={49}
                 titleAlign="center"

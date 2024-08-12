@@ -73,12 +73,15 @@
 .footer {
   width: 100%;
   position: fixed;
+  bottom: 0;
   left: 0;
-  padding: 0 16px;
-  bottom: 4px;
+  right: 0;
+  padding: 8px 16px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  background-color: var(--main-background-color);
+  border-top: 1px solid var(--second-background-color);
   .totalTitle {
     font-size: 15px;
     font-weight: 400;

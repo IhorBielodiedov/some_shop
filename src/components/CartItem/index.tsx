@@ -48,7 +48,7 @@ const CartItem = ({ product }: Props) => {
         <p className={styles.price}>13 497р.</p>
       </div>
       <button className={styles.close}>
-        <CloseSVG />
+        <CloseSVG color={"var(--second-text-color)"} />
       </button>
     </div>
   );

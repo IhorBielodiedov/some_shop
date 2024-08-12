@@ -6,6 +6,7 @@ import SearchPage from "./pages/SearchPage";
 import PageLayout from "./UI/PageLayout";
 import ProductPage from "./pages/ProductPage";
 import CartPage from "./pages/CartPage";
+import FavouriteProductsPage from "./pages/FavouriteProductsPage";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorBoundary />,
   },
   {
-    path: "/product/:id",
+    path: "/product/:id/:variantId",
     element: (
       <PageLayout>
         <ProductPage />
@@ -40,6 +41,15 @@ const router = createBrowserRouter([
     element: (
       <PageLayout>
         <CartPage />
+      </PageLayout>
+    ),
+    errorElement: <ErrorBoundary />,
+  },
+  {
+    path: "/favourites",
+    element: (
+      <PageLayout>
+        <FavouriteProductsPage />
       </PageLayout>
     ),
     errorElement: <ErrorBoundary />,

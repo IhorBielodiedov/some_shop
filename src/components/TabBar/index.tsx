@@ -8,7 +8,7 @@ import MenuSVG from "../../UI/icons/MenuSVG";
 const TabBar = () => {
   return (
     <div className={styles.container}>
-      <Link to="/">
+      <Link to="/favourites">
         <div className={styles.button}>
           <HeartSVG />
         </div>
