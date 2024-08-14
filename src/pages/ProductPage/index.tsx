@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { PRODUCTS, TELEGRAM } from "../../utils/constants";
+import { PRODUCTS, REVIEWS, TELEGRAM } from "../../utils/constants";
 import { Product } from "../../utils/types";
 import { useNavigate, useParams } from "react-router-dom";
 import Categories from "../../components/Categories";
@@ -14,6 +14,8 @@ import MenuSVG from "../../UI/icons/MenuSVG";
 import StarSVG from "../../UI/icons/StarSVG";
 import CategoryButton from "../../UI/CategoryButton";
 import SidePicker from "../../UI/SidePicker";
+import Specification from "../../components/Specification";
+import Review from "../../components/Review";
 
 const ProductPage = () => {
   const { id, variantId } = useParams();
@@ -100,14 +102,26 @@ const ProductPage = () => {
             title="Характеристики"
             color="var(--main-text-color)"
             icon={<MenuSVG color={"var(--main-button-color)"} />}
-          />
+          >
+            <div className={styles.specifications}>
+              {product.variants[variant].specifications.map((item) => (
+                <Specification specification={item} />
+              ))}
+            </div>
+          </Panel>
           <Panel
             title="Отзывы"
             color="var(--main-text-color)"
             withBottom
             icon={<StarSVG color={"var(--main-button-color)"} />}
-            additionalText={"150 отзывов"}
-          />
+            additionalText={"150 оценок"}
+          >
+            <div className={styles.reviews}>
+              {REVIEWS.map((item) => (
+                <Review review={item} />
+              ))}
+            </div>
+          </Panel>
           <div className={styles.footer}>
             <div>
               <p className={styles.fullPrice}>

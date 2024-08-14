@@ -13,6 +13,17 @@ export type Variant = {
   stock_quantity: number;
   id: number;
   is_favorite: boolean;
+  specifications: Specification[];
+};
+export type Specification = {
+  id: number;
+  title: string;
+  rows: SpecificationRow[];
+};
+export type SpecificationRow = {
+  id: number;
+  name: string;
+  value: string;
 };
 export type Category = {
   id: number | null;
@@ -27,4 +38,17 @@ export type Favourite = {
   quantity: number;
   in_stock: number;
   price: number;
+};
+export type Review = {
+  user: User;
+  product_variant_id: number;
+  rating: number;
+  description: string;
+  created_at: string;
+};
+export type User = {
+  id: number;
+  created_at: string;
+  updated_at: string;
+  cart: any[];
 };

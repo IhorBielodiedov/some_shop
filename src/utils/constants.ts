@@ -1,4 +1,4 @@
-import { Category, Favourite, Product } from "./types";
+import { Category, Favourite, Product, Review, User } from "./types";
 import black from "../assets/img/product.png";
 import black_side from "../assets/img/product1_1.png";
 import red from "../assets/img/product2.png";
@@ -24,6 +24,30 @@ export const PRODUCTS: Product[] = [
         stock_quantity: 10,
         id: 0,
         is_favorite: false,
+        specifications: [
+          {
+            id: 0,
+            title: "Звук",
+            rows: [
+              { id: 0, name: "Максимальная мощность, Вт", value: "30" },
+              { id: 1, name: "Количество полос", value: "1" },
+              { id: 2, name: "Мин. частота, Гц", value: "65" },
+              { id: 2, name: "Мин. частота, Гц", value: "20000" },
+            ],
+          },
+          {
+            id: 0,
+            title: "Подключение",
+            rows: [
+              {
+                id: 0,
+                name: "Беспроводные интерфейсы:",
+                value: "Bluetooth, Wi-Fi, Zigbee",
+              },
+              { id: 1, name: "Модуль связи Bluetooth:", value: "5,0" },
+            ],
+          },
+        ],
       },
       {
         color: "Антрацит",
@@ -32,6 +56,30 @@ export const PRODUCTS: Product[] = [
         stock_quantity: 10,
         id: 1,
         is_favorite: false,
+        specifications: [
+          {
+            id: 0,
+            title: "Звук",
+            rows: [
+              { id: 0, name: "Максимальная мощность, Вт", value: "30" },
+              { id: 1, name: "Количество полос", value: "1" },
+              { id: 2, name: "Мин. частота, Гц", value: "65" },
+              { id: 2, name: "Мин. частота, Гц", value: "20000" },
+            ],
+          },
+          {
+            id: 0,
+            title: "Подключение",
+            rows: [
+              {
+                id: 0,
+                name: "Беспроводные интерфейсы:",
+                value: "Bluetooth, Wi-Fi, Zigbee",
+              },
+              { id: 1, name: "Модуль связи Bluetooth:", value: "5,0" },
+            ],
+          },
+        ],
       },
     ],
     id: 1,
@@ -50,6 +98,30 @@ export const PRODUCTS: Product[] = [
         stock_quantity: 10,
         id: 0,
         is_favorite: false,
+        specifications: [
+          {
+            id: 0,
+            title: "Звук",
+            rows: [
+              { id: 0, name: "Максимальная мощность, Вт", value: "30" },
+              { id: 1, name: "Количество полос", value: "1" },
+              { id: 2, name: "Мин. частота, Гц", value: "65" },
+              { id: 2, name: "Мин. частота, Гц", value: "20000" },
+            ],
+          },
+          {
+            id: 0,
+            title: "Подключение",
+            rows: [
+              {
+                id: 0,
+                name: "Беспроводные интерфейсы:",
+                value: "Bluetooth, Wi-Fi, Zigbee",
+              },
+              { id: 1, name: "Модуль связи Bluetooth:", value: "5,0" },
+            ],
+          },
+        ],
       },
     ],
     id: 2,
@@ -68,6 +140,30 @@ export const PRODUCTS: Product[] = [
         stock_quantity: 10,
         id: 0,
         is_favorite: false,
+        specifications: [
+          {
+            id: 0,
+            title: "Звук",
+            rows: [
+              { id: 0, name: "Максимальная мощность, Вт", value: "30" },
+              { id: 1, name: "Количество полос", value: "1" },
+              { id: 2, name: "Мин. частота, Гц", value: "65" },
+              { id: 2, name: "Мин. частота, Гц", value: "20000" },
+            ],
+          },
+          {
+            id: 0,
+            title: "Подключение",
+            rows: [
+              {
+                id: 0,
+                name: "Беспроводные интерфейсы:",
+                value: "Bluetooth, Wi-Fi, Zigbee",
+              },
+              { id: 1, name: "Модуль связи Bluetooth:", value: "5,0" },
+            ],
+          },
+        ],
       },
     ],
     id: 3,
@@ -86,6 +182,30 @@ export const PRODUCTS: Product[] = [
         stock_quantity: 10,
         id: 0,
         is_favorite: false,
+        specifications: [
+          {
+            id: 0,
+            title: "Звук",
+            rows: [
+              { id: 0, name: "Максимальная мощность, Вт", value: "30" },
+              { id: 1, name: "Количество полос", value: "1" },
+              { id: 2, name: "Мин. частота, Гц", value: "65" },
+              { id: 2, name: "Мин. частота, Гц", value: "20000" },
+            ],
+          },
+          {
+            id: 0,
+            title: "Подключение",
+            rows: [
+              {
+                id: 0,
+                name: "Беспроводные интерфейсы:",
+                value: "Bluetooth, Wi-Fi, Zigbee",
+              },
+              { id: 1, name: "Модуль связи Bluetooth:", value: "5,0" },
+            ],
+          },
+        ],
       },
     ],
     id: 4,
@@ -104,6 +224,30 @@ export const PRODUCTS: Product[] = [
         stock_quantity: 10,
         id: 1,
         is_favorite: false,
+        specifications: [
+          {
+            id: 0,
+            title: "Звук",
+            rows: [
+              { id: 0, name: "Максимальная мощность, Вт", value: "30" },
+              { id: 1, name: "Количество полос", value: "1" },
+              { id: 2, name: "Мин. частота, Гц", value: "65" },
+              { id: 2, name: "Мин. частота, Гц", value: "20000" },
+            ],
+          },
+          {
+            id: 0,
+            title: "Подключение",
+            rows: [
+              {
+                id: 0,
+                name: "Беспроводные интерфейсы:",
+                value: "Bluetooth, Wi-Fi, Zigbee",
+              },
+              { id: 1, name: "Модуль связи Bluetooth:", value: "5,0" },
+            ],
+          },
+        ],
       },
       {
         color: "Красный рубин",
@@ -112,6 +256,30 @@ export const PRODUCTS: Product[] = [
         stock_quantity: 10,
         id: 0,
         is_favorite: false,
+        specifications: [
+          {
+            id: 0,
+            title: "Звук",
+            rows: [
+              { id: 0, name: "Максимальная мощность, Вт", value: "30" },
+              { id: 1, name: "Количество полос", value: "1" },
+              { id: 2, name: "Мин. частота, Гц", value: "65" },
+              { id: 2, name: "Мин. частота, Гц", value: "20000" },
+            ],
+          },
+          {
+            id: 0,
+            title: "Подключение",
+            rows: [
+              {
+                id: 0,
+                name: "Беспроводные интерфейсы:",
+                value: "Bluetooth, Wi-Fi, Zigbee",
+              },
+              { id: 1, name: "Модуль связи Bluetooth:", value: "5,0" },
+            ],
+          },
+        ],
       },
     ],
     id: 5,
@@ -158,5 +326,32 @@ export const FAVOURITES: Favourite[] = [
     quantity: 1,
     in_stock: 10,
     price: 1999,
+  },
+];
+export const USER: User = { id: 1, created_at: "", updated_at: "", cart: [] };
+export const REVIEWS: Review[] = [
+  {
+    user: USER,
+    product_variant_id: 1,
+    rating: 5,
+    description:
+      "Отличная колонка. Подключилась легко, работает без проблем. Много возможностей. Все оригинальное с логотипом яндекса.",
+    created_at: "15.03.2023",
+  },
+  {
+    user: USER,
+    product_variant_id: 1,
+    rating: 5,
+    description:
+      "Отличная колонка. Подключилась легко, работает без проблем. Много возможностей. Все оригинальное с логотипом яндекса.Отличная колонка. Подключилась легко, работает без проблем. Много возможностей. Все оригинальное с логотипом яндекса.Отличная колонка. Подключилась легко, работает без проблем. Много возможностей. Все оригинальное с логотипом яндекса.",
+    created_at: "15.03.2023",
+  },
+  {
+    user: USER,
+    product_variant_id: 1,
+    rating: 5,
+    description:
+      "Отличная колонка. Подключилась легко, работает без проблем. Много возможностей. Все оригинальное с логотипом яндекса.",
+    created_at: "15.03.2023",
   },
 ];

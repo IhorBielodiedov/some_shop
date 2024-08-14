@@ -1,10 +1,13 @@
 .container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 9px;
-  padding: 15px 9px 16px 7px;
-  border-top: solid 1.35px var(--second-background-color);
+  padding-bottom: 16px;
+  .panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 9px;
+    padding: 15px 9px 0 7px;
+    border-top: solid 1.35px var(--second-background-color);
+  }
   .wrapper {
     display: flex;
     align-items: center;
@@ -27,6 +30,12 @@
       text-align: left;
       margin-right: 25px;
       color: var(--main-button-color);
+    }
+    .arrow {
+      transition: transform 0.3s ease;
+    }
+    .rotated {
+      transform: rotate(-90deg);
     }
   }
 }
