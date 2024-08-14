@@ -5,10 +5,11 @@ import { Link } from "react-router-dom";
 
 interface Props extends PropsWithChildren {
   id: number;
+  variant: number;
 }
-const CardLayout = ({ children, id }: Props) => {
+const CardLayout = ({ children, id, variant }: Props) => {
   return (
-    <Link to={`/product/${id}`}>
+    <Link to={`/product/${id}/${variant}`}>
       <div className={styles.container}>
         <button className={styles.button}>
           <div className={styles.icon}>

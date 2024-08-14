@@ -8,7 +8,7 @@ interface Props {
 const ProductCardDetailed = ({ product }: Props) => {
   const { id, name, description, variants } = product;
   return (
-    <CardLayout id={id}>
+    <CardLayout id={id} variant={0}>
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.text}>
