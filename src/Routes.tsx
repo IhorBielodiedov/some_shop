@@ -7,6 +7,8 @@ import PageLayout from "./UI/PageLayout";
 import ProductPage from "./pages/ProductPage";
 import CartPage from "./pages/CartPage";
 import FavouriteProductsPage from "./pages/FavouriteProductsPage";
+import { OrderDataPage } from "./pages/OrderDataPage";
+import { PaymentPage } from "./pages/PaymentPage";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +52,24 @@ const router = createBrowserRouter([
     element: (
       <PageLayout>
         <FavouriteProductsPage />
+      </PageLayout>
+    ),
+    errorElement: <ErrorBoundary />,
+  },
+  {
+    path: "/orderData",
+    element: (
+      <PageLayout>
+        <OrderDataPage />
+      </PageLayout>
+    ),
+    errorElement: <ErrorBoundary />,
+  },
+  {
+    path: "/payment",
+    element: (
+      <PageLayout>
+        <PaymentPage />
       </PageLayout>
     ),
     errorElement: <ErrorBoundary />,
