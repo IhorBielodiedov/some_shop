@@ -28,7 +28,7 @@ const FavouriteCard = ({ product, variant, info }: Props) => {
         </div>
         <div className={styles.footer}>
           {amt ? (
-            <div className={styles.count}>
+            <div className={styles.count} onClick={(e) => e.preventDefault()}>
               <button
                 className={styles.countButton}
                 onClick={(e) => {
