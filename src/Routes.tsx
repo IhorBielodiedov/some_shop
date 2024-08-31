@@ -48,6 +48,15 @@ const router = createBrowserRouter([
     errorElement: <ErrorBoundary />,
   },
   {
+    path: "/payment",
+    element: (
+        <PageLayout>
+          <PaymentPage />
+        </PageLayout>
+    ),
+    errorElement: <ErrorBoundary />,
+  },
+  {
     path: "/favourites",
     element: (
       <PageLayout>

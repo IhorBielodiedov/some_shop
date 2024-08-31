@@ -1,37 +1,20 @@
 .container {
-  height: 100vh;
   .inputs {
     display: flex;
     flex-direction: column;
-    gap: 16px;
     margin-top: 22px;
-    .agreement {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      .checkbox {
-        min-width: 22px;
-        min-height: 22px;
-        border-radius: 3px;
-        border: 1px solid #9b9999;
-      }
-      .label {
-        font-size: 12px;
-        font-weight: 400;
-        line-height: 14.06px;
-        text-align: left;
-        color: var(--second-text-color);
-        span {
-          text-decoration: underline;
-        }
-      }
-    }
+    margin-bottom: 19px;
+    border: none
   }
-  .footer {
-    position: fixed;
-    bottom: 0;
+
+  .delivery {
+    position: absolute;
     left: 0;
-    right: 0;
-    padding: 16px;
+    bottom: 90px;
+    padding: 5px 0;
+    font-size: 12px;
+    width: 100%;
+    text-align: center;
+    background-color: var(--second-background-color);
   }
 }

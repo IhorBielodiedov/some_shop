@@ -9,7 +9,6 @@ import promo1 from "../../assets/img/promo.png";
 import promo2 from "../../assets/img/promo2.png";
 import promo3 from "../../assets/img/promo3.png";
 import promo4 from "../../assets/img/promo4.png";
-import alise2 from "../../assets/img/alise2.png";
 import ProductCardDetailed from "../../components/ProductCardDetailed";
 import { CATEGORIES, PRODUCTS, TELEGRAM } from "../../utils/constants";
 import styles from "./homePage.module.scss";
@@ -23,6 +22,7 @@ import BigBanner from "../../UI/BigBanner";
 import PromoCard from "../../UI/PromoCard";
 import Panel from "../../UI/Panel/intex";
 import { useProductsStore } from "../../stores/useProductsStore";
+import {manyDifferentSlidesWithBtn, oneSlideWithBtn} from "./testData";
 
 const HomePage = () => {
   const setActiveCategory = useProductsStore(
@@ -98,12 +98,12 @@ const HomePage = () => {
       <section>
         <div className={styles.categories} style={{ gap: "16px" }}>
           <div className={styles.categoriesRow} style={{ gap: "16px" }}>
-            <PromoCard img={promo1} title="Быстрые команды" />
-            <PromoCard img={promo2} title="Что нового" />
+            <PromoCard img={promo1} title="Быстрые команды" slider={manyDifferentSlidesWithBtn} />
+            <PromoCard img={promo2} title="Что нового" slider={oneSlideWithBtn} />
           </div>
           <div className={styles.categoriesRow} style={{ gap: "16px" }}>
-            <PromoCard img={promo3} title="Новые функции" />
-            <PromoCard img={promo4} title="Диодная лента" />
+            <PromoCard img={promo3} title="Новые функции" slider={oneSlideWithBtn}/>
+            <PromoCard img={promo4} title="Диодная лента" slider={manyDifferentSlidesWithBtn}/>
           </div>
         </div>
       </section>

@@ -52,3 +52,16 @@ export type User = {
   updated_at: string;
   cart: any[];
 };
+
+
+interface Button {
+  text: string;
+  url: string;
+}
+
+export interface StorySliderProps {
+  imageSrc: string;
+  title: string;
+  description: string;
+  button?: Button;
+}
