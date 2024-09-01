@@ -22,7 +22,7 @@ import BigBanner from "../../UI/BigBanner";
 import PromoCard from "../../UI/PromoCard";
 import Panel from "../../UI/Panel/intex";
 import { useProductsStore } from "../../stores/useProductsStore";
-import {manyDifferentSlidesWithBtn, oneSlideWithBtn} from "./testData";
+import { manyDifferentSlidesWithBtn, oneSlideWithBtn } from "./testData";
 
 const HomePage = () => {
   const setActiveCategory = useProductsStore(
@@ -33,7 +33,12 @@ const HomePage = () => {
   }, []);
   return (
     <div className={styles.container}>
-      <Swiper slidesPerView={"auto"} spaceBetween={16} loop={true}>
+      <Swiper
+        slidesPerView={"auto"}
+        spaceBetween={16}
+        loop={true}
+        className={`bannerSwiper`}
+      >
         <SwiperSlide>
           <img className={styles.banner} src={banner} alt="banner" />
         </SwiperSlide>
@@ -98,12 +103,28 @@ const HomePage = () => {
       <section>
         <div className={styles.categories} style={{ gap: "16px" }}>
           <div className={styles.categoriesRow} style={{ gap: "16px" }}>
-            <PromoCard img={promo1} title="Быстрые команды" slider={manyDifferentSlidesWithBtn} />
-            <PromoCard img={promo2} title="Что нового" slider={oneSlideWithBtn} />
+            <PromoCard
+              img={promo1}
+              title="Быстрые команды"
+              slider={manyDifferentSlidesWithBtn}
+            />
+            <PromoCard
+              img={promo2}
+              title="Что нового"
+              slider={oneSlideWithBtn}
+            />
           </div>
           <div className={styles.categoriesRow} style={{ gap: "16px" }}>
-            <PromoCard img={promo3} title="Новые функции" slider={oneSlideWithBtn}/>
-            <PromoCard img={promo4} title="Диодная лента" slider={manyDifferentSlidesWithBtn}/>
+            <PromoCard
+              img={promo3}
+              title="Новые функции"
+              slider={oneSlideWithBtn}
+            />
+            <PromoCard
+              img={promo4}
+              title="Диодная лента"
+              slider={manyDifferentSlidesWithBtn}
+            />
           </div>
         </div>
       </section>
