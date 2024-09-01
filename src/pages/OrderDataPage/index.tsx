@@ -2,9 +2,28 @@ import { useNavigate } from "react-router-dom";
 import GradientButton from "../../UI/GradientButton";
 import { Input } from "../../UI/Input";
 import styles from "./orderDataPage.module.scss";
+import { useEffect } from "react";
+import { TELEGRAM } from "../../utils/constants";
 
 export const OrderDataPage = () => {
   const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+    if (window.history.length > 1) {
+      TELEGRAM.BackButton.show();
+      TELEGRAM.BackButton.onClick(goBack);
+    } else {
+      TELEGRAM.BackButton.hide();
+    }
+    return () => {
+      TELEGRAM.BackButton.offClick(goBack);
+    };
+  }, []);
+
   return (
     <div className={styles.container}>
       <h1>Оформление заказа</h1>
