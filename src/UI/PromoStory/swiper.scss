@@ -1,11 +1,28 @@
-
-
 .swiper-button-prev, .swiper-button-next {
     position: absolute;
     top: 20px;
     height: 100%;
     width: 20%;
     z-index: 1;
+}
+
+.swiper-button-prev {
+    top: 0;
+    height: 92%;
+}
+
+.swiper-button-prev::after {
+    position: absolute;
+    width: 100%;
+    height: 10%;
+    bottom: -15%;
+}
+
+.withPagination {
+    .swiper-button-prev {
+        top: 20px;
+        height: 100%;
+    }
 }
 
 .swiper-button-prev::after, .swiper-button-next::after {

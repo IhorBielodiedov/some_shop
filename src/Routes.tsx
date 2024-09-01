@@ -50,16 +50,16 @@ const router = createBrowserRouter([
   {
     path: "/payment",
     element: (
-        <PageLayout>
-          <PaymentPage />
-        </PageLayout>
+      <PageLayout>
+        <PaymentPage />
+      </PageLayout>
     ),
     errorElement: <ErrorBoundary />,
   },
   {
     path: "/favourites",
     element: (
-      <PageLayout>
+      <PageLayout withTabs>
         <FavouriteProductsPage />
       </PageLayout>
     ),

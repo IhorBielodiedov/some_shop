@@ -1,6 +1,6 @@
 import styles from "./gradientButton.module.scss";
 
-interface Props {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
   titleSize: number;
   titleAlign: Align;
@@ -49,6 +49,7 @@ const GradientButton = ({
   paddingBottom,
   height,
   borderRadius,
+  ...attrs
 }: Props) => {
   return (
     <button
@@ -62,6 +63,7 @@ const GradientButton = ({
         height: `${height}px`,
         borderRadius: borderRadius ? `${borderRadius}px` : "8px",
       }}
+      {...attrs}
     >
       {img && <img src={img} alt="product" className={styles.img} />}
       <p className={styles.text} style={{ textDecoration: "none" }}>

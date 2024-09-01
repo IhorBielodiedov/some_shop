@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import GradientButton from "../../UI/GradientButton";
 import { Input } from "../../UI/Input";
 import styles from "./orderDataPage.module.scss";
 
 export const OrderDataPage = () => {
+  const navigate = useNavigate();
   return (
     <div className={styles.container}>
       <h1>Оформление заказа</h1>
@@ -34,6 +36,9 @@ export const OrderDataPage = () => {
           paddingBottom={15}
           gradientDirection="diagonal-right"
           borderRadius={13}
+          onClick={() => {
+            navigate("/payment");
+          }}
         />
       </div>
     </div>
