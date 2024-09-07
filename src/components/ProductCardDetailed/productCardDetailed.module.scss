@@ -1,7 +1,11 @@
+.cardBlock {
+  position: relative;
+}
 .container {
   display: flex;
   justify-content: space-between;
   padding: 24px 35px 18px 18px;
+  position: relative;
   .content {
     max-width: 50%;
     display: flex;
@@ -28,7 +32,7 @@
       white-space: nowrap;
     }
     .description {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 400;
       line-height: 16.41px;
       letter-spacing: -0.02em;

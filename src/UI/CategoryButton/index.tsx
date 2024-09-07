@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import {useEffect, useRef} from "react";
 import styles from "./categoryButton.module.scss";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -14,12 +14,14 @@ const CategoryButton = ({
   doFocus = false,
   ...attrs
 }: Props) => {
-  const buttonRef = useRef<HTMLButtonElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (active && buttonRef.current && doFocus) {
       buttonRef.current.scrollIntoView({
-        inline: "center",
+          behavior: "smooth",
+          block: "nearest",
+          inline: "start",
       });
     }
   }, [active]);

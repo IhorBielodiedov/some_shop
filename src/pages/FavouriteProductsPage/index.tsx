@@ -6,17 +6,25 @@ import styles from "./favouriteProductsPage.module.scss";
 import { useNavigate } from "react-router-dom";
 
 const FavouriteProductsPage = () => {
+
   const favouriteProducts = useProductsStore(
     (state) => state.favouriteProducts
   );
   const getFavouriteProducts = useProductsStore(
     (state) => state.getFavouriteProducts
   );
+  const deleteFavouriteProduct = useProductsStore(
+      (state) => state.deleteFavouriteProduct
+  );
+
   const navigate = useNavigate();
+
   const goBack = () => {
     navigate(-1);
   };
-  useEffect(() => getFavouriteProducts(FAVOURITES), []);
+
+  //useEffect(() => getFavouriteProducts(FAVOURITES), []);
+
   useEffect(() => {
     window.scrollTo({ top: 0 });
     if (window.history.length > 1) {
@@ -29,14 +37,17 @@ const FavouriteProductsPage = () => {
       TELEGRAM.BackButton.offClick(goBack);
     };
   }, []);
+
   return (
     <div className={styles.container}>
       {favouriteProducts &&
-        favouriteProducts.map((item) => (
+        favouriteProducts.map((item, index) => (
           <FavouriteCard
             product={item.product}
             variant={item.variant}
             info={item.info}
+            key={index}
+            deleteFavorite={deleteFavouriteProduct}
           />
         ))}
     </div>

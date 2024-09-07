@@ -5,12 +5,12 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 8px 16px;
+  padding: 8px 16px 31px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   background-color: var(--main-background-color);
-  border-top: 1px solid var(--second-background-color);
+
   .totalTitle {
     font-size: 15px;
     font-weight: 400;
@@ -23,6 +23,7 @@
     line-height: 25.78px;
     text-align: left;
   }
+
   .buyButton {
     width: 62%;
   }
