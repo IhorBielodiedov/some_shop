@@ -3,6 +3,7 @@ export type Product = {
   name: string;
   description: string;
   category_id: number;
+  discount: number;
   variants: Variant[];
   count_variants: number;
 };

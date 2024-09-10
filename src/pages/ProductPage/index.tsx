@@ -1,8 +1,14 @@
-import { useEffect, useState } from "react";
+
+import "swiper/swiper-bundle.css";
+import "swiper/css";
+import "./swiper.scss";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import {useEffect, useRef, useState} from "react";
 import { PRODUCTS, REVIEWS, TELEGRAM } from "../../utils/constants";
 import { Product } from "../../utils/types";
 import { useNavigate, useParams } from "react-router-dom";
-import Categories from "../../components/Categories";
 import LikeButton from "../../UI/LikeButton";
 import styles from "./productPage.module.scss";
 import GradientButton from "../../UI/GradientButton";
@@ -17,14 +23,27 @@ import SidePicker from "../../UI/SidePicker";
 import Specification from "../../components/Specification";
 import Review from "../../components/Review";
 
+import { Swiper as SwiperCore } from "swiper/types";
+import {useProductStore} from "../../stores/cartStore";
+
 const ProductPage = () => {
+  const toggleFavorites = useProductStore((state : any) => state.toggleFavorite);
+
+  const addProduct = useProductStore((state : any) => state.addProduct);
+  const favouriteProducts = useProductStore((state : any) => state.favouriteProducts);
+
+  const [isFavorite, setIsFavorite] = useState(false);
+
   const { id, variantId } = useParams();
   const [product, setProduct] = useState<Product>();
   const [variant, setVariant] = useState(
     variantId !== undefined ? +variantId : 0
   );
+
+
   const [side, setSide] = useState(0);
-  const colors = product?.variants.map((item) => item.color);
+  const swiperRef = useRef<SwiperCore | null>(null);
+
   useEffect(() => {
     if (id) {
       setProduct(PRODUCTS[parseInt(id) - 1]);
@@ -48,18 +67,48 @@ const ProductPage = () => {
     };
   }, []);
 
+  const handleSlideChange = (swiper: any) => {
+    setSide(swiper.activeIndex)
+  };
+
+  const goToSlide = (index: number) => {
+    setSide(index);
+    if (swiperRef.current) {
+      swiperRef.current.slideTo(index);
+    }
+  };
+
   return (
     <>
       {product && (
         <div className={styles.container}>
           <div className={styles.img}>
-            <img src={product.variants[variant].photos[side]} alt="product" />
+            {/*<img src={product.variants[variant].photos[side]} alt="product" />*/}
+            <Swiper
+                className={'swiperProduct'}
+                onSlideChange={handleSlideChange}
+                onSwiper={(swiper: SwiperCore) => (swiperRef.current = swiper)}
+                slidesPerView={1}
+                spaceBetween={0}
+                centeredSlides={false}
+            >
+              {product.variants[variant].photos.map((slide, index) => (
+                  <SwiperSlide key={index}>
+                    <div className={styles.picture}>
+                      <img src={slide} alt={slide} />
+                    </div>
+
+                  </SwiperSlide>
+              ))}
+            </Swiper>
+
             <div className={styles.colors}>
               {product.variants[variant].photos.map((item, index) => (
                 <SidePicker
+                    key={index}
                   img={item}
                   active={side === index}
-                  onClick={() => setSide(index)}
+                  onClick={() => goToSlide(index)}
                 />
               ))}
             </div>
@@ -71,13 +120,13 @@ const ProductPage = () => {
                 Умная колонка Яндекс станция Макс с Алисой, антрацит, 65B
               </p>
             </div>
-            <LikeButton />
+            <LikeButton isFavorite={isFavorite} onClick={() => setIsFavorite(!isFavorite)} />
           </div>
           <div className={styles.categories}>
-            {product.variants.map((item) => (
+            {product.variants.map((item, index) => (
               <CategoryButton
                 title={item.color}
-                key={item.id}
+                key={index}
                 active={variant === item.id}
                 onClick={() => {
                   setVariant(item.id);
@@ -104,8 +153,8 @@ const ProductPage = () => {
             icon={<MenuSVG color={"var(--main-button-color)"} />}
           >
             <div className={styles.specifications}>
-              {product.variants[variant].specifications.map((item) => (
-                <Specification specification={item} />
+              {product.variants[variant].specifications.map((item, index) => (
+                <Specification specification={item} key={index} />
               ))}
             </div>
           </Panel>
@@ -117,8 +166,8 @@ const ProductPage = () => {
             additionalText={"150 оценок"}
           >
             <div className={styles.reviews}>
-              {REVIEWS.map((item) => (
-                <Review review={item} />
+              {REVIEWS.map((item, index) => (
+                <Review review={item} key={index} />
               ))}
             </div>
           </Panel>
@@ -141,6 +190,9 @@ const ProductPage = () => {
                 paddingBottom={15}
                 gradientDirection="diagonal-right"
                 borderRadius={13}
+                onClick={() => {
+                  addProduct(product);
+                }}
               />
             </div>
           </div>

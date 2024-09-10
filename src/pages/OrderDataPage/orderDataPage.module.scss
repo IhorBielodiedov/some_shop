@@ -21,15 +21,21 @@
         line-height: 14.06px;
         text-align: left;
         color: var(--second-text-color);
-        span {
+        .link {
+          color: var(--second-text-color);
           text-decoration: underline;
         }
       }
+
     }
+  }
+  .title {
+    font-size: 26px;
+    font-weight: 500;
   }
   .footer {
     position: fixed;
-    bottom: 0;
+    bottom: 15px;
     left: 0;
     right: 0;
     padding: 16px;

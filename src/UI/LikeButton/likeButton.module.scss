@@ -10,3 +10,12 @@
     }
   }
 }
+
+.favorite {
+  background-color: var(--second-background-color);
+  svg {
+    path {
+      fill: var(--main-button-color);
+    }
+  }
+}

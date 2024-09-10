@@ -14,4 +14,22 @@
     width: 30px;
     height: 30px;
   }
+  .cartBtn {
+    position: relative;
+    .productAmount {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      width: 16px;
+      height: 16px;
+      background: var(--button-text-color);
+      border: 1px solid var(--main-button-color);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 10px;
+      color: var(--main-button-color);
+    }
+  }
 }

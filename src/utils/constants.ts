@@ -16,6 +16,7 @@ export const PRODUCTS: Product[] = [
     description:
       "Умная колонка Яндекс Станция 2 с Алисой  на YaGPT, 30 Вт. Умная колонка второго поколения — новый дизайн, звук, центр управления умным домом и Алиса.",
     category_id: 3,
+    discount: 1000,
     variants: [
       {
         color: "Красный рубин",
@@ -90,6 +91,7 @@ export const PRODUCTS: Product[] = [
     description:
       "Умная колонка Яндекс Станция 2 с Алисой  на YaGPT, 30 Вт. Умная колонка второго поколения — новый дизайн, звук, центр управления умным домом и Алиса.",
     category_id: 3,
+    discount: 1235,
     variants: [
       {
         color: "Белый",
@@ -132,6 +134,7 @@ export const PRODUCTS: Product[] = [
     description:
       "Умная колонка Яндекс Станция 2 с Алисой  на YaGPT, 30 Вт. Умная колонка второго поколения — новый дизайн, звук, центр управления умным домом и Алиса.",
     category_id: 1,
+    discount: 981,
     variants: [
       {
         color: "Белый",
@@ -174,6 +177,7 @@ export const PRODUCTS: Product[] = [
     description:
       "Умная колонка Яндекс Станция 2 с Алисой  на YaGPT, 30 Вт. Умная колонка второго поколения — новый дизайн, звук, центр управления умным домом и Алиса.",
     category_id: 1,
+    discount: 123,
     variants: [
       {
         color: "Белый",
@@ -216,6 +220,7 @@ export const PRODUCTS: Product[] = [
     description:
       "Умная колонка Яндекс Станция 2 с Алисой  на YaGPT, 30 Вт. Умная колонка второго поколения — новый дизайн, звук, центр управления умным домом и Алиса.",
     category_id: 3,
+    discount: 891,
     variants: [
       {
         color: "Антрацит",
@@ -293,6 +298,10 @@ export const CATEGORIES: Category[] = [
   { name: "Станции Алисы", id: 3 },
   { name: "Станция Дуо Макс", id: 4 },
   { name: "Новинки", id: 5 },
+  { name: "тест", id: 6 },
+  { name: "тест2", id: 7 },
+  { name: "тест3", id: 8 },
+  { name: "тест4", id: 9 },
 ];
 export const FAVOURITES: Favourite[] = [
   {
@@ -306,22 +315,6 @@ export const FAVOURITES: Favourite[] = [
   {
     id: 2,
     product_id: 2,
-    variant_id: 0,
-    quantity: 1,
-    in_stock: 10,
-    price: 1999,
-  },
-  {
-    id: 3,
-    product_id: 3,
-    variant_id: 0,
-    quantity: 0,
-    in_stock: 10,
-    price: 1999,
-  },
-  {
-    id: 4,
-    product_id: 1,
     variant_id: 0,
     quantity: 1,
     in_stock: 10,
