@@ -305,8 +305,8 @@ export const CATEGORIES: Category[] = [
 ];
 export const FAVOURITES: Favourite[] = [
   {
-    id: 1,
-    product_id: 1,
+    id: 5,
+    product_id: 5,
     variant_id: 1,
     quantity: 1,
     in_stock: 10,

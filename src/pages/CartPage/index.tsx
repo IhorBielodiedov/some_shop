@@ -5,16 +5,16 @@ import styles from "./cartPage.module.scss";
 import { useEffect } from "react";
 import OrderFooter from "../../components/OrderFooter";
 import OrderAmount from "../../components/OrderAmount";
-import {useProductStore} from "../../stores/cartStore";
+import {useCartStore} from "../../stores/cartStore";
 
 const CartPage = () => {
   const navigate = useNavigate();
-  const products = useProductStore((state : any) => state.products);
-  const totalAmount = useProductStore((state : any) => state.totalAmount);;
-  const calculateTotalAmount = useProductStore((state : any) => state.calculateTotalAmount); // Access calculateTotalAmount
+  const products = useCartStore((state : any) => state.products);
+  const totalAmount = useCartStore((state : any) => state.totalAmount);;
+  const calculateTotalAmount = useCartStore((state : any) => state.calculateTotalAmount); // Access calculateTotalAmount
 
-  const addProduct = useProductStore((state : any) => state.addProduct);
-  const removeProduct = useProductStore((state : any) => state.removeProduct);
+  const addProduct = useCartStore((state : any) => state.addProduct);
+  const removeProduct = useCartStore((state : any) => state.removeProduct);
 
   useEffect(() => {
     calculateTotalAmount(products);
@@ -46,7 +46,7 @@ const CartPage = () => {
       <input className={styles.promo} placeholder="ВВЕДИТЕ ПРОМОКОД" />
 
         <OrderAmount totalAmount={totalAmount} />
-        <OrderFooter amount={totalAmount?.total} buttonTitle="ОФОРМИТЬ ЗАКАЗ" />
+        <OrderFooter amount={totalAmount ? totalAmount.total - totalAmount.discount : 0} buttonTitle="ОФОРМИТЬ ЗАКАЗ" />
     </div>
   );
 };

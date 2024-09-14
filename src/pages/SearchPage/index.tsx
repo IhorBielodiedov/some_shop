@@ -1,35 +1,21 @@
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Categories from "../../components/Categories";
 import ProductList from "../../components/ProductList";
 import SearchPanel from "../../components/SearchPanel";
-import {CATEGORIES, PRODUCTS, TELEGRAM} from "../../utils/constants";
+import { CATEGORIES, PRODUCTS, TELEGRAM } from "../../utils/constants";
 import styles from "./searchPage.module.scss";
-import {useEffect, useState} from "react";
-import {useProductsStore} from "../../stores/useProductsStore";
-import {Product} from "../../utils/types";
+import { useEffect, useState } from "react";
+import { useProductsStore } from "../../stores/useProductsStore";
+import { Product } from "../../utils/types";
 import ProductCardDetailed from "../../components/ProductCardDetailed";
 
 const SearchPage = () => {
     const activeCategory = useProductsStore((state) => state.activeCategory);
     const [isLoading, setIsLoading] = useState(false);
     const [isContentVisible, setIsContentVisible] = useState(false);
-    const [searchValue, setSearchValue] = useState('');
+    const [searchValue, setSearchValue] = useState("");
 
-    const [products, setProducts] = useState(
-        PRODUCTS.filter((item, index) => {
-            if (
-                activeCategory &&
-                activeCategory.id !== null &&
-                activeCategory.id !== undefined &&
-                activeCategory.id !== 0
-            ) {
-                return activeCategory.id === item.category_id;
-            }
-            return true;
-        })
-    );
-    const [filteredProducts, setFilteredProducts] = useState(PRODUCTS);
-
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [firstProduct, setFirstProduct] = useState<Product | null>(null);
     const navigate = useNavigate();
 
@@ -61,17 +47,13 @@ const SearchPage = () => {
     }, []);
 
     useEffect(() => {
-        setFirstProduct(products[0]);
-    }, [products]);
-
-
-    useEffect(() => {
         setIsLoading(true);
 
-        const filtered = products.filter((item) => {
-            const matchesCategory = activeCategory && activeCategory.id
-                ? item.category_id === activeCategory.id
-                : true;
+        const filtered = PRODUCTS.filter((item) => {
+            const matchesCategory =
+                activeCategory && activeCategory.id && activeCategory.id !== 0
+                    ? item.category_id === activeCategory.id
+                    : true;
 
             const matchesSearch = searchValue
                 ? item.name.toLowerCase().includes(searchValue.toLowerCase())
@@ -86,26 +68,37 @@ const SearchPage = () => {
         setTimeout(() => {
             setIsLoading(false);
         }, Math.floor(Math.random() * (500 - 300 + 1)) + 300);
-    }, [activeCategory, searchValue, products]);
+    }, [activeCategory, searchValue]);
 
     return (
         <div>
             <SearchPanel setSearchValue={setSearchValue} searchValue={searchValue} />
             <Categories big list={CATEGORIES} />
-            {isLoading ? <p>Loading...</p> :
-                <div className={`${styles.content} ${!isLoading && isContentVisible ? styles.fadeIn : ''}`}>
-                    {firstProduct && <ProductCardDetailed product={firstProduct}/>}
+            {isLoading ? (
+                <p>Loading...</p>
+            ) : (
+                <div
+                    className={`${styles.content} ${
+                        !isLoading && isContentVisible ? styles.fadeIn : ""
+                    }`}
+                >
+                    {firstProduct && <ProductCardDetailed product={firstProduct} />}
                     <div className={styles.lists}>
                         <ProductList
-                            products={filteredProducts.filter((item, index) => index !== 0 && index % 2)}
+                            products={filteredProducts.filter(
+                                (item, index) => index !== 0 && index % 2
+                            )}
                         />
                         <ProductList
-                            products={filteredProducts.filter((item, index) => index !== 0 && !(index % 2))}
+                            products={filteredProducts.filter(
+                                (item, index) => index !== 0 && !(index % 2)
+                            )}
                         />
                     </div>
                 </div>
-            }
+            )}
         </div>
     );
 };
+
 export default SearchPage;

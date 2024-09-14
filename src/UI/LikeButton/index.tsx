@@ -7,7 +7,7 @@ interface Props {
 }
 
 const LikeButton = ( {isFavorite, onClick} : Props) => {
-  return (
+    return (
     <button className={`${styles.button} ${isFavorite ? styles.favorite: ''}`} onClick={onClick}>
       <HeartSmallSVG />
     </button>

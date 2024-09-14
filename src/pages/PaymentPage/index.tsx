@@ -7,11 +7,11 @@ import OrderAmount from "../../components/OrderAmount";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TELEGRAM } from "../../utils/constants";
-import {useProductStore} from "../../stores/cartStore";
+import { useCartStore } from "../../stores/cartStore";
 
 export const PaymentPage = () => {
   const [selectedOption, setSelectedOption] = useState("При получении");
-  const totalAmount = useProductStore((state : any) => state.totalAmount);;
+  const totalAmount = useCartStore((state : any) => state.totalAmount);;
 
   const navigate = useNavigate();
   const goBack = () => {

@@ -1,85 +1,87 @@
 import { create } from "zustand";
-import red from "../../assets/img/product2.png";
-import red_side from "../../assets/img/product2_1.png";
-import black from "../../assets/img/product.png";
-import black_side from "../../assets/img/product1_1.png";
 
 export const initialProducts: any[] = [];
 
-export const useProductStore = create<any>((set: any) => ({
-  products: initialProducts,
-  totalAmount: { total: 0, discount: 0 },
-  calculateTotalAmount: (products: any[]) => {
-    const totalAmount = products.reduce(
-        (acc: { total: number; discount: number }, product: any) => {
-          const variantPrice = product.variants[0].price || 0;
-          const productTotal = variantPrice * product.count;
-          const productDiscount = product.discount ? product.discount * product.count : 0;
+export const useCartStore = create<any>((set: any) => ({
+    products: initialProducts,
+    totalAmount: { total: 0, discount: 0 },
 
-          return {
-            total: acc.total + productTotal,
-            discount: acc.discount + productDiscount,
-          };
-        },
-        { total: 0, discount: 0 }
-    );
+    calculateTotalAmount: (products: any[]) => {
+        const totalAmount = products.reduce(
+            (acc: { total: number; discount: number }, product: any) => {
+                const variantPrice = product.variant.price || 0;
+                const productTotal = variantPrice * product.count;
+                const productDiscount = product.discount ? product.discount * product.count : 0;
 
-    set((state: any) => ({
-      ...state,
-      totalAmount,
-    }));
-  },
-
-  updateProductCount: (productId: any, newCount: number) =>
-      set((state: any) => {
-        const updatedProducts = state.products.map((product: any) =>
-            product.id === productId ? { ...product, count: newCount } : product
+                return {
+                    total: acc.total + productTotal,
+                    discount: acc.discount + productDiscount,
+                };
+            },
+            { total: 0, discount: 0 }
         );
 
-        const newTotalAmount = state.calculateTotalAmount(updatedProducts);
+        set((state: any) => ({
+            ...state,
+            totalAmount,
+        }));
+    },
 
-        return {
-          products: updatedProducts,
-          totalAmount: newTotalAmount,
-        };
-      }),
+    updateProductCount: (productId: any, variantId: any, newCount: number) =>
+        set((state: any) => {
+            const updatedProducts = state.products.map((product: any) =>
+                product.id === productId && product.variant.id === variantId
+                    ? { ...product, count: newCount }
+                    : product
+            );
 
-  addProduct: (newProduct: any) =>
-      set((state: any) => {
-        const productExists = state.products.find(
-            (product: any) => product.id === newProduct.id
-        );
+            state.calculateTotalAmount(updatedProducts);
 
-        let updatedProducts;
-        if (productExists) {
-          updatedProducts = state.products.map((product: any) =>
-              product.id === newProduct.id
-                  ? { ...product, count: product.count + 1 }
-                  : product
-          );
-        } else {
-          updatedProducts = [...state.products, { ...newProduct, count: 1 }];
-        }
+            return {
+                ...state,
+                products: updatedProducts,
+            };
+        }),
 
-        const newTotalAmount = state.calculateTotalAmount(updatedProducts);
+    addProduct: (newProduct: any, variant: any) =>
+        set((state: any) => {
+            const productExists = state.products.find(
+                (product: any) => product.id === newProduct.id && product.variant.id === variant.id
+            );
 
-        return {
-          products: updatedProducts,
-          totalAmount: newTotalAmount,
-        };
-      }),
+            let updatedProducts;
+            if (productExists) {
+                updatedProducts = state.products.map((product: any) =>
+                    product.id === newProduct.id && product.variant.id === variant.id
+                        ? { ...product, count: product.count + 1 }
+                        : product
+                );
+            } else {
+                updatedProducts = [
+                    ...state.products,
+                    { ...newProduct, variant: variant, count: 1 },
+                ];
+            }
 
-  removeProduct: (productId: any) =>
-      set((state: any) => {
-        const updatedProducts = state.products.filter(
-            (product: any) => product.id !== productId
-        );
+            state.calculateTotalAmount(updatedProducts);
 
-        const newTotalAmount = state.calculateTotalAmount(updatedProducts);
+            return {
+                ...state,
+                products: updatedProducts,
+            };
+        }),
 
-        return {
-          products: updatedProducts,
-          totalAmount: newTotalAmount,
-        };
-      }),
+    removeProduct: (productId: any, variantId: any) =>
+        set((state: any) => {
+            const updatedProducts = state.products.filter(
+                (product: any) => !(product.id === productId && product.variant.id === variantId)
+            );
+
+            state.calculateTotalAmount(updatedProducts);
+
+            return {
+                ...state,
+                products: updatedProducts,
+            };
+        }),
 }));

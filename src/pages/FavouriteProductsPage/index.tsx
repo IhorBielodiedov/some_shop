@@ -38,6 +38,7 @@ const FavouriteProductsPage = () => {
     };
   }, []);
 
+  console.log(favouriteProducts);
   return (
     <div className={styles.container}>
       {favouriteProducts &&

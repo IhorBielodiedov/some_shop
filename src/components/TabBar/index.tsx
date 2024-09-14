@@ -4,10 +4,10 @@ import HeartSVG from "../../UI/icons/HeartSVG";
 import HomeSVG from "../../UI/icons/HomeSVG";
 import styles from "./tabBar.module.scss";
 import MenuSVG from "../../UI/icons/MenuSVG";
-import {useProductStore} from "../../stores/cartStore";
+import {useCartStore} from "../../stores/cartStore";
 
 const TabBar = () => {
-    const products = useProductStore((state : any) => state.products);
+    const products = useCartStore((state : any) => state.products);
 
     return (
     <div className={styles.container}>

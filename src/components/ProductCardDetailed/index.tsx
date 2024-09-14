@@ -3,21 +3,46 @@ import styles from "./productCardDetailed.module.scss";
 import {Product} from "../../utils/types";
 import MediumButton from "../../UI/MediumButton";
 import FavoriteButton from "../../UI/FavoriteButton";
-import {useState} from "react";
-import {useProductStore} from "../../stores/cartStore";
+import {useEffect} from "react";
+import {useCartStore} from "../../stores/cartStore";
+import {useProductsStore} from "../../stores/useProductsStore";
 
 interface Props {
     product: Product;
 }
 
 const ProductCardDetailed = ({product}: Props) => {
-    const {id, name, description, variants} = product;
-    const [isFavorite, setIsFavorite] = useState(false);
-    const addProduct = useProductStore((state : any) => state.addProduct);
+    const { id, name, variants } = product;
+    const addProduct = useCartStore((state: any) => state.addProduct);
+
+    const toggleFavorite = useProductsStore((state: any) => state.toggleFavorite);
+    const favouriteProducts = useProductsStore((state: any) => state.favouriteProducts);
+
+    const currentProductId = id;
+    const currentVariantId = variants[0]?.id;
+
+    const isFavorite = favouriteProducts
+        ? favouriteProducts.some(
+            (item : any) =>
+                item.info.product_id === currentProductId &&
+                item.info.variant_id === currentVariantId
+        )
+        : false;
 
     return (
         <div className={styles.cardBlock}>
-            <FavoriteButton isFavorite={isFavorite} setIsFavorite={setIsFavorite}/>
+            <FavoriteButton
+                isFavorite={isFavorite}
+                setIsFavorite={() => {
+                    if (variants[0]) {
+                        toggleFavorite({
+                            product_id: currentProductId,
+                            variant_id: currentVariantId,
+                            quantity: 1
+                        });
+                    }
+                }}
+            />
             <CardLayout id={id} variant={0}>
                 <div className={styles.container}>
                     <div className={styles.content}>
@@ -28,7 +53,9 @@ const ProductCardDetailed = ({product}: Props) => {
                         <div className={styles.action}>
                             <MediumButton title={"Купить"} onClick={(e) => {
                                 e.preventDefault();
-                                addProduct(product);
+                                if (product && product.variants[0]) {
+                                    addProduct(product, product.variants[0]);
+                                }
                             }}
                             />
                             <p className={styles.price}>{variants[0].price}р.</p>
