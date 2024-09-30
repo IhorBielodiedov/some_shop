@@ -1,20 +1,26 @@
+
 .container {
   position: relative;
   background-color: var(--second-background-color);
   border-radius: 18px;
-  padding: 27px 35px 26px 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
   height: 174px;
   color: var(--main-text-color);
-  .info {
-    flex-grow: 1;
+
+  .linkBlock {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
     height: 100%;
+    padding: 27px 35px 26px 18px;
+  }
+  .info {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    flex-grow: 1;
+    height: 100%;
     .title {
       .name {
         font-size: 24px;

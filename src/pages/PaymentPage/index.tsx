@@ -7,9 +7,12 @@ import OrderAmount from "../../components/OrderAmount";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TELEGRAM } from "../../utils/constants";
+import { useCartStore } from "../../stores/cartStore";
 
 export const PaymentPage = () => {
   const [selectedOption, setSelectedOption] = useState("При получении");
+  const totalAmount = useCartStore((state : any) => state.totalAmount);;
+
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
@@ -31,7 +34,7 @@ export const PaymentPage = () => {
   }, []);
   return (
     <div className={styles.container}>
-      <h1>Способ оплаты</h1>
+      <h1 className={styles.title}>Способ оплаты</h1>
       <form className={styles.form}>
         <fieldset className={styles.inputs}>
           <Radio
@@ -47,13 +50,13 @@ export const PaymentPage = () => {
           />
         </fieldset>
       </form>
-      <OrderAmount />
+      <OrderAmount totalAmount={totalAmount} />
 
       <div className={styles.delivery}>
         Ориентировочное время доставки от 5 до 10 рабочих дней
       </div>
 
-      <OrderFooter buttonTitle="ПРОДОЛЖИТЬ" />
+      <OrderFooter amount={totalAmount?.total} buttonTitle="ПРОДОЛЖИТЬ" />
     </div>
   );
 };

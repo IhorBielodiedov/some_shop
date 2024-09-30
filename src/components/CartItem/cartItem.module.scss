@@ -1,13 +1,13 @@
 .container {
-  height: 144px;
+  border-radius: 18px;
+  background-color: var(--second-background-color);
   position: relative;
   display: flex;
   justify-content: space-between;
   gap: 8px;
   align-items: flex-end;
   margin-top: 11px;
-  padding-bottom: 28px;
-  border-bottom: 1px solid var(--main-hint-color);
+  padding: 21px 11px;
 
   .sale {
     font-size: 12px;
@@ -28,16 +28,24 @@
   }
   .close {
     position: absolute;
-    right: 0;
-    top: 0;
-    width: 20px;
-    height: 20px;
+    right: 10px;
+    top: 8px;
+    width: 36px;
+    height: 36px;
+    background: white;
+    border-radius: 50%;
+    svg {
+      width: 22px;
+      height: 22px;
+      margin-top: 3px;
+    }
   }
   .product {
     display: flex;
     img {
-      margin-right: 6px;
+      margin-right: 11px;
       height: 100%;
+      max-height: 140px;
     }
     .info {
       display: flex;
@@ -49,7 +57,7 @@
         font-weight: 500;
         line-height: 19.92px;
         text-align: left;
-        color: var(--main-text-color);
+        color: var(--main-button-color);
       }
       .properties {
         flex: 1 1 auto;
@@ -75,8 +83,8 @@
       align-items: center;
       width: 81px;
       height: 24px;
-      border: 1px solid var(--main-text-color);
-      border-radius: 11px;
+      border: 1px solid var(--main-button-color);
+      border-radius: 8px;
       padding: 0 6px;
       p {
         color: var(--main-text-color);
@@ -93,7 +101,15 @@
       background: none;
       width: 10px;
       height: 10px;
-      padding: 0;
+      position: relative;
+      &:after {
+        top: -5px;
+        position: absolute;
+        content: '';
+        width: 12.5px;
+        height: 12.5px;
+        padding: 10px;
+      }
     }
   }
 }

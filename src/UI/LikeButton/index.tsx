@@ -1,9 +1,14 @@
 import HeartSmallSVG from "../icons/HeartSmallSVG";
 import styles from "./likeButton.module.scss";
 
-const LikeButton = () => {
-  return (
-    <button className={styles.button}>
+interface Props {
+    isFavorite: boolean;
+    onClick: () => void;
+}
+
+const LikeButton = ( {isFavorite, onClick} : Props) => {
+    return (
+    <button className={`${styles.button} ${isFavorite ? styles.favorite: ''}`} onClick={onClick}>
       <HeartSmallSVG />
     </button>
   );
