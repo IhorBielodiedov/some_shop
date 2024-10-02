@@ -1,4 +1,25 @@
+import { useNavigate } from "react-router-dom";
+import { TELEGRAM } from "../../utils/constants";
+import { useEffect } from "react";
+
 const UserAgreementPage = () => {
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+    if (window.history.length > 1) {
+      TELEGRAM.BackButton.show();
+      TELEGRAM.BackButton.onClick(goBack);
+    } else {
+      TELEGRAM.BackButton.hide();
+    }
+    return () => {
+      TELEGRAM.BackButton.offClick(goBack);
+    };
+  }, []);
   return (
     <div>
       <h2>Пользовательское соглашение</h2>
