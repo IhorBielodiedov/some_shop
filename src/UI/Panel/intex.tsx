@@ -12,7 +12,9 @@ import styles from "./panel.module.scss";
  * @property {string} additionalText - дополнительный текст
  * @property {boolean} withBottom - нижняя граница
  */
-interface Props extends PropsWithChildren {
+interface Props
+  extends PropsWithChildren,
+    React.ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
   icon?: JSX.Element;
   color: string;
@@ -26,16 +28,19 @@ const Panel = ({
   color,
   additionalText,
   withBottom = false,
+  ...args
 }: Props) => {
   const [opened, setOpened] = useState(false);
   return (
-    <div
+    <button
       className={styles.container}
       style={{
+        width: "100%",
         borderBottom: withBottom
           ? "solid 1.35px var(--second-background-color)"
           : "none",
       }}
+      {...args}
     >
       <div
         className={styles.panel}
@@ -55,7 +60,7 @@ const Panel = ({
         </div>
       </div>
       {opened && <div>{children}</div>}
-    </div>
+    </button>
   );
 };
 export default Panel;

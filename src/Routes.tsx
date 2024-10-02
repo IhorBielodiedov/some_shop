@@ -9,6 +9,10 @@ import CartPage from "./pages/CartPage";
 import FavouriteProductsPage from "./pages/FavouriteProductsPage";
 import { OrderDataPage } from "./pages/OrderDataPage";
 import { PaymentPage } from "./pages/PaymentPage";
+import DeliveryPage from "./pages/DeliveryPage";
+import PaymnetInfoPage from "./pages/PaymentInfoPage";
+import UserAgreementPage from "./pages/UserAgreementPage";
+import RefoundPage from "./pages/RefoundPage";
 
 const router = createBrowserRouter([
   {
@@ -79,6 +83,42 @@ const router = createBrowserRouter([
     element: (
       <PageLayout>
         <PaymentPage />
+      </PageLayout>
+    ),
+    errorElement: <ErrorBoundary />,
+  },
+  {
+    path: "/delivery",
+    element: (
+      <PageLayout>
+        <DeliveryPage />
+      </PageLayout>
+    ),
+    errorElement: <ErrorBoundary />,
+  },
+  {
+    path: "/paymentInfo",
+    element: (
+      <PageLayout>
+        <PaymnetInfoPage />
+      </PageLayout>
+    ),
+    errorElement: <ErrorBoundary />,
+  },
+  {
+    path: "/userAgreement",
+    element: (
+      <PageLayout>
+        <UserAgreementPage />
+      </PageLayout>
+    ),
+    errorElement: <ErrorBoundary />,
+  },
+  {
+    path: "/refound",
+    element: (
+      <PageLayout>
+        <RefoundPage />
       </PageLayout>
     ),
     errorElement: <ErrorBoundary />,

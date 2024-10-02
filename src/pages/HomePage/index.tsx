@@ -23,12 +23,13 @@ import PromoCard from "../../UI/PromoCard";
 import Panel from "../../UI/Panel/intex";
 import { useProductsStore } from "../../stores/useProductsStore";
 import { stories1, stories2, stories3, stories4 } from "./testData";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const setActiveCategory = useProductsStore(
     (state) => state.setActiveCategory
   );
+  const navigate = useNavigate();
   useEffect(() => {
     TELEGRAM.BackButton.hide();
   }, []);
@@ -112,13 +113,26 @@ const HomePage = () => {
       </section>
       <ProductCardDetailed product={PRODUCTS[0]} />
       <section>
-        <Panel title="Доставка" color="var(--main-button-color)" />
-        <Panel title="Оплата" color="var(--main-button-color)" />
-        <Panel title="Гарантия" color="var(--main-button-color)" />
+        <Panel
+          title="Доставка"
+          color="var(--main-button-color)"
+          onClick={() => navigate("/delivery")}
+        />
+        <Panel
+          title="Оплата"
+          color="var(--main-button-color)"
+          onClick={() => navigate("/paymentInfo")}
+        />
+        <Panel
+          title="Возврат"
+          color="var(--main-button-color)"
+          onClick={() => navigate("/refound")}
+        />
         <Panel
           title="Пользовательское соглашение"
           color="var(--main-button-color)"
           withBottom
+          onClick={() => navigate("/userAgreement")}
         />
       </section>
     </div>
