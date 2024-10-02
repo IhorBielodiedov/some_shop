@@ -4,6 +4,7 @@
   padding: 15px 14px 14px 14px;
   width: 53px;
   height: 51px;
+  z-index: 99;
   svg {
     path {
       fill: var(--button-text-color);

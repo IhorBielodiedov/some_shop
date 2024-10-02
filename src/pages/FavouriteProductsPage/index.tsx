@@ -6,7 +6,6 @@ import styles from "./favouriteProductsPage.module.scss";
 import { useNavigate } from "react-router-dom";
 
 const FavouriteProductsPage = () => {
-
   const favouriteProducts = useProductsStore(
     (state) => state.favouriteProducts
   );
@@ -14,7 +13,7 @@ const FavouriteProductsPage = () => {
     (state) => state.getFavouriteProducts
   );
   const deleteFavouriteProduct = useProductsStore(
-      (state) => state.deleteFavouriteProduct
+    (state) => state.deleteFavouriteProduct
   );
 
   const navigate = useNavigate();
@@ -38,7 +37,6 @@ const FavouriteProductsPage = () => {
     };
   }, []);
 
-  console.log(favouriteProducts);
   return (
     <div className={styles.container}>
       {favouriteProducts &&
@@ -51,6 +49,9 @@ const FavouriteProductsPage = () => {
             deleteFavorite={deleteFavouriteProduct}
           />
         ))}
+      {favouriteProducts && favouriteProducts?.length === 0 && (
+        <p>Здесь пока ничего нет</p>
+      )}
     </div>
   );
 };

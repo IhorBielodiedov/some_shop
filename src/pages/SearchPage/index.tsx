@@ -10,95 +10,97 @@ import { Product } from "../../utils/types";
 import ProductCardDetailed from "../../components/ProductCardDetailed";
 
 const SearchPage = () => {
-    const activeCategory = useProductsStore((state) => state.activeCategory);
-    const [isLoading, setIsLoading] = useState(false);
-    const [isContentVisible, setIsContentVisible] = useState(false);
-    const [searchValue, setSearchValue] = useState("");
+  const activeCategory = useProductsStore((state) => state.activeCategory);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isContentVisible, setIsContentVisible] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
 
-    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-    const [firstProduct, setFirstProduct] = useState<Product | null>(null);
-    const navigate = useNavigate();
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [firstProduct, setFirstProduct] = useState<Product | null>(null);
+  const navigate = useNavigate();
 
-    const goBack = () => {
-        navigate(-1);
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  useEffect(() => {
+    if (!isLoading) {
+      const timeout = setTimeout(() => {
+        setIsContentVisible(true);
+      }, 50);
+      return () => clearTimeout(timeout);
+    } else {
+      setIsContentVisible(false);
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (window.history.length > 1) {
+      TELEGRAM.BackButton.show();
+      TELEGRAM.BackButton.onClick(goBack);
+    } else {
+      TELEGRAM.BackButton.hide();
+    }
+    return () => {
+      TELEGRAM.BackButton.offClick(goBack);
     };
+  }, []);
 
-    useEffect(() => {
-        if (!isLoading) {
-            const timeout = setTimeout(() => {
-                setIsContentVisible(true);
-            }, 50);
-            return () => clearTimeout(timeout);
-        } else {
-            setIsContentVisible(false);
-        }
-    }, [isLoading]);
+  useEffect(() => {
+    setIsLoading(true);
 
-    useEffect(() => {
-        if (window.history.length > 1) {
-            TELEGRAM.BackButton.show();
-            TELEGRAM.BackButton.onClick(goBack);
-        } else {
-            TELEGRAM.BackButton.hide();
-        }
-        return () => {
-            TELEGRAM.BackButton.offClick(goBack);
-        };
-    }, []);
+    const filtered = PRODUCTS.filter((item) => {
+      const matchesCategory =
+        activeCategory && activeCategory.id && activeCategory.id !== 0
+          ? item.category_id === activeCategory.id
+          : true;
 
-    useEffect(() => {
-        setIsLoading(true);
+      const matchesSearch = searchValue
+        ? item.name.toLowerCase().includes(searchValue.toLowerCase())
+        : true;
 
-        const filtered = PRODUCTS.filter((item) => {
-            const matchesCategory =
-                activeCategory && activeCategory.id && activeCategory.id !== 0
-                    ? item.category_id === activeCategory.id
-                    : true;
+      return matchesCategory && matchesSearch;
+    });
 
-            const matchesSearch = searchValue
-                ? item.name.toLowerCase().includes(searchValue.toLowerCase())
-                : true;
+    setFilteredProducts(filtered);
+    setFirstProduct(filtered[0] || null);
 
-            return matchesCategory && matchesSearch;
-        });
+    setTimeout(() => {
+      setIsLoading(false);
+    }, Math.floor(Math.random() * (500 - 300 + 1)) + 300);
+  }, [activeCategory, searchValue]);
 
-        setFilteredProducts(filtered);
-        setFirstProduct(filtered[0]);
-
-        setTimeout(() => {
-            setIsLoading(false);
-        }, Math.floor(Math.random() * (500 - 300 + 1)) + 300);
-    }, [activeCategory, searchValue]);
-
-    return (
-        <div>
-            <SearchPanel setSearchValue={setSearchValue} searchValue={searchValue} />
-            <Categories big list={CATEGORIES} />
-            {isLoading ? (
-                <p>Loading...</p>
-            ) : (
-                <div
-                    className={`${styles.content} ${
-                        !isLoading && isContentVisible ? styles.fadeIn : ""
-                    }`}
-                >
-                    {firstProduct && <ProductCardDetailed product={firstProduct} />}
-                    <div className={styles.lists}>
-                        <ProductList
-                            products={filteredProducts.filter(
-                                (item, index) => index !== 0 && index % 2
-                            )}
-                        />
-                        <ProductList
-                            products={filteredProducts.filter(
-                                (item, index) => index !== 0 && !(index % 2)
-                            )}
-                        />
-                    </div>
-                </div>
-            )}
+  return (
+    <div>
+      <SearchPanel setSearchValue={setSearchValue} searchValue={searchValue} />
+      <Categories big list={CATEGORIES} />
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : filteredProducts.length === 0 ? (
+        <p>Здесь ничего нет</p>
+      ) : (
+        <div
+          className={`${styles.content} ${
+            !isLoading && isContentVisible ? styles.fadeIn : ""
+          }`}
+        >
+          {firstProduct && <ProductCardDetailed product={firstProduct} />}
+          <div className={styles.lists}>
+            <ProductList
+              products={filteredProducts.filter(
+                (item, index) => index !== 0 && index % 2
+              )}
+            />
+            <ProductList
+              products={filteredProducts.filter(
+                (item, index) => index !== 0 && !(index % 2)
+              )}
+            />
+          </div>
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default SearchPage;
