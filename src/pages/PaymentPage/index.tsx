@@ -11,7 +11,7 @@ import { useCartStore } from "../../stores/cartStore";
 
 export const PaymentPage = () => {
   const [selectedOption, setSelectedOption] = useState("При получении");
-  const totalAmount = useCartStore((state : any) => state.totalAmount);;
+  const totalAmount = useCartStore((state: any) => state.totalAmount);
 
   const navigate = useNavigate();
   const goBack = () => {

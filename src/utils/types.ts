@@ -55,7 +55,6 @@ export type User = {
   cart: any[];
 };
 
-
 interface Button {
   text: string;
   url: string;
@@ -67,3 +66,38 @@ export interface StorySliderProps {
   description: string;
   button?: Button;
 }
+
+export interface OrderInitialState {
+  client: {
+    firstName: string | null;
+    lastName: string | null;
+    phone: string | null;
+    email: string | null;
+    paymentMethod: string | null;
+    city: ProviderCity | null;
+  };
+  providerCities: ProviderCitiesDataType | null;
+}
+
+export type ProviderCity = {
+  fullName: string;
+  cityUuid: string;
+  cdekId: string;
+  cityName: string;
+  oblName: string;
+  cityGuid?: string;
+  fiasGuid?: string | null;
+  countryCode: string;
+  codCostLimit: string;
+};
+
+type Meta = {
+  total: number;
+  offset: number;
+  limit: number;
+};
+
+export type ProviderCitiesDataType = {
+  rows: Array<ProviderCity>;
+  meta: Meta;
+};
