@@ -117,14 +117,16 @@ export const OrderDataPage = () => {
           handleOptionChange={handleOptionChange}
           selectedOption={selectedOption}
         />
-        <YMap
-          location={LOCATION}
-          showScaleInCopyrights={true}
-          ref={(x) => (map = x)}
-        >
-          {/* Add a map scheme layer */}
-          <YMapDefaultSchemeLayer />
-        </YMap>
+        <div style={{ height: "250px" }}>
+          <YMap
+            location={LOCATION}
+            showScaleInCopyrights={true}
+            ref={(x) => (map = x)}
+          >
+            {/* Add a map scheme layer */}
+            <YMapDefaultSchemeLayer />
+          </YMap>
+        </div>
         <h1 className={styles.title}>Промокод</h1>
         <input className={styles.promo} placeholder="ВВЕДИТЕ ПРОМОКОД" />
         <h1 className={styles.title}>Комментарии к заказу</h1>
