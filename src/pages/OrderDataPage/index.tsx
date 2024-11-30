@@ -7,12 +7,8 @@ import { TELEGRAM } from "../../utils/constants";
 import { Radio } from "../../UI/Radio";
 import { useOrderStore } from "../../stores/orderStore";
 import CityItem from "../../components/CityItem";
-import Map from "../../components/Map";
-import Marker from "../../components/Marker";
-import PopupWithButtons from "../../components/PopupWithButtons";
-import InfoMessage from "../../components/InfoMessage";
-import { LngLat, YMapLocationRequest } from "@yandex/ymaps3-types";
-import { YMapDefaultMarkerProps } from "@yandex/ymaps3-default-ui-theme";
+import { type YMapLocationRequest } from "ymaps3";
+import { YMap, YMapDefaultSchemeLayer } from "../../lib/ymaps";
 
 export const OrderDataPage = () => {
   const navigate = useNavigate();
@@ -21,7 +17,7 @@ export const OrderDataPage = () => {
   const [address, setAddress] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [comment, setComment] = useState<string>("");
-  const [showPopupWithButtons, setShowPopupWithButtons] = useState(false);
+
   const [isCheckError, setIsCheckError] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState("Онлайн");
   const client = useOrderStore((state) => state.client);
@@ -41,13 +37,9 @@ export const OrderDataPage = () => {
     zoom: 14.5, // starting zoom
   };
 
-  const SECOND_MARKER_PROPS: {
-    iconName: YMapDefaultMarkerProps["iconName"];
-    coordinates: LngLat;
-  } = {
-    iconName: "waterpark",
-    coordinates: [39.6929, 43.5794],
-  };
+  // @ts-ignore
+  window.map = null;
+  let map;
 
   useEffect(() => {
     getCities("cdek", "RU", "Мос");
@@ -125,23 +117,14 @@ export const OrderDataPage = () => {
           handleOptionChange={handleOptionChange}
           selectedOption={selectedOption}
         />
-        <Map location={LOCATION}>
-          <Marker
-            popup={{
-              content: () => (
-                <PopupWithButtons
-                  onClose={() => setShowPopupWithButtons(false)}
-                />
-              ),
-              position: "right",
-              show: showPopupWithButtons,
-            }}
-            onClick={() => setShowPopupWithButtons(true)}
-            {...SECOND_MARKER_PROPS}
-          />
-
-          <InfoMessage text="Click on markers" />
-        </Map>
+        <YMap
+          location={LOCATION}
+          showScaleInCopyrights={true}
+          ref={(x) => (map = x)}
+        >
+          {/* Add a map scheme layer */}
+          <YMapDefaultSchemeLayer />
+        </YMap>
         <h1 className={styles.title}>Промокод</h1>
         <input className={styles.promo} placeholder="ВВЕДИТЕ ПРОМОКОД" />
         <h1 className={styles.title}>Комментарии к заказу</h1>
