@@ -16,7 +16,6 @@ export const {
   YMapControl,
 } = reactify.module(ymaps3);
 
-export const { YMapZoomControl } = reactify.module(
-  //@ts-ignore
-  await ymaps3.import("@yandex/ymaps3-default-ui-theme")
-);
+const defaultUITheme = await ymaps3.import("@yandex/ymaps3-default-ui-theme");
+
+export const { YMapZoomControl } = reactify.module(defaultUITheme);
