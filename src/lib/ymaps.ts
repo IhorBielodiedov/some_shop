@@ -6,16 +6,16 @@ const [ymaps3React] = await Promise.all([
   ymaps3.ready,
 ]);
 
-export const reactify = ymaps3React.reactify.bindTo(React, ReactDom);
+const reactify = ymaps3React.reactify.bindTo(React, ReactDom);
 
 export const {
   YMap,
   YMapDefaultSchemeLayer,
   YMapDefaultFeaturesLayer,
   YMapControls,
-  YMapControl,
 } = reactify.module(ymaps3);
 
-const defaultUITheme = await ymaps3.import("@yandex/ymaps3-default-ui-theme");
-
-export const { YMapZoomControl } = reactify.module(defaultUITheme);
+export const { YMapDefaultMarker, YMapZoomControl } = reactify.module(
+  // @ts-ignore
+  await ymaps3.import("@yandex/ymaps3-default-ui-theme")
+);
