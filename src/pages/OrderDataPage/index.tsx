@@ -8,7 +8,12 @@ import { Radio } from "../../UI/Radio";
 import { useOrderStore } from "../../stores/orderStore";
 import CityItem from "../../components/CityItem";
 import { type YMapLocationRequest } from "ymaps3";
-import { YMap, YMapDefaultSchemeLayer } from "../../lib/ymaps";
+import {
+  YMap,
+  YMapControls,
+  YMapDefaultSchemeLayer,
+  YMapZoomControl,
+} from "../../lib/ymaps";
 
 export const OrderDataPage = () => {
   const navigate = useNavigate();
@@ -125,6 +130,10 @@ export const OrderDataPage = () => {
           >
             {/* Add a map scheme layer */}
             <YMapDefaultSchemeLayer />
+            <YMapControls position="right">
+              {/* Add the first zoom control to the map */}
+              <YMapZoomControl />
+            </YMapControls>
           </YMap>
         </div>
         <h1 className={styles.title}>Промокод</h1>
