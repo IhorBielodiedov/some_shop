@@ -41,6 +41,7 @@ export const OrderDataPage = () => {
     };
   }, []);
 
+  const [indxesVisiblePlacemark, setVisiblePlacemark] = useState([]);
   const points = {
     rows: [
       {
@@ -121,7 +122,11 @@ export const OrderDataPage = () => {
       <div className={styles.content}>
         <h1 className={styles.title}>Населенный пункт</h1>
         <CitySearch />
-        <ComponentMap data={points.rows} />
+        <ComponentMap
+          data={points.rows}
+          indxesVisiblePlacemark={indxesVisiblePlacemark}
+          setVisiblePlacemark={setVisiblePlacemark}
+        />
         {points?.rows?.map((point) => (
           <p>{point.name}</p>
         ))}
