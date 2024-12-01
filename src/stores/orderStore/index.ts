@@ -1,6 +1,10 @@
 import { create } from "zustand";
 import * as api from "../../api";
-import { OrderInitialState, ProviderCity } from "../../utils/types";
+import {
+  OrderInitialState,
+  PaymentMethod,
+  ProviderCity,
+} from "../../utils/types";
 
 const initialState: OrderInitialState = {
   client: {
@@ -10,8 +14,10 @@ const initialState: OrderInitialState = {
     email: null,
     paymentMethod: null,
     city: null,
+    promocode: null,
   },
   providerCities: null,
+  paymentMethods: null,
 };
 
 interface Actions {
@@ -20,7 +26,11 @@ interface Actions {
     countryCode: string,
     cityName: string
   ) => Promise<void>;
-  setCity: (city: ProviderCity) => void;
+  getPaymentMethods: () => Promise<void>;
+  updateClientProperty: <K extends keyof OrderInitialState["client"]>(
+    key: K,
+    value: OrderInitialState["client"][K]
+  ) => void;
 }
 
 export const useOrderStore = create<OrderInitialState & Actions>()(
@@ -33,12 +43,30 @@ export const useOrderStore = create<OrderInitialState & Actions>()(
       cityName: string
     ) => {
       try {
-        const cities = await api.getCities(provider, countryCode, cityName);
-        set(() => ({ providerCities: cities.data }));
+        const { data: providerCities } = await api.getCities(
+          provider,
+          countryCode,
+          cityName
+        );
+        set(() => ({ providerCities }));
       } catch (e) {}
     },
-    setCity: (city: ProviderCity) => {
-      set((state) => ({ client: { ...state.client, city } }));
+    getPaymentMethods: async () => {
+      try {
+        const { data: paymentMethods } = await api.getPaymentMethods();
+        set((state) => ({
+          paymentMethods,
+          client: { ...state.client, paymentMethod: paymentMethods[0] },
+        }));
+      } catch (e) {}
+    },
+    updateClientProperty: <K extends keyof OrderInitialState["client"]>(
+      key: K,
+      value: OrderInitialState["client"][K]
+    ) => {
+      set((state) => ({
+        client: { ...state.client, [key]: value },
+      }));
     },
   })
 );

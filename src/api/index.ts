@@ -17,3 +17,4 @@ export const getCities = (
   apiShip.get<ProviderCitiesDataType>(
     `/lists/providerCities/${provider}?filter=countryCode=${countryCode};cityName%${cityName};oblName%${cityName}`
   );
+export const getPaymentMethods = () => apiShip.get(`/lists/paymentMethods/`);

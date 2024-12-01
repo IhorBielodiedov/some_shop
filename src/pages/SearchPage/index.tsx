@@ -72,7 +72,11 @@ const SearchPage = () => {
 
   return (
     <div>
-      <SearchPanel setSearchValue={setSearchValue} searchValue={searchValue} />
+      <SearchPanel
+        setSearchValue={setSearchValue}
+        searchValue={searchValue}
+        withFilter
+      />
       <Categories big list={CATEGORIES} />
       {isLoading ? (
         <p>Loading...</p>

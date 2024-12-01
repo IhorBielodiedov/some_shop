@@ -73,11 +73,19 @@ export interface OrderInitialState {
     lastName: string | null;
     phone: string | null;
     email: string | null;
-    paymentMethod: string | null;
+    paymentMethod: PaymentMethod | null;
     city: ProviderCity | null;
+    promocode: string | null;
   };
   providerCities: ProviderCitiesDataType | null;
+  paymentMethods: Array<PaymentMethod> | null;
 }
+
+export type PaymentMethod = {
+  id: number;
+  name: string;
+  description: string;
+};
 
 export type ProviderCity = {
   fullName: string;

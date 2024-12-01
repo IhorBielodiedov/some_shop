@@ -1,5 +1,5 @@
 .container {
-    position: relative;
+  position: relative;
 
   .button {
     position: absolute;
@@ -26,5 +26,12 @@
     &::placeholder {
       color: var(--error-color);
     }
+  }
+
+  .errorMessage {
+    position: absolute;
+    bottom: -12;
+    font-size: 14px;
+    color: var(--error-color);
   }
 }

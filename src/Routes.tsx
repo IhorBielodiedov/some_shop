@@ -13,6 +13,7 @@ import DeliveryPage from "./pages/DeliveryPage";
 import PaymnetInfoPage from "./pages/PaymentInfoPage";
 import UserAgreementPage from "./pages/UserAgreementPage";
 import RefoundPage from "./pages/RefoundPage";
+import CitySearchPage from "./pages/CitySearchPage";
 
 const router = createBrowserRouter([
   {
@@ -119,6 +120,15 @@ const router = createBrowserRouter([
     element: (
       <PageLayout>
         <RefoundPage />
+      </PageLayout>
+    ),
+    errorElement: <ErrorBoundary />,
+  },
+  {
+    path: "/citySearch",
+    element: (
+      <PageLayout>
+        <CitySearchPage />
       </PageLayout>
     ),
     errorElement: <ErrorBoundary />,
