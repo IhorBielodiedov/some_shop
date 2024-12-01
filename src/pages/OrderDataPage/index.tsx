@@ -8,6 +8,13 @@ import { useOrderStore } from "../../stores/orderStore";
 import PaymentMethodsPanel from "../../components/PaymentMethodsPanel";
 import ClientCredentials from "../../components/ClientCredentials";
 import CitySearch from "../../components/CitySearch";
+import { YMapZoomControl } from "@yandex/ymaps3-default-ui-theme";
+import {
+  YMap,
+  YMapDefaultFeaturesLayer,
+  YMapDefaultSchemeLayer,
+} from "../../lib/ymaps";
+import { YMapLocationRequest } from "@yandex/ymaps3-types";
 
 export const OrderDataPage = () => {
   const navigate = useNavigate();
@@ -39,6 +46,11 @@ export const OrderDataPage = () => {
     };
   }, []);
 
+  const LOCATION: YMapLocationRequest = {
+    center: [37.53, 55.703], // starting position [lng, lat]
+    zoom: 17, // starting zoom
+  };
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Получатель</h1>
@@ -46,6 +58,12 @@ export const OrderDataPage = () => {
       <div className={styles.content}>
         <h1 className={styles.title}>Населенный пункт</h1>
         <CitySearch />
+        <YMap location={LOCATION} showScaleInCopyrights={true}>
+          <YMapDefaultSchemeLayer />
+          <YMapDefaultFeaturesLayer />
+          {/* @ts-ignore */}
+          <YMapZoomControl />
+        </YMap>
         <h1 className={styles.title}>Оплата</h1>
         <PaymentMethodsPanel />
         <h1 className={styles.title}>Промокод</h1>
