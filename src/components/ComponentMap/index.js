@@ -2,6 +2,7 @@ import React from "react";
 
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
 import styles from "./componentMap.module.scss";
+import "./balloon.scss";
 
 const ComponentMap = (props) => {
   const data = props.data.sort((c) => c.id);
@@ -58,7 +59,7 @@ const ComponentMap = (props) => {
                 defaultGeometry={[c.lat, c.lng]}
                 properties={{
                   balloonContentBody: `<div>
-                    <div style={{color:"red"}}>${c.name}</div>
+                    <div class="balloon-title">${c.name}</div>
                     <div>${c.address}</div>
                     <div>${c.timetable}</div>
                     <button onclick="(function() {
