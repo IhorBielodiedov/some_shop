@@ -15,6 +15,7 @@ const initialState: OrderInitialState = {
     paymentMethod: null,
     city: null,
     promocode: null,
+    point: null,
   },
   providerCities: null,
   paymentMethods: null,
@@ -29,6 +30,7 @@ interface Actions {
   ) => Promise<void>;
   getPaymentMethods: () => Promise<void>;
   getPointsList: (city: string) => Promise<void>;
+  setPoint: (point: any) => void;
   updateClientProperty: <K extends keyof OrderInitialState["client"]>(
     key: K,
     value: OrderInitialState["client"][K]
@@ -67,6 +69,11 @@ export const useOrderStore = create<OrderInitialState & Actions>()(
         const { data: points } = await api.getPoints(city);
         set(() => ({ points }));
       } catch (e) {}
+    },
+    setPoint: (point: any) => {
+      set((state) => ({
+        client: { ...state.client, point },
+      }));
     },
     updateClientProperty: <K extends keyof OrderInitialState["client"]>(
       key: K,

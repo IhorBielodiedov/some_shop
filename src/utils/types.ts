@@ -76,6 +76,7 @@ export interface OrderInitialState {
     paymentMethod: PaymentMethod | null;
     city: ProviderCity | null;
     promocode: string | null;
+    point: any | null;
   };
   providerCities: ProviderCitiesDataType | null;
   paymentMethods: Array<PaymentMethod> | null;

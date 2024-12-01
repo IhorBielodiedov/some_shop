@@ -63,7 +63,7 @@ const ComponentMap = (props) => {
                     <div class="balloon-name">${c.address}</div>
                     <div class="balloon-timetable">${c.timetable}</div>
                     <button class="balloon-button" onclick="(function() {
-                      alert('Вы нажали на кнопку для ID: ${c.id}');
+                      props.setPoint(${c})
                     })()">Заберу отсюда</button>
                   </div>`,
                 }}
