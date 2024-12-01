@@ -60,9 +60,9 @@ const ComponentMap = (props) => {
                 properties={{
                   balloonContentBody: `<div>
                     <div class="balloon-title">${c.name}</div>
-                    <div>${c.address}</div>
-                    <div>${c.timetable}</div>
-                    <button onclick="(function() {
+                    <div class="balloon-name">${c.address}</div>
+                    <div class="balloon-timetable">${c.timetable}</div>
+                    <button class="balloon-button" onclick="(function() {
                       alert('Вы нажали на кнопку для ID: ${c.id}');
                     })()">Заберу отсюда</button>
                   </div>`,
