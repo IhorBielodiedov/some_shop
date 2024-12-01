@@ -11,17 +11,6 @@ const ComponentMap = (props) => {
   const setVisiblePlacemark = props.setVisiblePlacemark;
   const repeatIds = [];
 
-  // В компоненте React ловим событие нажатия на кнопку
-  React.useEffect(() => {
-    document.addEventListener("click", (event) => {
-      if (event.target && event.target.classList.contains("balloon-button")) {
-        const id = event.target.getAttribute("data-id");
-        const selectedPoint = data.find((p) => p.id === Number(id));
-        setPoint(selectedPoint); // Передаем текущий объект в setPoint
-      }
-    });
-  }, [data, setPoint]);
-
   return (
     <div className={styles.container}>
       <YMaps>
@@ -39,47 +28,52 @@ const ComponentMap = (props) => {
             return (
               <Placemark
                 instanceRef={(ref) => {
-                  let flag = true;
-                  for (let i = 0; i < repeatPonts.length; i++) {
-                    if (indxesVisiblePlacemark.includes(repeatPonts[i].id)) {
-                      flag = false;
-                      ref && ref.balloon.open();
-                      return;
-                    }
-                  }
-                  if (flag && ref && ref.balloon.isOpen()) {
-                    ref && ref.balloon.close();
-                  }
-                  ref &&
-                    ref.events.add("click", () => {
-                      setVisiblePlacemark([
-                        ...indxesVisiblePlacemark,
-                        ...repeatPonts.map((el) => el.id),
-                      ]);
-                    });
-                  ref &&
-                    ref.balloon.events.add("close", () => {
-                      setVisiblePlacemark(
-                        indxesVisiblePlacemark.filter(
-                          (c) => !repeatPonts.some((el) => el.id == c)
-                        )
+                  if (!ref) return;
+
+                  ref.events.add("click", () => {
+                    setVisiblePlacemark([
+                      ...indxesVisiblePlacemark,
+                      ...repeatPonts.map((el) => el.id),
+                    ]);
+                  });
+
+                  ref.balloon.events.add("close", () => {
+                    setVisiblePlacemark(
+                      indxesVisiblePlacemark.filter(
+                        (id) => !repeatPonts.some((el) => el.id === id)
+                      )
+                    );
+                  });
+
+                  ref.balloon.events.add("open", () => {
+                    setTimeout(() => {
+                      const button = document.querySelector(
+                        `.balloon-button[data-id="${c.id}"]`
                       );
-                    });
+                      if (button) {
+                        button.addEventListener("click", () => {
+                          setPoint("point", c);
+                        });
+                      }
+                    }, 0);
+                  });
                 }}
                 modules={["geoObject.addon.balloon"]}
                 key={c.id}
                 defaultGeometry={[c.lat, c.lng]}
                 properties={{
-                  balloonContentBody: `<div>
-                    <div class="balloon-title">${c.name}</div>
-                    <div class="balloon-name">${c.address}</div>
-                    <div class="balloon-timetable">${c.timetable}</div>
-                    <button class="balloon-button" data-id="${c.id}">
+                  balloonContentBody: `
+                    <div>
+                      <div class="balloon-title">${c.name}</div>
+                      <div class="balloon-name">${c.address}</div>
+                      <div class="balloon-timetable">${c.timetable}</div>
+                      <button class="balloon-button" data-id="${c.id}">
                         Заберу отсюда
-                    </button>
-                  </div>`,
+                      </button>
+                    </div>
+                  `,
                 }}
-              ></Placemark>
+              />
             );
           })}
         </Map>
@@ -87,4 +81,5 @@ const ComponentMap = (props) => {
     </div>
   );
 };
+
 export default ComponentMap;

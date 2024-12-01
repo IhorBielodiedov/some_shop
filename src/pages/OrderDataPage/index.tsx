@@ -17,7 +17,6 @@ export const OrderDataPage = () => {
   const client = useOrderStore((state) => state.client);
   const getCities = useOrderStore((state) => state.getCitiesList);
   const getPoints = useOrderStore((state) => state.getPointsList);
-  const setPoint = useOrderStore((state) => state.setPoint);
   const updateClientProperty = useOrderStore(
     (state) => state.updateClientProperty
   );
@@ -124,13 +123,23 @@ export const OrderDataPage = () => {
         <h1 className={styles.title}>Населенный пункт</h1>
         <CitySearch />
         {client.point ? (
-          <p>{client.point.name}</p>
+          <div className={styles.point}>
+            <p className={styles.pointName}>{client.point.name}</p>
+            <p className={styles.pointAddress}>{client.point.address}</p>
+            <p className={styles.pointTimetable}>{client.point.timetable}</p>
+            <button
+              className={styles.pointButton}
+              onClick={() => updateClientProperty("point", null)}
+            >
+              Выбрать другой
+            </button>
+          </div>
         ) : (
           <ComponentMap
             data={points.rows}
             indxesVisiblePlacemark={indxesVisiblePlacemark}
             setVisiblePlacemark={setVisiblePlacemark}
-            setPoint={setPoint}
+            setPoint={updateClientProperty}
           />
         )}
         <h1 className={styles.title}>Оплата</h1>

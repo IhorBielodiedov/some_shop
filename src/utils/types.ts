@@ -76,11 +76,11 @@ export interface OrderInitialState {
     paymentMethod: PaymentMethod | null;
     city: ProviderCity | null;
     promocode: string | null;
-    point: any | null;
+    point: ProviderPoint | null;
   };
   providerCities: ProviderCitiesDataType | null;
   paymentMethods: Array<PaymentMethod> | null;
-  points: any | null;
+  points: ProviderPointsDataType | null;
 }
 
 export type PaymentMethod = {
@@ -111,3 +111,70 @@ export type ProviderCitiesDataType = {
   rows: Array<ProviderCity>;
   meta: Meta;
 };
+
+interface Worktime {
+  [day: string]: string;
+}
+
+interface Extra {
+  key: string;
+  value: string;
+}
+
+interface Limits {
+  maxSizeA: number | null;
+  maxSizeB: number | null;
+  maxSizeC: number | null;
+  maxSizeSum: number | null;
+  minWeight: number | null;
+  maxWeight: number | null;
+  maxCod: number | null;
+}
+
+export interface ProviderPoint {
+  id: string;
+  providerKey: string;
+  type: number;
+  availableOperation: number;
+  cod: number;
+  paymentCash: number | null;
+  paymentCard: number | null;
+  name: string;
+  lat: number;
+  lng: number;
+  code: string;
+  postIndex: string;
+  countryCode: string;
+  region: string;
+  regionType: string;
+  area: string | null;
+  city: string;
+  cityType: string;
+  cityGuid: string;
+  community: string | null;
+  communityType: string | null;
+  communityGuid: string | null;
+  street: string;
+  streetType: string;
+  house: string;
+  address: string;
+  block: string | null;
+  office: string | null;
+  url: string | null;
+  email: string | null;
+  phone: string;
+  timetable: string;
+  worktime: Worktime;
+  photos: string | null;
+  fittingRoom: number;
+  description: string | null;
+  metro: string | null;
+  multiplaceDeliveryAllowed: string | null;
+  extra: Extra[];
+  limits: Limits;
+}
+
+export interface ProviderPointsDataType {
+  rows: Array<ProviderPoint>;
+  meta: Meta;
+}

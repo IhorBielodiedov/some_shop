@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ProviderCitiesDataType } from "../utils/types";
+import { ProviderCitiesDataType, ProviderPointsDataType } from "../utils/types";
 
 export const apiShip = axios.create({
   baseURL: process.env.REACT_APP_API_SHIP_BASE_URL,
@@ -20,6 +20,6 @@ export const getCities = (
 export const getPaymentMethods = () => apiShip.get(`/lists/paymentMethods/`);
 
 export const getPoints = (city: string) =>
-  apiShip.get(
+  apiShip.get<ProviderPointsDataType>(
     `/lists/points?filter=city=${city};providerKey=cdek;availableOperation=[2,3]`
   );
