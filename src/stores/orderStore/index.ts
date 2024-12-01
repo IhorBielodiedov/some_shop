@@ -18,6 +18,7 @@ const initialState: OrderInitialState = {
   },
   providerCities: null,
   paymentMethods: null,
+  points: null,
 };
 
 interface Actions {
@@ -27,6 +28,7 @@ interface Actions {
     cityName: string
   ) => Promise<void>;
   getPaymentMethods: () => Promise<void>;
+  getPointsList: (city: string) => Promise<void>;
   updateClientProperty: <K extends keyof OrderInitialState["client"]>(
     key: K,
     value: OrderInitialState["client"][K]
@@ -58,6 +60,12 @@ export const useOrderStore = create<OrderInitialState & Actions>()(
           paymentMethods,
           client: { ...state.client, paymentMethod: paymentMethods[0] },
         }));
+      } catch (e) {}
+    },
+    getPointsList: async (city: string) => {
+      try {
+        const { data: points } = await api.getPoints(city);
+        set(() => ({ points }));
       } catch (e) {}
     },
     updateClientProperty: <K extends keyof OrderInitialState["client"]>(

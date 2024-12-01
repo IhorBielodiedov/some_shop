@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import GradientButton from "../../UI/GradientButton";
 import { Input } from "../../UI/Input";
 import styles from "./orderDataPage.module.scss";
@@ -8,14 +8,7 @@ import { useOrderStore } from "../../stores/orderStore";
 import PaymentMethodsPanel from "../../components/PaymentMethodsPanel";
 import ClientCredentials from "../../components/ClientCredentials";
 import CitySearch from "../../components/CitySearch";
-import { YMapZoomControl } from "@yandex/ymaps3-default-ui-theme";
-import {
-  YMap,
-  YMapDefaultFeaturesLayer,
-  YMapDefaultSchemeLayer,
-} from "../../lib/ymaps";
-import { YMapLocationRequest } from "@yandex/ymaps3-types";
-
+import ComponentMap from "../../components/ComponentMap";
 export const OrderDataPage = () => {
   const navigate = useNavigate();
   const [comment, setComment] = useState<string>("");
@@ -23,17 +16,19 @@ export const OrderDataPage = () => {
   const [isCheckError, setIsCheckError] = useState<boolean>(false);
   const client = useOrderStore((state) => state.client);
   const getCities = useOrderStore((state) => state.getCitiesList);
+  const getPoints = useOrderStore((state) => state.getPointsList);
   const updateClientProperty = useOrderStore(
     (state) => state.updateClientProperty
   );
   const promocode = useOrderStore((state) => state.client.promocode);
-
+  // const points = useOrderStore((state) => state.points);
   const goBack = () => {
     navigate(-1);
   };
 
   useEffect(() => {
-    getCities("cdek", "RU", "Мос");
+    getCities("cdek", "RU", "Москва");
+    getPoints(client.city?.cityName);
     window.scrollTo({ top: 0 });
     if (window.history.length > 1) {
       TELEGRAM.BackButton.show();
@@ -46,11 +41,79 @@ export const OrderDataPage = () => {
     };
   }, []);
 
-  const LOCATION: YMapLocationRequest = {
-    center: [37.53, 55.703], // starting position [lng, lat]
-    zoom: 17, // starting zoom
+  const points = {
+    rows: [
+      {
+        id: "521456",
+        providerKey: "cse",
+        type: 2,
+        availableOperation: 2,
+        cod: 1,
+        paymentCash: null,
+        paymentCard: 1,
+        name: "Почтомат 5post в Пятерочке OM103327",
+        lat: 56.3286537,
+        lng: 37.5211701,
+        code: "c4b96690-d4cc-11eb-80fe-0090faaaf8e4",
+        postIndex: "141804",
+        countryCode: "RU",
+        region: "Московская",
+        regionType: "обл",
+        area: null,
+        city: "Дмитров",
+        cityType: "г",
+        cityGuid: "0d8a246f-6446-403e-91c6-3aec9cdbfc32",
+        community: null,
+        communityType: null,
+        communityGuid: null,
+        street: "Веретенникова",
+        streetType: "ул",
+        house: "25",
+        address: "141804, обл Московская, г Дмитров, ул Веретенникова, дом 25",
+        block: null,
+        office: null,
+        url: null,
+        email: null,
+        phone: "88005118800",
+        timetable:
+          "ПН 08:01 - 23:01,ВТ 08:01 - 23:01,СР 08:01 - 23:01,ЧТ 08:01 - 23:01,ПТ 08:01 - 23:01,СБ 08:01 - 23:01,ВС 08:01 - 23:01",
+        worktime: {
+          "1": "08:01/23:01",
+          "2": "08:01/23:01",
+          "3": "08:01/23:01",
+          "4": "08:01/23:01",
+          "5": "08:01/23:01",
+          "6": "08:01/23:01",
+          "7": "08:01/23:01",
+        },
+        photos: null,
+        fittingRoom: 0,
+        description: null,
+        metro: null,
+        multiplaceDeliveryAllowed: null,
+        extra: [
+          {
+            key: "ownerCode",
+            value: "Почтомат",
+          },
+        ],
+        limits: {
+          maxSizeA: null,
+          maxSizeB: null,
+          maxSizeC: null,
+          maxSizeSum: null,
+          minWeight: null,
+          maxWeight: null,
+          maxCod: 100000,
+        },
+      },
+    ],
+    meta: {
+      total: 1,
+      offset: 0,
+      limit: 10,
+    },
   };
-
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Получатель</h1>
@@ -58,12 +121,10 @@ export const OrderDataPage = () => {
       <div className={styles.content}>
         <h1 className={styles.title}>Населенный пункт</h1>
         <CitySearch />
-        <YMap location={LOCATION} showScaleInCopyrights={true}>
-          <YMapDefaultSchemeLayer />
-          <YMapDefaultFeaturesLayer />
-          {/* @ts-ignore */}
-          <YMapZoomControl />
-        </YMap>
+        <ComponentMap data={points.rows} />
+        {points?.rows?.map((point) => (
+          <p>{point.name}</p>
+        ))}
         <h1 className={styles.title}>Оплата</h1>
         <PaymentMethodsPanel />
         <h1 className={styles.title}>Промокод</h1>

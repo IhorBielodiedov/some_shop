@@ -18,3 +18,8 @@ export const getCities = (
     `/lists/providerCities/${provider}?filter=countryCode=${countryCode};cityName%${cityName};oblName%${cityName}`
   );
 export const getPaymentMethods = () => apiShip.get(`/lists/paymentMethods/`);
+
+export const getPoints = (city: string) =>
+  apiShip.get(
+    `/lists/points?filter=city=${city};providerKey=cdek;availableOperation=[2,3]`
+  );
