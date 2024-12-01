@@ -6,9 +6,21 @@ import "./balloon.scss";
 
 const ComponentMap = (props) => {
   const data = props.data.sort((c) => c.id);
+  const setPoint = props.setPoint;
   const indxesVisiblePlacemark = props.indxesVisiblePlacemark;
   const setVisiblePlacemark = props.setVisiblePlacemark;
   const repeatIds = [];
+
+  // В компоненте React ловим событие нажатия на кнопку
+  React.useEffect(() => {
+    document.addEventListener("click", (event) => {
+      if (event.target && event.target.classList.contains("balloon-button")) {
+        const id = event.target.getAttribute("data-id");
+        const selectedPoint = data.find((p) => p.id === Number(id));
+        setPoint(selectedPoint); // Передаем текущий объект в setPoint
+      }
+    });
+  }, [data, setPoint]);
 
   return (
     <div className={styles.container}>
@@ -62,9 +74,9 @@ const ComponentMap = (props) => {
                     <div class="balloon-title">${c.name}</div>
                     <div class="balloon-name">${c.address}</div>
                     <div class="balloon-timetable">${c.timetable}</div>
-                    <button class="balloon-button" onclick="(function() {
-                      props.setPoint(${c})
-                    })()">Заберу отсюда</button>
+                    <button class="balloon-button" data-id="${c.id}">
+                        Заберу отсюда
+                    </button>
                   </div>`,
                 }}
               ></Placemark>
