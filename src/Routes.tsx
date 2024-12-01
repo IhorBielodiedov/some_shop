@@ -1,18 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { memo } from "react";
-import { ErrorBoundary } from "./pages/ErrorBoundary";
-import HomePage from "./pages/HomePage";
-import SearchPage from "./pages/SearchPage";
-import PageLayout from "./UI/PageLayout";
-import ProductPage from "./pages/ProductPage";
-import CartPage from "./pages/CartPage";
-import FavouriteProductsPage from "./pages/FavouriteProductsPage";
 import { OrderDataPage } from "./pages/OrderDataPage";
-import { PaymentPage } from "./pages/PaymentPage";
-import DeliveryPage from "./pages/DeliveryPage";
-import PaymnetInfoPage from "./pages/PaymentInfoPage";
-import UserAgreementPage from "./pages/UserAgreementPage";
-import RefoundPage from "./pages/RefoundPage";
 import CitySearchPage from "./pages/CitySearchPage";
 
 const router = createBrowserRouter([

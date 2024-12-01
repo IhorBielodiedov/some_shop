@@ -11,6 +11,7 @@ import CitySearch from "../../components/CitySearch";
 import { YMapZoomControl } from "@yandex/ymaps3-default-ui-theme";
 import {
   YMap,
+  YMapControls,
   YMapDefaultFeaturesLayer,
   YMapDefaultSchemeLayer,
 } from "../../lib/ymaps";
@@ -61,8 +62,10 @@ export const OrderDataPage = () => {
         <YMap location={LOCATION} showScaleInCopyrights={true}>
           <YMapDefaultSchemeLayer />
           <YMapDefaultFeaturesLayer />
-          {/* @ts-ignore */}
-          <YMapZoomControl />
+
+          <YMapControls position="right">
+            <YMapZoomControl />
+          </YMapControls>
         </YMap>
         <h1 className={styles.title}>Оплата</h1>
         <PaymentMethodsPanel />
