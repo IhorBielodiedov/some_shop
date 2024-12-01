@@ -61,18 +61,7 @@ const ComponentMap = (props) => {
             <div>id: ${repeatPonts[0].id}</div>
             <div>Название: ${c.name}</div>
             <div>Адрес: ${c.address}</div>
-            <div>
-            ${repeatPonts
-              .map((x) => {
-                repeatIds.push(x.id);
-                return indxesVisiblePlacemark.includes(x.id)
-                  ? `<div>Наполненность ${
-                      repeatPonts.lenght == 1 ? null : `контейнер${x.id}`
-                    }:${x.percent}%</div>`
-                  : null;
-              })
-              .join("")}
-            </div>
+            <div>${c.timetable}</div>
             <button onclick="(function() {
                       alert('Вы нажали на кнопку для ID: ${c.id}');
                     })()">Заберу отсюда</button>
