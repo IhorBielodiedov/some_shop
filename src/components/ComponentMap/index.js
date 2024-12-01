@@ -58,8 +58,8 @@ const ComponentMap = (props) => {
                 defaultGeometry={[c.lat, c.lng]}
                 properties={{
                   balloonContentBody: `<div>
-            <div>Название: ${c.name}</div>
-            <div>Адрес: ${c.address}</div>
+            <div>${c.name}</div>
+            <div>${c.address}</div>
             <div>${c.timetable}</div>
             <button onclick="(function() {
                       alert('Вы нажали на кнопку для ID: ${c.id}');
