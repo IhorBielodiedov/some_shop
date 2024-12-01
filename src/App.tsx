@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import AppRoutes from "./Routes";
 import "./styles/app.scss";
-import { TELEGRAM } from "./utils/constants";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { TELEGRAM } from "./utils/constants";
 
 function App() {
   useEffect(() => {
