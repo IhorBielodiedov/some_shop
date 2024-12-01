@@ -73,6 +73,9 @@ const ComponentMap = (props) => {
               })
               .join("")}
             </div>
+            <button onclick="(function() {
+                      alert('Вы нажали на кнопку для ID: ${c.id}');
+                    })()">Заберу отсюда</button>
             </div>`,
                 }}
               ></Placemark>
