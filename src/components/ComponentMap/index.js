@@ -58,7 +58,6 @@ const ComponentMap = (props) => {
                 defaultGeometry={[c.lat, c.lng]}
                 properties={{
                   balloonContentBody: `<div>
-            <div>id: ${repeatPonts[0].id}</div>
             <div>Название: ${c.name}</div>
             <div>Адрес: ${c.address}</div>
             <div>${c.timetable}</div>
