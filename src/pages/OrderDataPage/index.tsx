@@ -117,8 +117,10 @@ export const OrderDataPage = () => {
   };
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Получатель</h1>
-      <ClientCredentials isCheckError={isCheckError} />
+      <div>
+        <h1 className={styles.title}>Получатель</h1>
+        <ClientCredentials isCheckError={isCheckError} />
+      </div>
       <div className={styles.content}>
         <h1 className={styles.title}>Населенный пункт</h1>
         <CitySearch />
