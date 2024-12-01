@@ -1,6 +1,7 @@
 import React from "react";
 
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
+import styles from "./componentMap.module.scss";
 
 const ComponentMap = (props) => {
   const data = props.data.sort((c) => c.id);
@@ -9,11 +10,11 @@ const ComponentMap = (props) => {
   const repeatIds = [];
 
   return (
-    <div className="component">
+    <div className={styles.container}>
       <YMaps>
         <Map
           defaultState={{ center: [56.3286537, 37.5211701], zoom: 13 }}
-          className="componentMap"
+          className={styles.componentMap}
         >
           {data.map((c) => {
             let repeatPonts = data
