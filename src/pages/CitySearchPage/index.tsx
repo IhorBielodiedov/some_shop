@@ -8,6 +8,7 @@ import { TELEGRAM } from "../../utils/constants";
 
 const CitySearchPage = () => {
   const [searchValue, setSearchValue] = useState("");
+  const getCities = useOrderStore((state) => state.getCitiesList);
   const cities = useOrderStore((state) => state.providerCities);
   const updateClientProperty = useOrderStore(
     (state) => state.updateClientProperty
@@ -17,6 +18,10 @@ const CitySearchPage = () => {
   const goBack = () => {
     navigate(-1);
   };
+
+  useEffect(() => {
+    getCities("cdek", "RU", searchValue);
+  }, [searchValue]);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });

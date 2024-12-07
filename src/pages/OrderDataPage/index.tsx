@@ -15,20 +15,21 @@ export const OrderDataPage = () => {
 
   const [isCheckError, setIsCheckError] = useState<boolean>(false);
   const client = useOrderStore((state) => state.client);
-  const getCities = useOrderStore((state) => state.getCitiesList);
   const getPoints = useOrderStore((state) => state.getPointsList);
   const points = useOrderStore((state) => state.points);
   const updateClientProperty = useOrderStore(
     (state) => state.updateClientProperty
   );
   const promocode = useOrderStore((state) => state.client.promocode);
+  const mapLoadingState = useOrderStore(
+    (state) => state.loadingStates.mapLoadingState
+  );
   // const points = useOrderStore((state) => state.points);
   const goBack = () => {
     navigate(-1);
   };
 
   useEffect(() => {
-    getCities("cdek", "RU", "Москва");
     getPoints(client.city?.cityName);
     window.scrollTo({ top: 0 });
     if (window.history.length > 1) {
@@ -66,7 +67,9 @@ export const OrderDataPage = () => {
             </button>
           </div>
         ) : (
-          client.city && (
+          client.city &&
+          points.rows.length > 0 &&
+          !mapLoadingState && (
             <ComponentMap
               data={points ? points.rows : []}
               indxesVisiblePlacemark={indxesVisiblePlacemark}

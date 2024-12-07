@@ -1,31 +1,52 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 import { YMaps, Map, Placemark, ZoomControl } from "@pbe/react-yandex-maps";
 import styles from "./componentMap.module.scss";
 import "./balloon.scss";
 
 const ComponentMap = (props) => {
-  const data = props.data.sort((c) => c.id);
-  const setPoint = props.setPoint;
-  const indxesVisiblePlacemark = props.indxesVisiblePlacemark;
-  const setVisiblePlacemark = props.setVisiblePlacemark;
+  const {
+    data: initialData,
+    setPoint,
+    indxesVisiblePlacemark,
+    setVisiblePlacemark,
+  } = props;
+
+  const [mapCenter, setMapCenter] = useState([
+    initialData[0]?.lat,
+    initialData[0]?.lng,
+  ]);
+
   const repeatIds = [];
+  const data = [...initialData].sort((c) => c.id);
+
+  useEffect(() => {
+    if (data.length > 0) {
+      const newCenter = [data[0]?.lat, data[0]?.lng];
+      setMapCenter(newCenter);
+    }
+  }, [data]);
 
   return (
     <div className={styles.container}>
       <YMaps>
         <Map
-          defaultState={{ center: [56.3286537, 37.5211701], zoom: 13 }}
+          key={JSON.stringify(data)} // Используем key, чтобы пересоздавать компонент
+          defaultState={{
+            center: mapCenter,
+            zoom: 13,
+          }}
           className={styles.componentMap}
         >
           <ZoomControl options={{ float: "right" }} />
           {data.map((c) => {
-            let repeatPonts = data
+            let repeatPoints = data
               .filter((x) => x.lat === c.lat && x.lng === c.lng)
               .sort((x) => x.id);
+
             if (repeatIds.includes(c.id)) {
               return null;
             }
+
             return (
               <Placemark
                 instanceRef={(ref) => {
@@ -34,14 +55,14 @@ const ComponentMap = (props) => {
                   ref.events.add("click", () => {
                     setVisiblePlacemark([
                       ...indxesVisiblePlacemark,
-                      ...repeatPonts.map((el) => el.id),
+                      ...repeatPoints.map((el) => el.id),
                     ]);
                   });
 
                   ref.balloon.events.add("close", () => {
                     setVisiblePlacemark(
                       indxesVisiblePlacemark.filter(
-                        (id) => !repeatPonts.some((el) => el.id === id)
+                        (id) => !repeatPoints.some((el) => el.id === id)
                       )
                     );
                   });

@@ -78,6 +78,9 @@ export interface OrderInitialState {
     promocode: string | null;
     point: ProviderPoint | null;
   };
+  loadingStates: {
+    mapLoadingState: boolean;
+  };
   providerCities: ProviderCitiesDataType | null;
   paymentMethods: Array<PaymentMethod> | null;
   points: ProviderPointsDataType | null;

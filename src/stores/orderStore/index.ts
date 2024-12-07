@@ -18,6 +18,9 @@ const initialState: OrderInitialState = {
     promocode: null,
     point: null,
   },
+  loadingStates: {
+    mapLoadingState: false,
+  },
   providerCities: null,
   paymentMethods: null,
   points: null,
@@ -47,6 +50,9 @@ export const useOrderStore = create<OrderInitialState & Actions>()(
       cityName: string
     ) => {
       try {
+        set((state) => ({
+          loadingStates: { ...state.loadingStates, mapLoadingState: true },
+        }));
         const { data: providerCities } = await api.getCities(
           provider,
           countryCode,
@@ -54,6 +60,9 @@ export const useOrderStore = create<OrderInitialState & Actions>()(
         );
         set(() => ({ providerCities }));
       } catch (e) {}
+      set((state) => ({
+        loadingStates: { ...state.loadingStates, mapLoadingState: false },
+      }));
     },
     getPaymentMethods: async () => {
       try {
