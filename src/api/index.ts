@@ -21,5 +21,5 @@ export const getPaymentMethods = () => apiShip.get(`/lists/paymentMethods/`);
 
 export const getPoints = (city: string) =>
   apiShip.get<ProviderPointsDataType>(
-    `/lists/points?filter=city=${city};providerKey=cdek;availableOperation=[2,3]`
+    `/lists/points?limit=523&filter=city=${city};providerKey=cdek;availableOperation=[2,3]`
   );

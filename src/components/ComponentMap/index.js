@@ -1,6 +1,6 @@
 import React from "react";
 
-import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
+import { YMaps, Map, Placemark, ZoomControl } from "@pbe/react-yandex-maps";
 import styles from "./componentMap.module.scss";
 import "./balloon.scss";
 
@@ -18,6 +18,7 @@ const ComponentMap = (props) => {
           defaultState={{ center: [56.3286537, 37.5211701], zoom: 13 }}
           className={styles.componentMap}
         >
+          <ZoomControl options={{ float: "right" }} />
           {data.map((c) => {
             let repeatPonts = data
               .filter((x) => x.lat === c.lat && x.lng === c.lng)

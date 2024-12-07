@@ -66,12 +66,14 @@ export const OrderDataPage = () => {
             </button>
           </div>
         ) : (
-          <ComponentMap
-            data={points.rows}
-            indxesVisiblePlacemark={indxesVisiblePlacemark}
-            setVisiblePlacemark={setVisiblePlacemark}
-            setPoint={updateClientProperty}
-          />
+          client.city && (
+            <ComponentMap
+              data={points ? points.rows : []}
+              indxesVisiblePlacemark={indxesVisiblePlacemark}
+              setVisiblePlacemark={setVisiblePlacemark}
+              setPoint={updateClientProperty}
+            />
+          )
         )}
         <h1 className={styles.title}>Оплата</h1>
         <PaymentMethodsPanel />
