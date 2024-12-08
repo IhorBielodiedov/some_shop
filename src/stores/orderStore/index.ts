@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import * as api from "../../api";
 import {
+  CalculateRequestData,
   OrderInitialState,
   PaymentMethod,
   ProviderCity,
@@ -17,6 +18,8 @@ const initialState: OrderInitialState = {
     city: null,
     promocode: null,
     point: null,
+    deliveryCost: null,
+    deliveryInterval: null,
   },
   loadingStates: {
     mapLoadingState: false,
@@ -38,6 +41,7 @@ interface Actions {
     key: K,
     value: OrderInitialState["client"][K]
   ) => void;
+  calculateDeliveryCost: (body: CalculateRequestData) => Promise<void>;
 }
 
 export const useOrderStore = create<OrderInitialState & Actions>()(
@@ -85,6 +89,16 @@ export const useOrderStore = create<OrderInitialState & Actions>()(
     ) => {
       set((state) => ({
         client: { ...state.client, [key]: value },
+      }));
+    },
+    calculateDeliveryCost: async (body: CalculateRequestData) => {
+      const response = await api.calculate(body);
+      const intervals = await api.calculate(body, true);
+      console.log(response.data);
+
+      set((state) => ({
+        ...state,
+        client: { ...state.client, deliveryCost: response.data },
       }));
     },
   })

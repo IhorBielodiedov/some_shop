@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { YMaps, Map, Placemark, ZoomControl } from "@pbe/react-yandex-maps";
 import styles from "./componentMap.module.scss";
+import { useOrderStore } from "../../stores/orderStore";
 import "./balloon.scss";
 
 const ComponentMap = (props) => {
   const {
     data: initialData,
     setPoint,
+    calculateDeliveryCost,
     indxesVisiblePlacemark,
     setVisiblePlacemark,
   } = props;
+
+  const client = useOrderStore((state) => state.client);
 
   const [mapCenter, setMapCenter] = useState([
     initialData[0]?.lat,
@@ -86,7 +90,7 @@ const ComponentMap = (props) => {
                 properties={{
                   balloonContentBody: `
                     <div>
-                      <div class="balloon-title">${c.name}</div>
+                      <div class="balloon-title">${c.code}, ${c.name}</div>
                       <div class="balloon-name">${c.address}</div>
                       <div class="balloon-timetable">${c.timetable}</div>
                       <button class="balloon-button" data-id="${c.id}">

@@ -9,6 +9,7 @@ import PaymentMethodsPanel from "../../components/PaymentMethodsPanel";
 import ClientCredentials from "../../components/ClientCredentials";
 import CitySearch from "../../components/CitySearch";
 import ComponentMap from "../../components/ComponentMap";
+import moment from "moment";
 export const OrderDataPage = () => {
   const navigate = useNavigate();
   const [comment, setComment] = useState<string>("");
@@ -17,6 +18,9 @@ export const OrderDataPage = () => {
   const client = useOrderStore((state) => state.client);
   const getPoints = useOrderStore((state) => state.getPointsList);
   const points = useOrderStore((state) => state.points);
+  const calculateDeliveryCost = useOrderStore(
+    (state) => state.calculateDeliveryCost
+  );
   const updateClientProperty = useOrderStore(
     (state) => state.updateClientProperty
   );
@@ -43,8 +47,65 @@ export const OrderDataPage = () => {
     };
   }, []);
 
-  const [indxesVisiblePlacemark, setVisiblePlacemark] = useState([]);
+  useEffect(() => {
+    client.point &&
+      calculateDeliveryCost({
+        to: {
+          countryCode: client.point?.countryCode,
+          index: client.point?.postIndex,
+          addressString: client.point?.address,
+          region: client.point?.region,
+          city: client.point?.city,
+          cityGuid: client.point?.cityGuid,
+          lat: client.point?.lat,
+          lng: client.point?.lng,
+        },
+        from: {
+          countryCode: "RU",
+          index: "105066",
+          addressString: "г Москва, ул Нижняя Красносельская, д 35",
+          region: "г Москва",
+          city: "г Москва",
+          cityGuid: "0c5b2444-70a0-4932-980c-b4dc0d3f02b5",
+          lat: 55.755318,
+          lng: 37.594265,
+        },
+        places: [
+          {
+            height: 45,
+            length: 30,
+            width: 20,
+            weight: 20,
+          },
+        ],
+        pickupTypes: [1, 2],
+        deliveryTypes: [1, 2],
+        assessedCost: 100,
+        includeFees: false,
+        timeout: 20000,
+        skipTariffRules: false,
+        tariffIds: [53],
+        pointOutId: client.point?.id,
+      });
+  }, [client.point]);
 
+  const [indxesVisiblePlacemark, setVisiblePlacemark] = useState([]);
+  function getDeliveryDates(tariff) {
+    if (!tariff) return null;
+
+    const { daysMin, daysMax } = tariff;
+    const today = moment();
+
+    // Рассчитываем даты
+    const minDate = today.clone().add(daysMin, "days");
+    const maxDate = today.clone().add(daysMax, "days");
+
+    // Форматируем даты
+    const formattedMinDate = minDate.format("DD.MM");
+    const formattedMaxDate = maxDate.format("DD.MM");
+
+    return `${formattedMinDate} - ${formattedMaxDate}`;
+  }
   return (
     <div className={styles.container}>
       <div>
@@ -55,17 +116,20 @@ export const OrderDataPage = () => {
         <h1 className={styles.title}>Населенный пункт</h1>
         <CitySearch />
         {client.point ? (
-          <div className={styles.point}>
-            <p className={styles.pointName}>{client.point.name}</p>
-            <p className={styles.pointAddress}>{client.point.address}</p>
-            <p className={styles.pointTimetable}>{client.point.timetable}</p>
-            <button
-              className={styles.pointButton}
-              onClick={() => updateClientProperty("point", null)}
-            >
-              Выбрать другой
-            </button>
-          </div>
+          <>
+            <h1 className={styles.title}>Пункт самовывоза</h1>
+            <div className={styles.point}>
+              <p className={styles.pointName}>{client.point.name}</p>
+              <p className={styles.pointAddress}>{client.point.address}</p>
+              <p className={styles.pointTimetable}>{client.point.timetable}</p>
+              <button
+                className={styles.pointButton}
+                onClick={() => updateClientProperty("point", null)}
+              >
+                Выбрать другой
+              </button>
+            </div>
+          </>
         ) : (
           client.city &&
           points.rows.length > 0 &&
@@ -75,8 +139,33 @@ export const OrderDataPage = () => {
               indxesVisiblePlacemark={indxesVisiblePlacemark}
               setVisiblePlacemark={setVisiblePlacemark}
               setPoint={updateClientProperty}
+              calculateDeliveryCost={calculateDeliveryCost}
             />
           )
+        )}
+        {client.deliveryCost && (
+          <>
+            <h1 className={styles.title}>Сроки и стоимость</h1>
+            <div className={styles.point}>
+              <p>
+                {client.deliveryCost.deliveryToPoint[0]?.tariffs[0].tariffName}
+              </p>
+              <p>
+                Срок доставки:{" "}
+                {getDeliveryDates(
+                  client.deliveryCost.deliveryToPoint[0]?.tariffs[0]
+                )}
+              </p>
+              <p>
+                Стоимость:{" "}
+                {
+                  client.deliveryCost.deliveryToPoint[0]?.tariffs[0]
+                    ?.deliveryCost
+                }
+                ₽
+              </p>
+            </div>
+          </>
         )}
         <h1 className={styles.title}>Оплата</h1>
         <PaymentMethodsPanel />

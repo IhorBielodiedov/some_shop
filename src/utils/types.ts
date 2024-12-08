@@ -77,6 +77,8 @@ export interface OrderInitialState {
     city: ProviderCity | null;
     promocode: string | null;
     point: ProviderPoint | null;
+    deliveryCost: DeliveryDataType | null;
+    deliveryInterval: any | null;
   };
   loadingStates: {
     mapLoadingState: boolean;
@@ -134,8 +136,24 @@ interface Limits {
   maxCod: number | null;
 }
 
-export interface ProviderPoint {
-  id: string;
+export type ProviderPoint = Pick<
+  ProviderPointFull,
+  | "countryCode"
+  | "postIndex"
+  | "region"
+  | "city"
+  | "cityGuid"
+  | "address"
+  | "code"
+  | "name"
+  | "timetable"
+  | "id"
+  | "lat"
+  | "lng"
+>;
+
+export interface ProviderPointFull {
+  id: number;
   providerKey: string;
   type: number;
   availableOperation: number;
@@ -180,4 +198,70 @@ export interface ProviderPoint {
 export interface ProviderPointsDataType {
   rows: Array<ProviderPoint>;
   meta: Meta;
+}
+
+// <=== Стоимость доставки ===>
+export interface DeliveryTariff {
+  tariffProviderId: number;
+  tariffId: number;
+  tariffName: string;
+  from: string;
+  deliveryCost: number;
+  deliveryCostOriginal: number;
+  feesIncluded: boolean;
+  insuranceFee: number;
+  cashServiceFee: number;
+  daysMin: number;
+  daysMax: number;
+  pickupTypes: number[];
+  deliveryTypes: number[];
+}
+
+export interface DeliveryProvider {
+  providerKey: string;
+  tariffs: DeliveryTariff[];
+}
+
+export interface DeliveryDataType {
+  deliveryToDoor: DeliveryProvider[];
+  deliveryToPoint: DeliveryProvider[];
+}
+
+export interface Address {
+  countryCode: string;
+  index: string;
+  addressString: string;
+  region: string;
+  city: string;
+  cityGuid: string;
+  lat: number;
+  lng: number;
+}
+
+export interface Place {
+  height: number;
+  length: number;
+  width: number;
+  weight: number;
+}
+
+export interface CalculateRequestData {
+  from: Address;
+  to: Address;
+  places: Place[];
+  pickupDate?: string;
+  pickupTypes?: number[];
+  deliveryTypes?: number[];
+  providerKeys?: string[];
+  assessedCost: number;
+  codCost?: number;
+  includeFees?: boolean;
+  timeout?: number;
+  skipTariffRules?: boolean;
+  tariffIds: number[];
+  pointInId?: number;
+  pointOutId?: number;
+  extraParams?: Record<string, string>;
+  promoCode?: string;
+  customCode?: string;
 }
