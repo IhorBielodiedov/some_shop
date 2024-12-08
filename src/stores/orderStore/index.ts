@@ -79,9 +79,15 @@ export const useOrderStore = create<OrderInitialState & Actions>()(
     },
     getPointsList: async (city: string) => {
       try {
+        set((state) => ({
+          loadingStates: { ...state.loadingStates, mapLoadingState: true },
+        }));
         const { data: points } = await api.getPoints(city);
         set(() => ({ points }));
       } catch (e) {}
+      set((state) => ({
+        loadingStates: { ...state.loadingStates, mapLoadingState: false },
+      }));
     },
     updateClientProperty: <K extends keyof OrderInitialState["client"]>(
       key: K,

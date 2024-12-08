@@ -130,16 +130,21 @@ export const OrderDataPage = () => {
               </button>
             </div>
           </>
-        ) : client.city && points.rows.length > 0 && !mapLoadingState ? (
-          <ComponentMap
-            data={points ? points.rows : []}
-            indxesVisiblePlacemark={indxesVisiblePlacemark}
-            setVisiblePlacemark={setVisiblePlacemark}
-            setPoint={updateClientProperty}
-            calculateDeliveryCost={calculateDeliveryCost}
-          />
+        ) : client.city && points.rows.length > 0 ? (
+          !mapLoadingState ? (
+            <ComponentMap
+              data={points ? points.rows : []}
+              indxesVisiblePlacemark={indxesVisiblePlacemark}
+              setVisiblePlacemark={setVisiblePlacemark}
+              setPoint={updateClientProperty}
+              calculateDeliveryCost={calculateDeliveryCost}
+              mapLoadingState={mapLoadingState}
+            />
+          ) : (
+            <div>Загрузка...</div>
+          )
         ) : (
-          <div>Загрузка...</div>
+          <></>
         )}
         {client.deliveryCost && (
           <>
