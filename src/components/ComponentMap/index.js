@@ -20,13 +20,16 @@ const ComponentMap = (props) => {
     initialData[0]?.lng,
   ]);
 
+  const [initialLoading, setInitialLoading] = useState(true);
+
   const repeatIds = [];
   const data = [...initialData].sort((c) => c.id);
 
   useEffect(() => {
-    if (data.length > 0) {
+    if (data.length > 0 && initialLoading) {
       const newCenter = [data[0]?.lat, data[0]?.lng];
       setMapCenter(newCenter);
+      setInitialLoading(false);
     }
   }, [data]);
 
