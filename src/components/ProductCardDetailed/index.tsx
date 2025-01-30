@@ -3,10 +3,11 @@ import styles from "./productCardDetailed.module.scss";
 import { Product } from "../../utils/types";
 import MediumButton from "../../UI/MediumButton";
 import FavoriteButton from "../../UI/FavoriteButton";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useCartStore } from "../../stores/cartStore";
 import { useProductsStore } from "../../stores/useProductsStore";
 import { toast } from "react-toastify";
+import * as api from "../../api";
 
 interface Props {
   product: Product;
@@ -31,6 +32,34 @@ const ProductCardDetailed = ({ product }: Props) => {
           item.info.variant_id === currentVariantId
       )
     : false;
+
+  const [photo, setPhoto] = useState<string | undefined>(undefined);
+  const [photoLoading, setPhotoLoading] = useState(true);
+
+  useEffect(() => {
+    const getPhotoF = async (img: string) => {
+      try {
+        setPhotoLoading(true);
+        const response = await api.getPhoto(img);
+
+        // Create an object URL from the Blob
+        const imageUrl = URL.createObjectURL(response.data);
+
+        return imageUrl;
+      } catch (error) {
+        console.error("Error fetching photo:", error);
+        return undefined;
+      }
+    };
+
+    const fetchPhoto = async () => {
+      const fetchedPhoto = await getPhotoF(variants[0].photos[0]); // Wait for the photo to be fetched
+      setPhoto(fetchedPhoto);
+      setPhotoLoading(false);
+    };
+
+    product && fetchPhoto(); // Call the function to fetch the photo
+  }, [product]);
 
   return (
     <div className={styles.cardBlock}>
@@ -68,7 +97,11 @@ const ProductCardDetailed = ({ product }: Props) => {
             </div>
           </div>
           <div className={styles.imgWrapper}>
-            <img src={variants[0].photos[0]} className={styles.img} alt="img" />
+            {photoLoading ? (
+              <p className={styles.img}>Loading...</p>
+            ) : (
+              <img src={photo} className={styles.img} alt="img" />
+            )}
           </div>
         </div>
       </CardLayout>

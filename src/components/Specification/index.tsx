@@ -8,7 +8,7 @@ const Specification = ({ specification }: Props) => {
   return (
     <div className={styles.container}>
       <p className={styles.title}>{specification.title}</p>
-      {specification.rows.map((row) => {
+      {specification.rows?.map((row) => {
         const isColonAbsent = !row.name.includes(":");
         return (
           <div

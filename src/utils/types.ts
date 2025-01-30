@@ -14,7 +14,9 @@ export type Variant = {
   stock_quantity: number;
   id: number;
   description: string;
-  is_favorite: boolean;
+  in_favorite: boolean;
+  vendor_code: number;
+  external_shops: Array<{ shop_id: number; link: string }>;
   specifications: Specification[];
 };
 export type Specification = {
@@ -28,10 +30,10 @@ export type SpecificationRow = {
   value: string;
 };
 export type Category = {
-  id: number | null;
+  id: number;
   name: string;
-  alias?: string;
-  photo?: string;
+  description: string;
+  photo: string;
 };
 export type Favourite = {
   id: number;
@@ -264,4 +266,13 @@ export interface CalculateRequestData {
   extraParams?: Record<string, string>;
   promoCode?: string;
   customCode?: string;
+}
+
+export interface GetProductsParams {
+  min_price?: number;
+  max_price?: number;
+  min_quantity?: number;
+  max_quantity?: number;
+  min_stock_quantity?: number;
+  max_stock_quantity?: number;
 }

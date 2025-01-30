@@ -1,12 +1,6 @@
 import { create } from "zustand";
 import * as api from "../../api";
-import {
-  CalculateRequestData,
-  OrderInitialState,
-  PaymentMethod,
-  ProviderCity,
-  ProviderPoint,
-} from "../../utils/types";
+import { CalculateRequestData, OrderInitialState } from "../../utils/types";
 
 const initialState: OrderInitialState = {
   client: {
@@ -100,7 +94,6 @@ export const useOrderStore = create<OrderInitialState & Actions>()(
     calculateDeliveryCost: async (body: CalculateRequestData) => {
       const response = await api.calculate(body);
       const intervals = await api.calculate(body, true);
-      console.log(response.data);
 
       set((state) => ({
         ...state,

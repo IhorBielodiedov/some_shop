@@ -9,9 +9,7 @@ const FavouriteProductsPage = () => {
   const favouriteProducts = useProductsStore(
     (state) => state.favouriteProducts
   );
-  const getFavouriteProducts = useProductsStore(
-    (state) => state.getFavouriteProducts
-  );
+
   const deleteFavouriteProduct = useProductsStore(
     (state) => state.deleteFavouriteProduct
   );

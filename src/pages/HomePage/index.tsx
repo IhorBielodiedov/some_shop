@@ -24,15 +24,34 @@ import Panel from "../../UI/Panel/intex";
 import { useProductsStore } from "../../stores/useProductsStore";
 import { stories1, stories2, stories3, stories4 } from "./testData";
 import { Link, useNavigate } from "react-router-dom";
+import { Category } from "../../utils/types";
 
 const HomePage = () => {
+  const products = useProductsStore((state) => state.products);
+  const getProducts = useProductsStore((state) => state.getProducts);
+  const categories = useProductsStore((state) => state.categories);
   const setActiveCategory = useProductsStore(
     (state) => state.setActiveCategory
   );
   const navigate = useNavigate();
+
   useEffect(() => {
     TELEGRAM.BackButton.hide();
+    getProducts(1);
   }, []);
+
+  const chunkCategories = (categories: Category[], size: number) => {
+    if (!categories) return [];
+
+    const result = [];
+    for (let i = 0; i < categories.length; i += size) {
+      result.push(categories.slice(i, i + size));
+    }
+    return result;
+  };
+
+  const categoriesRows = chunkCategories(categories, 3);
+
   return (
     <div className={styles.container}>
       <Swiper
@@ -51,47 +70,19 @@ const HomePage = () => {
       </Swiper>
       <section>
         <div className={styles.categories}>
-          <div className={styles.categoriesRow}>
-            <BigImgCard
-              title={"Яндекс Станции"}
-              img={alise}
-              link={"/products"}
-              onClick={() => setActiveCategory(CATEGORIES[3])}
-            />
-            <BigImgCard
-              title={"Телевизоры"}
-              img={tv}
-              link={"/products"}
-              onClick={() => setActiveCategory(CATEGORIES[2])}
-            />
-            <BigImgCard
-              title={"Станции Дуо макс"}
-              img={station}
-              link={"/products"}
-              onClick={() => setActiveCategory(CATEGORIES[4])}
-            />
-          </div>
-          <div className={styles.categoriesRow}>
-            <BigImgCard
-              title={"Умный дом"}
-              img={smartlamp}
-              link={"/products"}
-              onClick={() => setActiveCategory(CATEGORIES[1])}
-            />
-            <BigImgCard
-              title={"Новинки"}
-              img={star}
-              link={"/products"}
-              onClick={() => setActiveCategory(CATEGORIES[5])}
-            />
-            <BigImgCard
-              title={"Весь каталог устройств"}
-              img={banner}
-              withImg={false}
-              link={"/products"}
-              onClick={() => setActiveCategory(CATEGORIES[0])}
-            />
-          </div>
+          {categoriesRows.map((row, index) => (
+            <div key={index} className={styles.categoriesRow}>
+              {row.map((category, index) => (
+                <BigImgCard
+                  key={category.id}
+                  title={category.name}
+                  img={category.photo}
+                  link="/products"
+                  onClick={() => setActiveCategory(category)}
+                />
+              ))}
+            </div>
+          ))}
         </div>
       </section>
       <BigBanner
@@ -111,7 +102,9 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-      <ProductCardDetailed product={PRODUCTS[0]} />
+      {products && products.length > 0 && (
+        <ProductCardDetailed product={products[0]} />
+      )}
       <section>
         <Panel
           title="Доставка"

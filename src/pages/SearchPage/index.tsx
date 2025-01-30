@@ -8,10 +8,14 @@ import { useEffect, useState } from "react";
 import { useProductsStore } from "../../stores/useProductsStore";
 import { Product } from "../../utils/types";
 import ProductCardDetailed from "../../components/ProductCardDetailed";
+import * as api from "../../api";
 
 const SearchPage = () => {
+  const categories = useProductsStore((state) => state.categories);
+  const products = useProductsStore((state) => state.products);
+  const productsLoading = useProductsStore((state) => state.productsLoading);
+  const getProducts = useProductsStore((state) => state.getProducts);
   const activeCategory = useProductsStore((state) => state.activeCategory);
-  const [isLoading, setIsLoading] = useState(false);
   const [isContentVisible, setIsContentVisible] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
@@ -24,7 +28,11 @@ const SearchPage = () => {
   };
 
   useEffect(() => {
-    if (!isLoading) {
+    activeCategory && getProducts(activeCategory.id);
+  }, [activeCategory]);
+
+  useEffect(() => {
+    if (!productsLoading) {
       const timeout = setTimeout(() => {
         setIsContentVisible(true);
       }, 50);
@@ -32,7 +40,7 @@ const SearchPage = () => {
     } else {
       setIsContentVisible(false);
     }
-  }, [isLoading]);
+  }, [productsLoading]);
 
   useEffect(() => {
     if (window.history.length > 1) {
@@ -47,28 +55,9 @@ const SearchPage = () => {
   }, []);
 
   useEffect(() => {
-    setIsLoading(true);
-
-    const filtered = PRODUCTS.filter((item) => {
-      const matchesCategory =
-        activeCategory && activeCategory.id && activeCategory.id !== 0
-          ? item.category_id === activeCategory.id
-          : true;
-
-      const matchesSearch = searchValue
-        ? item.name.toLowerCase().includes(searchValue.toLowerCase())
-        : true;
-
-      return matchesCategory && matchesSearch;
-    });
-
-    setFilteredProducts(filtered);
-    setFirstProduct(filtered[0] || null);
-
-    setTimeout(() => {
-      setIsLoading(false);
-    }, Math.floor(Math.random() * (500 - 300 + 1)) + 300);
-  }, [activeCategory, searchValue]);
+    products && setFilteredProducts(products);
+    products && setFirstProduct(products[0] || null);
+  }, [products]);
 
   return (
     <div>
@@ -77,30 +66,32 @@ const SearchPage = () => {
         searchValue={searchValue}
         withFilter
       />
-      <Categories big list={CATEGORIES} />
-      {isLoading ? (
+      {categories && <Categories big list={categories} />}
+      {productsLoading ? (
         <p>Loading...</p>
-      ) : filteredProducts.length === 0 ? (
+      ) : products?.length === 0 ? (
         <p>Здесь ничего нет</p>
       ) : (
         <div
           className={`${styles.content} ${
-            !isLoading && isContentVisible ? styles.fadeIn : ""
+            !productsLoading && isContentVisible ? styles.fadeIn : ""
           }`}
         >
           {firstProduct && <ProductCardDetailed product={firstProduct} />}
-          <div className={styles.lists}>
-            <ProductList
-              products={filteredProducts.filter(
-                (item, index) => index !== 0 && index % 2
-              )}
-            />
-            <ProductList
-              products={filteredProducts.filter(
-                (item, index) => index !== 0 && !(index % 2)
-              )}
-            />
-          </div>
+          {products && (
+            <div className={styles.lists}>
+              <ProductList
+                products={products.filter(
+                  (item, index) => index !== 0 && index % 2
+                )}
+              />
+              <ProductList
+                products={products.filter(
+                  (item, index) => index !== 0 && !(index % 2)
+                )}
+              />
+            </div>
+          )}
         </div>
       )}
     </div>
