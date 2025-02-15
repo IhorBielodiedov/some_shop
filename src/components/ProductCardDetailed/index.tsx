@@ -15,9 +15,9 @@ interface Props {
 
 const ProductCardDetailed = ({ product }: Props) => {
   const { id, name, variants } = product;
-  const addProduct = useCartStore((state: any) => state.addProduct);
+  const addProduct = useCartStore((state) => state.addProduct);
 
-  const toggleFavorite = useProductsStore((state: any) => state.toggleFavorite);
+  const toggleFavorite = useProductsStore((state) => state.toggleFavorite);
   const favouriteProducts = useProductsStore(
     (state: any) => state.favouriteProducts
   );
@@ -25,13 +25,7 @@ const ProductCardDetailed = ({ product }: Props) => {
   const currentProductId = id;
   const currentVariantId = variants[0]?.id;
 
-  const isFavorite = favouriteProducts
-    ? favouriteProducts.some(
-        (item: any) =>
-          item.info.product_id === currentProductId &&
-          item.info.variant_id === currentVariantId
-      )
-    : false;
+  const [isFavorite, setIsFavorite] = useState(product.variants[0].in_favorite);
 
   const [photo, setPhoto] = useState<string | undefined>(undefined);
   const [photoLoading, setPhotoLoading] = useState(true);
@@ -65,13 +59,17 @@ const ProductCardDetailed = ({ product }: Props) => {
     <div className={styles.cardBlock}>
       <FavoriteButton
         isFavorite={isFavorite}
-        setIsFavorite={() => {
-          if (variants[0]) {
-            toggleFavorite({
-              product_id: currentProductId,
-              variant_id: currentVariantId,
-              quantity: 1,
-            });
+        setIsFavorite={async () => {
+          if (product && product.variants[0]) {
+            if (product.variants[0]?.in_favorite) {
+              await api.deleteFavorite(product.variants[0]?.id, 1);
+              toggleFavorite(product, false, 0);
+              setIsFavorite(false);
+            } else {
+              await api.createFavorite(product.variants[0]?.id, 1);
+              toggleFavorite(product, true, 0);
+              setIsFavorite(true);
+            }
           }
         }}
       />
@@ -88,7 +86,7 @@ const ProductCardDetailed = ({ product }: Props) => {
                 onClick={(e) => {
                   e.preventDefault();
                   if (product && product.variants[0]) {
-                    addProduct(product, product.variants[0]);
+                    addProduct(product, product.variants[0], 1);
                     toast.success("Добавлено в корзину");
                   }
                 }}

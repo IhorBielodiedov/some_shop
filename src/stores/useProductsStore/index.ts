@@ -6,10 +6,9 @@ import {
   Product,
   Variant,
 } from "../../utils/types";
-import { FAVOURITES, PRODUCTS } from "../../utils/constants";
-import { log } from "node:util";
 import * as api from "../../api";
 import { toast } from "react-toastify";
+import { USER } from "../../utils/constants";
 
 interface State {
   categories: Array<Category> | null;
@@ -32,7 +31,11 @@ interface Actions {
   getFavouriteProducts: (favouriteProducts: Favourite[]) => void;
   deleteFavouriteProduct: (id: number) => void;
   initializeFavouriteProducts: () => void;
-  toggleFavorite: (in_favorite: boolean, variantIndex: number) => void;
+  toggleFavorite: (
+    product: Product,
+    in_favorite: boolean,
+    variantIndex: number
+  ) => void;
 }
 
 const initialState: State = {
@@ -110,22 +113,24 @@ export const useProductsStore = create<State & Actions>()((set, get) => ({
       set(() => ({ currentProductLoading: false }));
     }
   },
-  toggleFavorite: (in_favorite: boolean, variantIndex: number) => {
-    const product = JSON.parse(JSON.stringify(get().currentProduct));
-
+  toggleFavorite: (
+    product: Product,
+    in_favorite: boolean,
+    variantIndex: number
+  ) => {
     product.variants[variantIndex].in_favorite = in_favorite;
-    console.log(product);
+
     set(() => ({ currentProduct: { ...product } }));
   },
   setActiveCategory: (activeCategory: Category | null) => {
-    console.log(activeCategory);
     set((state) => ({ ...state, activeCategory }));
   },
 
-  deleteFavouriteProduct: (id: number) => {
+  deleteFavouriteProduct: async (id: number) => {
+    await api.deleteFavorite(id, USER.id);
     set((state) => ({
       favouriteProducts: state.favouriteProducts
-        ? state.favouriteProducts.filter((item) => item.info.product_id !== id)
+        ? state.favouriteProducts.filter((item) => item.info.id !== id)
         : null,
     }));
   },
@@ -161,7 +166,7 @@ export const useProductsStore = create<State & Actions>()((set, get) => ({
 
   initializeFavouriteProducts: async () => {
     const { getFavouriteProducts } = get();
-    const { data } = await api.getFavorites(1);
+    const { data } = await api.getFavorites(USER.id);
     getFavouriteProducts(data.products);
   },
 }));

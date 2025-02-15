@@ -10,9 +10,9 @@ import promo2 from "../../assets/img/promo2.png";
 import promo3 from "../../assets/img/promo3.png";
 import promo4 from "../../assets/img/promo4.png";
 import ProductCardDetailed from "../../components/ProductCardDetailed";
-import { CATEGORIES, PRODUCTS, TELEGRAM } from "../../utils/constants";
+import { TELEGRAM } from "../../utils/constants";
 import styles from "./homePage.module.scss";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -25,6 +25,8 @@ import { useProductsStore } from "../../stores/useProductsStore";
 import { stories1, stories2, stories3, stories4 } from "./testData";
 import { Link, useNavigate } from "react-router-dom";
 import { Category } from "../../utils/types";
+import * as api from "../../api";
+import { toast } from "react-toastify";
 
 const HomePage = () => {
   const products = useProductsStore((state) => state.products);
@@ -34,6 +36,8 @@ const HomePage = () => {
     (state) => state.setActiveCategory
   );
   const navigate = useNavigate();
+  const [banners, setBanners] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     TELEGRAM.BackButton.hide();
@@ -52,22 +56,74 @@ const HomePage = () => {
 
   const categoriesRows = chunkCategories(categories, 3);
 
+  const getBanners = async () => {
+    // Set loading to true before starting the fetch
+    setLoading(true);
+
+    // Helper function: converts an image string to a blob URL
+    const getPhotoF = async (img) => {
+      try {
+        const response = await api.getPhoto(img);
+        // Create an object URL from the Blob data
+        const imageUrl = URL.createObjectURL(response.data);
+        return imageUrl;
+      } catch (error) {
+        toast.error(error);
+        return undefined;
+      }
+    };
+
+    try {
+      const response = await api.getBanners();
+      // Assume the response data follows this structure:
+      // { banners: [ { photo: "banner", id: 1 }, ... ], count: 3 }
+      const bannerList = response.data.banners;
+
+      // Process each banner by retrieving the actual photo URL via getPhotoF
+      const bannersWithPhotos = await Promise.all(
+        bannerList.map(async (banner) => {
+          const photoUrl = await getPhotoF(banner.photo);
+          // Return a new object that includes the photo URL
+          return {
+            ...banner,
+            photo: photoUrl, // Overwrite or add a property with the URL
+          };
+        })
+      );
+
+      // Update the state with the new banners data
+      setBanners(bannersWithPhotos);
+    } catch (error) {
+      toast.error(error);
+    } finally {
+      // End the loading state after all photos are processed
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getBanners();
+  }, []);
+
   return (
     <div className={styles.container}>
-      <Swiper
-        slidesPerView={"auto"}
-        spaceBetween={16}
-        loop={true}
-        className={`bannerSwiper`}
-      >
-        {[1, 2, 3].map((item) => (
-          <SwiperSlide>
-            <Link to={"/products"}>
-              <img className={styles.banner} src={banner} alt="banner" />
-            </Link>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {loading && <p>Loading banners...</p>}
+      {!loading && banners.length > 0 && (
+        <Swiper
+          slidesPerView={"auto"}
+          spaceBetween={16}
+          loop={true}
+          className={`bannerSwiper`}
+        >
+          {banners.map((item) => (
+            <SwiperSlide>
+              <Link to={"/products"}>
+                <img className={styles.banner} src={item.photo} alt="banner" />
+              </Link>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
       <section>
         <div className={styles.categories}>
           {categoriesRows.map((row, index) => (

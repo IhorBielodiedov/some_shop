@@ -42,9 +42,13 @@
   }
   .product {
     display: flex;
-    img {
+    .img {
       margin-right: 11px;
       height: 100%;
+      max-height: 140px;
+      width: auto;
+    }
+    svg {
       max-height: 140px;
     }
     .info {
@@ -105,7 +109,7 @@
       &:after {
         top: -5px;
         position: absolute;
-        content: '';
+        content: "";
         width: 12.5px;
         height: 12.5px;
         padding: 10px;

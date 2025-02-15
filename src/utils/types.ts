@@ -18,7 +18,9 @@ export type Variant = {
   vendor_code: number;
   external_shops: Array<{ shop_id: number; link: string }>;
   specifications: Specification[];
+  reviews: any[];
 };
+
 export type Specification = {
   id: number;
   title: string;
@@ -37,7 +39,6 @@ export type Category = {
 };
 export type Favourite = {
   id: number;
-  product_id: number;
   variant_id: number;
   quantity: number;
   in_stock: number;
@@ -50,6 +51,16 @@ export type Review = {
   description: string;
   created_at: string;
 };
+
+export interface CartItem {
+  id: number;
+  variant_id: number;
+  product_id: number;
+  quantity: number;
+  in_stock: number;
+  price: number;
+}
+
 export type User = {
   id: number;
   created_at: string;

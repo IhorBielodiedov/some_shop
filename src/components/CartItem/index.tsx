@@ -1,42 +1,73 @@
-import { Product } from "../../utils/types";
 import styles from "./cartItem.module.scss";
 import PlusSVG from "../../UI/icons/PlusSVG";
 import MinusSVG from "../../UI/icons/MinusSVG";
 import CloseSVG from "../../UI/icons/CloseSVG";
 import { useCartStore } from "../../stores/cartStore";
 import { formatNumberWithSpaces } from "../../utils/helper";
-
+import React, { useEffect, useState } from "react";
+import { CartProduct } from "../../stores/cartStore/types";
+import * as api from "../../api";
+import LoaderSVG from "../../UI/icons/LoaderSVG";
+import { USER } from "../../utils/constants";
 interface Props {
-  product: Product & {
-    variant: any;
-    count: number;
-    discount?: number;
-  };
+  product: CartProduct;
 }
 
-const CartItem = ({ product }: Props) => {
-  const removeProduct = useCartStore((state: any) => state.removeProduct);
-  const updateProductCount = useCartStore(
-    (state: any) => state.updateProductCount
-  );
+const CartItem = React.memo(({ product }: Props) => {
+  const removeProduct = useCartStore((state) => state.removeProduct);
+  const updateProductCount = useCartStore((state) => state.updateProductCount);
+  const [photo, setPhoto] = useState<string | undefined>(undefined);
+  const [photoLoading, setPhotoLoading] = useState(false);
 
+  useEffect(() => {
+    const getPhotoF = async (img: string) => {
+      try {
+        setPhotoLoading(true);
+        const response = await api.getPhoto(img);
+
+        // Create an object URL from the Blob
+        const imageUrl = URL.createObjectURL(response.data);
+
+        return imageUrl;
+      } catch (error) {
+        console.error("Error fetching photo:", error);
+        return undefined;
+      }
+    };
+
+    const fetchPhoto = async () => {
+      const fetchedPhoto = await getPhotoF(product.variant.photos[0]);
+      setPhoto(fetchedPhoto);
+      setPhotoLoading(false);
+    };
+
+    product && fetchPhoto(); // Call the function to fetch the photo
+  }, [product]);
+
+  console.log(product);
   const handleDelete = () => {
-    removeProduct(product.id, product.variant.id);
+    removeProduct(product);
   };
 
   const handleCountChange = (
-    productId: number,
+    product: CartProduct,
     variantId: number,
     newCount: number
   ) => {
     if (newCount < 1) return;
-    updateProductCount(productId, variantId, newCount);
+    updateProductCount(product, variantId, newCount, USER.id);
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.product}>
-        <img src={product.variant.photos[0]} alt="product" />
+        {photoLoading ? (
+          <div className={styles.img}>
+            <LoaderSVG />
+          </div>
+        ) : (
+          <img className={styles.img} src={photo} alt={product.name} />
+        )}
         <div className={styles.info}>
           <div>
             <p className={styles.name}>{product.name}</p>
@@ -51,7 +82,7 @@ const CartItem = ({ product }: Props) => {
                   handleDelete();
                 }
                 handleCountChange(
-                  product.id,
+                  product,
                   product.variant.id,
                   product.count - 1
                 );
@@ -64,7 +95,7 @@ const CartItem = ({ product }: Props) => {
               className={styles.countButton}
               onClick={() =>
                 handleCountChange(
-                  product.id,
+                  product,
                   product.variant.id,
                   product.count + 1
                 )
@@ -93,6 +124,6 @@ const CartItem = ({ product }: Props) => {
       </button>
     </div>
   );
-};
+});
 
 export default CartItem;

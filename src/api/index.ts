@@ -4,9 +4,11 @@ import {
   Category,
   DeliveryDataType,
   GetProductsParams,
+  Product,
   ProviderCitiesDataType,
   ProviderPointsDataType,
 } from "../utils/types";
+import { GetCartsResponse } from "./types";
 
 const token = localStorage.getItem("access");
 
@@ -79,7 +81,7 @@ export const getProductsByCategory = (category_id: number, x_init_data: any) =>
   });
 
 export const getProduct = (product_id: number, x_init_data: any) =>
-  api.get(`/products/${product_id}`, {
+  api.get<Product>(`/products/${product_id}`, {
     headers: {
       "x-init-data": x_init_data,
     },
@@ -91,7 +93,27 @@ export const createFavorite = (product_variant_id: number, user_id: number) =>
 export const getFavorites = (user_id: number) =>
   api.get(`/favorites/${user_id}`);
 
-export const deleteFavorite = (product_variant_id: number) =>
-  api.delete(`/favorites/${product_variant_id}`);
+export const deleteFavorite = (product_variant_id: number, user_id: number) =>
+  api.delete(`/favorites/${product_variant_id}?user_id=${user_id}`);
 
-export const getCarts = (user_id: string) => api.get(`/carts/${user_id}`);
+export const getCarts = (user_id: number) =>
+  api.get<GetCartsResponse>(`/carts/${user_id}`);
+
+export const createCart = (cart: {
+  variant_id: number;
+  user_id: number;
+  quantity: number;
+}) => api.post(`/carts`, cart);
+
+export const updateCart = (
+  cartId: number,
+  cart: {
+    variant_id: number;
+    user_id: number;
+    quantity: number;
+  }
+) => api.put(`/carts/${cartId}`, cart);
+
+export const deleteCart = (cart_id: number) => api.delete(`/carts/${cart_id}`);
+
+export const getBanners = () => api.get("/banners");

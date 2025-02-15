@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import FavouriteCard from "../../components/FavouriteCard";
 import { useProductsStore } from "../../stores/useProductsStore";
-import { FAVOURITES, PRODUCTS, TELEGRAM } from "../../utils/constants";
+import { TELEGRAM } from "../../utils/constants";
 import styles from "./favouriteProductsPage.module.scss";
 import { useNavigate } from "react-router-dom";
 
@@ -14,13 +14,22 @@ const FavouriteProductsPage = () => {
     (state) => state.deleteFavouriteProduct
   );
 
+  const initializeFavouriteProducts = useProductsStore(
+    (state) => state.initializeFavouriteProducts
+  );
+
   const navigate = useNavigate();
 
   const goBack = () => {
     navigate(-1);
   };
 
-  //useEffect(() => getFavouriteProducts(FAVOURITES), []);
+  useEffect(() => {
+    const fetchData = async () => {
+      await initializeFavouriteProducts();
+    };
+    fetchData();
+  }, [initializeFavouriteProducts]);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });

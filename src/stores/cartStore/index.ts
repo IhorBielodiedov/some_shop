@@ -1,87 +1,189 @@
 import { create } from "zustand";
+import * as api from "../../api";
+import { CartProduct, CartStore } from "./types";
+import { USER } from "../../utils/constants";
+import { toast } from "react-toastify";
 
-export const initialProducts: any[] = [];
+export const initialProducts: CartProduct[] = [];
 
-export const useCartStore = create<any>((set: any) => ({
-    products: initialProducts,
-    totalAmount: { total: 0, discount: 0 },
+export const useCartStore = create<CartStore>((set, get) => ({
+  products: initialProducts,
+  productsLoading: false,
+  totalAmount: { total: 0, discount: 0 },
 
-    calculateTotalAmount: (products: any[]) => {
-        const totalAmount = products.reduce(
-            (acc: { total: number; discount: number }, product: any) => {
-                const variantPrice = product.variant.price || 0;
-                const productTotal = variantPrice * product.count;
-                const productDiscount = product.discount ? product.discount * product.count : 0;
+  getCarts: async () => {
+    set(() => ({ productsLoading: true }));
+    try {
+      const { data } = await api.getCarts(USER.id);
+      const { carts } = data;
 
-                return {
-                    total: acc.total + productTotal,
-                    discount: acc.discount + productDiscount,
-                };
-            },
-            { total: 0, discount: 0 }
-        );
+      const products: CartProduct[] = [];
 
-        set((state: any) => ({
-            ...state,
-            totalAmount,
-        }));
-    },
+      await Promise.all(
+        carts.map(async (cart) => {
+          try {
+            const { data } = await api.getProduct(cart.product_id, "x-init");
 
-    updateProductCount: (productId: any, variantId: any, newCount: number) =>
-        set((state: any) => {
-            const updatedProducts = state.products.map((product: any) =>
-                product.id === productId && product.variant.id === variantId
-                    ? { ...product, count: newCount }
-                    : product
+            const variant = data.variants.find(
+              (variant) => variant.id === cart.variant_id
             );
 
-            state.calculateTotalAmount(updatedProducts);
-
-            return {
-                ...state,
-                products: updatedProducts,
-            };
-        }),
-
-    addProduct: (newProduct: any, variant: any) =>
-        set((state: any) => {
-            const productExists = state.products.find(
-                (product: any) => product.id === newProduct.id && product.variant.id === variant.id
-            );
-
-            let updatedProducts;
-            if (productExists) {
-                updatedProducts = state.products.map((product: any) =>
-                    product.id === newProduct.id && product.variant.id === variant.id
-                        ? { ...product, count: product.count + 1 }
-                        : product
-                );
-            } else {
-                updatedProducts = [
-                    ...state.products,
-                    { ...newProduct, variant: variant, count: 1 },
-                ];
+            if (!variant) {
+              console.error(
+                `Variant with ID ${cart.variant_id} not found for product ${cart.product_id}`
+              );
+              return; // Прерываем выполнение для этого cart
             }
 
-            state.calculateTotalAmount(updatedProducts);
+            delete data.variants;
 
-            return {
-                ...state,
-                products: updatedProducts,
+            const cartProduct: CartProduct = {
+              ...data,
+              variant, // Теперь это один объект, а не массив
+              count: cart.quantity,
+              cartId: cart.id,
             };
-        }),
 
-    removeProduct: (productId: any, variantId: any) =>
-        set((state: any) => {
-            const updatedProducts = state.products.filter(
-                (product: any) => !(product.id === productId && product.variant.id === variantId)
-            );
+            products.push(cartProduct);
+          } catch (error) {
+            console.error(`Error fetching product ${cart.product_id}:`, error);
+          }
+        })
+      );
 
-            state.calculateTotalAmount(updatedProducts);
+      set(() => ({
+        products,
+        productsLoading: false,
+      }));
+    } catch (e) {
+      toast.error(e?.detail);
+      set(() => ({
+        products: [],
+        productsLoading: false,
+      }));
+    }
+  },
 
-            return {
-                ...state,
-                products: updatedProducts,
-            };
-        }),
+  calculateTotalAmount: (products: CartProduct[]) => {
+    const totalAmount = products.reduce(
+      (acc: { total: number; discount: number }, product: CartProduct) => {
+        const variantPrice = product.variant.price || 0;
+        const productTotal = variantPrice * product.count;
+        const productDiscount = product.discount
+          ? product.discount * product.count
+          : 0;
+
+        const totalPrice = {
+          total: acc.total + productTotal,
+          discount: acc.discount + productDiscount,
+        };
+
+        return totalPrice;
+      },
+      { total: 0, discount: 0 }
+    );
+
+    set((state) => ({
+      ...state,
+      totalAmount,
+    }));
+  },
+
+  updateProductCount: async (product, variantId, newCount, userId) => {
+    try {
+      await api.updateCart(userId, {
+        variant_id: variantId,
+        user_id: userId,
+        quantity: newCount,
+      });
+      set((state) => {
+        const updatedProducts = state.products.map((item) =>
+          item.cartId === product.cartId ? { ...item, count: newCount } : item
+        );
+
+        state.calculateTotalAmount(updatedProducts);
+
+        return {
+          ...state,
+          products: updatedProducts,
+        };
+      });
+    } catch (e) {
+      toast.error(e?.detail);
+    }
+  },
+
+  addProduct: async (newProduct, variant, userId) => {
+    try {
+      const state = get();
+
+      const productExists = state.products.find(
+        (product) =>
+          product.id === newProduct.id && product.variant.id === variant.id
+      );
+
+      let updatedProducts: CartProduct[];
+      if (productExists) {
+        updatedProducts = state.products.map((product) =>
+          product.id === newProduct.id && product.variant.id === variant.id
+            ? { ...product, count: product.count + 1 }
+            : product
+        );
+
+        // Обновление корзины в API
+        await api.updateCart(userId, {
+          variant_id: variant.id,
+          user_id: userId,
+          quantity: productExists.count + 1,
+        });
+      } else {
+        const { variants, ...fields } = newProduct;
+        const cartData = get().products.find(
+          (item) => item.variant.id === variant.id
+        );
+
+        updatedProducts = [
+          ...state.products,
+          {
+            ...fields,
+            variant: variant,
+            count: 1,
+            cartId: cartData?.cartId || null,
+          },
+        ];
+
+        // Создание корзины в API
+        await api.createCart({
+          variant_id: variant.id,
+          user_id: userId,
+          quantity: 1,
+        });
+      }
+
+      set({ products: updatedProducts });
+      state.calculateTotalAmount(updatedProducts);
+    } catch (e) {
+      toast.error(e?.detail);
+    }
+  },
+
+  removeProduct: (product) => {
+    try {
+      api.deleteCart(product.cartId);
+      set((state) => {
+        const updatedProducts = state.products.filter(
+          (item) => !(item.cartId === product.cartId)
+        );
+
+        state.calculateTotalAmount(updatedProducts);
+
+        return {
+          ...state,
+          products: updatedProducts,
+        };
+      });
+    } catch (e) {
+      toast.error(e?.detail);
+    }
+  },
 }));

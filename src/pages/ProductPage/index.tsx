@@ -3,8 +3,8 @@ import "swiper/css";
 import "./swiper.scss";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useEffect, useRef, useState } from "react";
-import { PRODUCTS, REVIEWS, TELEGRAM } from "../../utils/constants";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { REVIEWS, TELEGRAM } from "../../utils/constants";
 import { Product } from "../../utils/types";
 import { useNavigate, useParams } from "react-router-dom";
 import LikeButton from "../../UI/LikeButton";
@@ -28,7 +28,7 @@ import { toast } from "react-toastify";
 import * as api from "../../api";
 
 const ProductPage = () => {
-  const toggleFavorite = useProductsStore((state: any) => state.toggleFavorite);
+  const toggleFavorite = useProductsStore((state) => state.toggleFavorite);
   const getCurrentProduct = useProductsStore(
     (state) => state.getCurrentProduct
   );
@@ -39,7 +39,7 @@ const ProductPage = () => {
   const favouriteProducts = useProductsStore(
     (state: any) => state.favouriteProducts
   );
-  const addProduct = useCartStore((state: any) => state.addProduct);
+  const addProduct = useCartStore((state) => state.addProduct);
   const [product, setProduct] = useState<Product | undefined>();
   const { id, variantId } = useParams();
   const [variantIndex, setVariantIndex] = useState(0);
@@ -49,19 +49,19 @@ const ProductPage = () => {
 
   const [isFavorite, setIsFavorite] = useState(false);
 
-  useEffect(() => {
-    if (product) {
-      if (Number(variantId) !== 0) {
-        setVariantIndex(
-          product.variants.findIndex(
-            (variant) => variant.id === Number(variantId)
-          )
-        );
-      } else {
-        setVariantIndex(0);
-      }
+  const initialVariantIndex = useMemo(() => {
+    if (!product) return 0;
+    if (Number(variantId) !== 0) {
+      return product.variants.findIndex(
+        (variant) => variant.id === Number(variantId)
+      );
     }
-  }, [product]);
+    return 0;
+  }, [product, variantId]);
+
+  useEffect(() => {
+    setVariantIndex(initialVariantIndex);
+  }, [initialVariantIndex]);
 
   useEffect(() => {
     if (id) {
@@ -74,16 +74,7 @@ const ProductPage = () => {
   }, [currentProduct]);
 
   useEffect(() => {
-    const currentProductId = product?.id;
-    const currentVariantId = product?.variants[variantIndex]?.id;
-    const favoriteExists = favouriteProducts
-      ? favouriteProducts.some(
-          (item: any) =>
-            item.info.id === currentProductId &&
-            item.info.variant_id === currentVariantId
-        )
-      : false;
-    setIsFavorite(favoriteExists);
+    if (product) setIsFavorite(product.variants[variantIndex]?.in_favorite);
   }, [favouriteProducts, product, variantIndex]);
 
   const navigate = useNavigate();
@@ -167,19 +158,22 @@ const ProductPage = () => {
                   </p>
                 </div>
                 <LikeButton
-                  isFavorite={isFavorite}
+                  isFavorite={product.variants[variantIndex]?.in_favorite}
                   onClick={async () => {
                     if (product && product.variants[variantIndex]) {
                       if (product.variants[variantIndex]?.in_favorite) {
-                        // await api.deleteFavorite(6);
+                        await api.deleteFavorite(
+                          product.variants[variantIndex].id,
+                          1
+                        );
                         setIsFavorite(false);
-                        toggleFavorite(false, variantIndex);
+                        toggleFavorite(currentProduct, false, variantIndex);
                       } else {
-                        // await api.createFavorite(
-                        //   product.variants[variantIndex]?.id,
-                        //   1
-                        // );
-                        toggleFavorite(true, variantIndex);
+                        await api.createFavorite(
+                          product.variants[variantIndex]?.id,
+                          1
+                        );
+                        toggleFavorite(currentProduct, true, variantIndex);
                         setIsFavorite(true);
                       }
                     }
@@ -231,12 +225,14 @@ const ProductPage = () => {
                 color="var(--main-text-color)"
                 withBottom
                 icon={<StarSVG color={"var(--main-button-color)"} />}
-                additionalText={"150 оценок"}
+                additionalText={`${product.variants[variantIndex]?.reviews?.length} оценок`}
               >
                 <div className={styles.reviews}>
-                  {REVIEWS.map((item, index) => (
-                    <Review review={item} key={index} />
-                  ))}
+                  {product.variants[variantIndex]?.reviews?.map(
+                    (item, index) => (
+                      <Review review={item} key={index} />
+                    )
+                  )}
                 </div>
               </Panel>
               <div className={styles.footer}>
@@ -247,7 +243,9 @@ const ProductPage = () => {
                     </p>
                   )}
                   <p className={styles.totalPrice}>
-                    {product.variants[variantIndex]?.price - product.discount}р.
+                    {product.variants[variantIndex]?.price -
+                      (product.discount || 0)}
+                    р.
                   </p>
                 </div>
                 <div style={{ width: "233px" }}>
@@ -262,7 +260,7 @@ const ProductPage = () => {
                     borderRadius={13}
                     onClick={() => {
                       if (product && product.variants[variantIndex]) {
-                        addProduct(product, product.variants[variantIndex]);
+                        addProduct(product, product.variants[variantIndex], 1);
                         toast.success("Добавлено в корзину");
                       }
                     }}

@@ -1,22 +1,22 @@
 import { Link } from "react-router-dom";
 import MediumButton from "../../UI/MediumButton";
 import CloseSVG from "../../UI/icons/CloseSVG";
-import { CATEGORIES } from "../../utils/constants";
 import { Favourite, Product, Variant } from "../../utils/types";
 import styles from "./favouriteCard.module.scss";
 import MinusSVG from "../../UI/icons/MinusSVG";
 import PlusSVG from "../../UI/icons/PlusSVG";
 import { useEffect, useState } from "react";
 import * as api from "../../api";
+import { useProductsStore } from "../../stores/useProductsStore";
 interface Props {
   product: Product;
   variant: Variant;
   info: Favourite;
-  deleteFavorite: (id: number) => void;
+  deleteFavorite: (id: number, user_id: number) => void;
 }
 const FavouriteCard = ({ product, variant, info, deleteFavorite }: Props) => {
   const [amt, setAmt] = useState(info.quantity);
-
+  const categories = useProductsStore((state) => state.categories);
   const [photo, setPhoto] = useState<string | undefined>(undefined);
   const [photoLoading, setPhotoLoading] = useState(true);
 
@@ -55,7 +55,7 @@ const FavouriteCard = ({ product, variant, info, deleteFavorite }: Props) => {
           <div className={styles.title}>
             <p className={styles.name}>{product?.name}</p>
             <p className={styles.category}>
-              {CATEGORIES[product.category_id].name}
+              {categories[product.category_id].name}
             </p>
           </div>
           <div className={styles.footer}>
@@ -95,14 +95,14 @@ const FavouriteCard = ({ product, variant, info, deleteFavorite }: Props) => {
           </div>
         </div>
         {photoLoading ? (
-          <p>Loading...</p>
+          <p className={styles.img}>Loading...</p>
         ) : (
           <img className={styles.img} src={photo} alt="img" />
         )}
       </Link>
       <button
         className={styles.button}
-        onClick={() => deleteFavorite(product.id)}
+        onClick={() => deleteFavorite(product.id, 1)}
       >
         <CloseSVG color={"var(--main-button-color)"} />
       </button>

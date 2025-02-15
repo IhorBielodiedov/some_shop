@@ -4,11 +4,16 @@ import "./styles/app.scss";
 import { TELEGRAM } from "./utils/constants";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import * as api from "./api";
 import { useProductsStore } from "./stores/useProductsStore";
+import { useCartStore } from "./stores/cartStore";
 
 function App() {
+  const carts = useCartStore((state) => state.products);
   const getCategories = useProductsStore((state) => state.getCategories);
+  const getCarts = useCartStore((state) => state.getCarts);
+  const calculateTotalAmount = useCartStore(
+    (state) => state.calculateTotalAmount
+  );
 
   useEffect(() => {
     TELEGRAM.setBackgroundColor("#ffffff");
@@ -24,10 +29,18 @@ function App() {
     getCategories();
   }, []);
 
+  useEffect(() => {
+    getCarts();
+  }, []);
+
+  useEffect(() => {
+    calculateTotalAmount(carts);
+  }, [carts]);
+
   return (
     <div className="App">
       <AppRoutes />
-      <ToastContainer />
+      <ToastContainer position="bottom-left" />
     </div>
   );
 }

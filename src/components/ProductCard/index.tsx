@@ -12,20 +12,9 @@ interface Props {
 
 const ProductCard = ({ product }: Props) => {
   const { id, name, variants } = product;
-  const toggleFavorite = useProductsStore((state: any) => state.toggleFavorite);
-  const favouriteProducts = useProductsStore(
-    (state: any) => state.favouriteProducts
-  );
-  const currentProductId = id;
-  const currentVariantId = variants[0]?.id; // Ensure variants[0] exists
+  const toggleFavorite = useProductsStore((state) => state.toggleFavorite);
 
-  const isFavorite = favouriteProducts
-    ? favouriteProducts.some(
-        (item: any) =>
-          item.info.product_id === currentProductId &&
-          item.info.variant_id === currentVariantId
-      )
-    : false;
+  const [isFavorite, setIsFavorite] = useState(product.variants[0].in_favorite);
 
   const [photo, setPhoto] = useState<string | undefined>(undefined);
   const [photoLoading, setPhotoLoading] = useState(true);
@@ -54,21 +43,24 @@ const ProductCard = ({ product }: Props) => {
     };
 
     product && fetchPhoto(); // Call the function to fetch the photo
-  }, [product]);
+  }, [product, variants]);
 
   return (
     <>
       <div className={styles.container}>
         <FavoriteButton
           isFavorite={isFavorite}
-          setIsFavorite={() => {
-            if (variants[0]) {
-              toggleFavorite({
-                id: currentProductId,
-                product_id: currentProductId,
-                variant_id: currentVariantId,
-                quantity: 1,
-              });
+          setIsFavorite={async () => {
+            if (product && product.variants[0]) {
+              if (product.variants[0]?.in_favorite) {
+                await api.deleteFavorite(product.variants[0]?.id, 1);
+                toggleFavorite(product, false, 0);
+                setIsFavorite(false);
+              } else {
+                await api.createFavorite(product.variants[0]?.id, 1);
+                toggleFavorite(product, true, 0);
+                setIsFavorite(true);
+              }
             }
           }}
         />

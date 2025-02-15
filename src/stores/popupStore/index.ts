@@ -1,6 +1,4 @@
 import { create } from "zustand";
-import { Category, Favourite, Product, Variant } from "../../utils/types";
-import { PRODUCTS } from "../../utils/constants";
 import { ReactNode } from "react";
 
 type PopupType = {

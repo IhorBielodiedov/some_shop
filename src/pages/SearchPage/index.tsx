@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Categories from "../../components/Categories";
 import ProductList from "../../components/ProductList";
 import SearchPanel from "../../components/SearchPanel";
-import { CATEGORIES, PRODUCTS, TELEGRAM } from "../../utils/constants";
+import { TELEGRAM } from "../../utils/constants";
 import styles from "./searchPage.module.scss";
 import { useEffect, useState } from "react";
 import { useProductsStore } from "../../stores/useProductsStore";
