@@ -9,10 +9,20 @@ export interface TotalAmount {
   total: number;
   discount: number;
 }
+
+export interface Promocode {
+  name: string;
+  discount: number;
+  type_discount: string;
+  quantity: number;
+  id: number;
+}
 export interface CartStore {
   products: CartProduct[];
   productsLoading: boolean;
   totalAmount: TotalAmount;
+  promocode: Promocode | null;
+  getPromocode: (code: string) => Promise<void>;
   getCarts: () => Promise<void>;
   calculateTotalAmount: (products: CartProduct[]) => void;
   updateProductCount: (

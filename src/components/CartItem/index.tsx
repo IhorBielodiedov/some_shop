@@ -44,7 +44,6 @@ const CartItem = React.memo(({ product }: Props) => {
     product && fetchPhoto(); // Call the function to fetch the photo
   }, [product]);
 
-  console.log(product);
   const handleDelete = () => {
     removeProduct(product);
   };

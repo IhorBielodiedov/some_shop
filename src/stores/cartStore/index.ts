@@ -10,7 +10,23 @@ export const useCartStore = create<CartStore>((set, get) => ({
   products: initialProducts,
   productsLoading: false,
   totalAmount: { total: 0, discount: 0 },
+  promocode: null,
+  getPromocode: async (code) => {
+    try {
+      const response = await api.getPromocode(code);
+      const { data } = response;
 
+      set((state) => ({
+        promocode: data,
+        totalAmount: {
+          ...state.totalAmount,
+          discount: state.totalAmount.discount + data.discount,
+        },
+      }));
+    } catch (e) {
+      set(() => ({ promocode: null }));
+    }
+  },
   getCarts: async () => {
     set(() => ({ productsLoading: true }));
     try {

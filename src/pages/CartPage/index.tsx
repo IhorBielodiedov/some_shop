@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import CartItem from "../../components/CartItem";
 import { TELEGRAM } from "../../utils/constants";
 import styles from "./cartPage.module.scss";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import OrderFooter from "../../components/OrderFooter";
 import OrderAmount from "../../components/OrderAmount";
 import { useCartStore } from "../../stores/cartStore";
@@ -15,7 +15,9 @@ const CartPage = () => {
   const productsLoading = useCartStore((state) => state.productsLoading);
   const totalAmount = useCartStore((state) => state.totalAmount);
   const getCarts = useCartStore((state) => state.getCarts);
-
+  const [promocode, setPromocode] = useState("");
+  const promocodeFinal = useCartStore((state) => state.promocode);
+  const getPromocode = useCartStore((state) => state.getPromocode);
   const goBack = () => {
     navigate(-1);
   };
@@ -59,7 +61,20 @@ const CartPage = () => {
             ))}
           </div>
           {products.length !== 0 && (
-            <input className={styles.promo} placeholder="ВВЕДИТЕ ПРОМОКОД" />
+            <>
+              <input
+                className={styles.promo}
+                placeholder="ВВЕДИТЕ ПРОМОКОД"
+                value={promocode}
+                onChange={(e) => {
+                  setPromocode(e.target.value);
+                }}
+              />
+              <MediumButton
+                title="Применить"
+                onClick={() => getPromocode(promocode)}
+              />
+            </>
           )}
 
           {products.length !== 0 && <OrderAmount totalAmount={totalAmount} />}

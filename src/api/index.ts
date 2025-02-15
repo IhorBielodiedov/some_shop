@@ -117,3 +117,6 @@ export const updateCart = (
 export const deleteCart = (cart_id: number) => api.delete(`/carts/${cart_id}`);
 
 export const getBanners = () => api.get("/banners");
+
+export const getPromocode = (code: string) =>
+  api.get(`/promocodes?code=${code}`);
