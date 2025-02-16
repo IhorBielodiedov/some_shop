@@ -5,6 +5,7 @@ import FavoriteButton from "../../UI/FavoriteButton";
 import { useProductsStore } from "../../stores/useProductsStore";
 import { useEffect, useState } from "react";
 import * as api from "../../api";
+import { USER } from "../../utils/constants";
 
 interface Props {
   product: Product;
@@ -53,11 +54,11 @@ const ProductCard = ({ product }: Props) => {
           setIsFavorite={async () => {
             if (product && product.variants[0]) {
               if (product.variants[0]?.in_favorite) {
-                await api.deleteFavorite(product.variants[0]?.id, 1);
+                await api.deleteFavorite(product.variants[0]?.id, USER.id);
                 toggleFavorite(product, false, 0);
                 setIsFavorite(false);
               } else {
-                await api.createFavorite(product.variants[0]?.id, 1);
+                await api.createFavorite(product.variants[0]?.id, USER.id);
                 toggleFavorite(product, true, 0);
                 setIsFavorite(true);
               }

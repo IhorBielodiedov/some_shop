@@ -42,7 +42,7 @@ const CartItem = React.memo(({ product }: Props) => {
     };
 
     product && fetchPhoto(); // Call the function to fetch the photo
-  }, [product]);
+  }, [product.variant.photos[0]]);
 
   const handleDelete = () => {
     removeProduct(product);
@@ -106,7 +106,7 @@ const CartItem = React.memo(({ product }: Props) => {
         </div>
       </div>
       <div>
-        {product.discount !== 0 && (
+        {product.discount && (
           <p className={styles.sale}>
             {formatNumberWithSpaces(
               (product.variant.price + product.discount) * product.count

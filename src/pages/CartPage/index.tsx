@@ -61,9 +61,8 @@ const CartPage = () => {
             ))}
           </div>
           {products.length !== 0 && (
-            <>
+            <div className={styles.promo}>
               <input
-                className={styles.promo}
                 placeholder="ВВЕДИТЕ ПРОМОКОД"
                 value={promocode}
                 onChange={(e) => {
@@ -74,7 +73,7 @@ const CartPage = () => {
                 title="Применить"
                 onClick={() => getPromocode(promocode)}
               />
-            </>
+            </div>
           )}
 
           {products.length !== 0 && <OrderAmount totalAmount={totalAmount} />}

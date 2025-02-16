@@ -9,6 +9,7 @@ import {
 import * as api from "../../api";
 import { toast } from "react-toastify";
 import { USER } from "../../utils/constants";
+import axios from "axios";
 
 interface State {
   categories: Array<Category> | null;
@@ -45,7 +46,12 @@ const initialState: State = {
   productsLoading: false,
   currentProduct: null,
   currentProductLoading: false,
-  activeCategory: null,
+  activeCategory: {
+    name: "Весь каталог устройств",
+    description: "Все",
+    photo: "",
+    id: 1,
+  },
   favouriteProducts: null,
 };
 
@@ -127,12 +133,21 @@ export const useProductsStore = create<State & Actions>()((set, get) => ({
   },
 
   deleteFavouriteProduct: async (id: number) => {
-    await api.deleteFavorite(id, USER.id);
-    set((state) => ({
-      favouriteProducts: state.favouriteProducts
-        ? state.favouriteProducts.filter((item) => item.info.id !== id)
-        : null,
-    }));
+    try {
+      await api.deleteFavorite(id, USER.id);
+      set((state) => ({
+        favouriteProducts: state.favouriteProducts
+          ? state.favouriteProducts.filter((item) => item.info.id !== id)
+          : null,
+      }));
+    } catch (error) {
+      if (error.response) {
+        if (axios.isAxiosError(error)) {
+          toast.error(`${error.response.data?.detail}`);
+          console.error(error);
+        }
+      }
+    }
   },
   getFavouriteProducts: async (favouriteProducts: Favourite[]) => {
     await get().getProducts(1);

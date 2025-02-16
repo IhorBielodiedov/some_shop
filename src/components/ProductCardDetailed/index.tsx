@@ -8,6 +8,7 @@ import { useCartStore } from "../../stores/cartStore";
 import { useProductsStore } from "../../stores/useProductsStore";
 import { toast } from "react-toastify";
 import * as api from "../../api";
+import { USER } from "../../utils/constants";
 
 interface Props {
   product: Product;
@@ -86,7 +87,7 @@ const ProductCardDetailed = ({ product }: Props) => {
                 onClick={(e) => {
                   e.preventDefault();
                   if (product && product.variants[0]) {
-                    addProduct(product, product.variants[0], 1);
+                    addProduct(product, product.variants[0], USER.id);
                     toast.success("Добавлено в корзину");
                   }
                 }}

@@ -3,6 +3,7 @@ import * as api from "../../api";
 import { CartProduct, CartStore } from "./types";
 import { USER } from "../../utils/constants";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 export const initialProducts: CartProduct[] = [];
 
@@ -107,11 +108,16 @@ export const useCartStore = create<CartStore>((set, get) => ({
 
   updateProductCount: async (product, variantId, newCount, userId) => {
     try {
-      await api.updateCart(userId, {
+      const response = await api.updateCart(userId, {
         variant_id: variantId,
         user_id: userId,
         quantity: newCount,
       });
+
+      if (newCount >= response.data.in_stock) {
+        throw new Error("Это максимальное количество единиц товара");
+      }
+
       set((state) => {
         const updatedProducts = state.products.map((item) =>
           item.cartId === product.cartId ? { ...item, count: newCount } : item
@@ -124,8 +130,15 @@ export const useCartStore = create<CartStore>((set, get) => ({
           products: updatedProducts,
         };
       });
-    } catch (e) {
-      toast.error(e?.detail);
+    } catch (error) {
+      if (error.response) {
+        if (axios.isAxiosError(error)) {
+          toast.error(`${error.response.data?.detail}`);
+          console.error(error);
+        }
+      } else {
+        toast.error(error);
+      }
     }
   },
 

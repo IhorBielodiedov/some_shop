@@ -55,7 +55,7 @@ const FavouriteCard = ({ product, variant, info, deleteFavorite }: Props) => {
           <div className={styles.title}>
             <p className={styles.name}>{product?.name}</p>
             <p className={styles.category}>
-              {categories[product.category_id].name}
+              {categories?.[product.category_id]?.name}
             </p>
           </div>
           <div className={styles.footer}>

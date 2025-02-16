@@ -22,4 +22,23 @@
       gap: 5px;
     }
   }
+  .bannerPlaceholder {
+    width: calc(100vw - 60px);
+    height: calc((100vw - 60px) / 1);
+    background: #f0f0f0;
+    border-radius: 14px;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+
+  @keyframes pulse {
+    0% {
+      background-color: #f0f0f0;
+    }
+    50% {
+      background-color: #e0e0e0;
+    }
+    100% {
+      background-color: #f0f0f0;
+    }
+  }
 }

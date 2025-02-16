@@ -107,7 +107,7 @@ const HomePage = () => {
 
   return (
     <div className={styles.container}>
-      {loading && <p>Loading banners...</p>}
+      {loading && <div className={styles.bannerPlaceholder}></div>}
       {!loading && banners.length > 0 && (
         <Swiper
           slidesPerView={"auto"}
