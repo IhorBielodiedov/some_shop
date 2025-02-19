@@ -60,39 +60,11 @@ const HomePage = () => {
     // Set loading to true before starting the fetch
     setLoading(true);
 
-    // Helper function: converts an image string to a blob URL
-    const getPhotoF = async (img) => {
-      try {
-        const response = await api.getPhoto(img);
-        // Create an object URL from the Blob data
-        const imageUrl = URL.createObjectURL(response.data);
-        return imageUrl;
-      } catch (error) {
-        toast.error(error);
-        return undefined;
-      }
-    };
-
     try {
       const response = await api.getBanners();
-      // Assume the response data follows this structure:
-      // { banners: [ { photo: "banner", id: 1 }, ... ], count: 3 }
-      const bannerList = response.data.banners;
-
-      // Process each banner by retrieving the actual photo URL via getPhotoF
-      const bannersWithPhotos = await Promise.all(
-        bannerList.map(async (banner) => {
-          const photoUrl = await getPhotoF(banner.photo);
-          // Return a new object that includes the photo URL
-          return {
-            ...banner,
-            photo: photoUrl, // Overwrite or add a property with the URL
-          };
-        })
-      );
 
       // Update the state with the new banners data
-      setBanners(bannersWithPhotos);
+      setBanners(response.data.banners);
     } catch (error) {
       toast.error(error);
     } finally {
@@ -132,7 +104,7 @@ const HomePage = () => {
                 <BigImgCard
                   key={category.id}
                   title={category.name}
-                  img={category.photo}
+                  img={category.photo || undefined}
                   link="/products"
                   onClick={() => setActiveCategory(category)}
                 />

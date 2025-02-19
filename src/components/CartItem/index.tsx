@@ -4,10 +4,8 @@ import MinusSVG from "../../UI/icons/MinusSVG";
 import CloseSVG from "../../UI/icons/CloseSVG";
 import { useCartStore } from "../../stores/cartStore";
 import { formatNumberWithSpaces } from "../../utils/helper";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { CartProduct } from "../../stores/cartStore/types";
-import * as api from "../../api";
-import LoaderSVG from "../../UI/icons/LoaderSVG";
 import { USER } from "../../utils/constants";
 interface Props {
   product: CartProduct;
@@ -16,33 +14,6 @@ interface Props {
 const CartItem = React.memo(({ product }: Props) => {
   const removeProduct = useCartStore((state) => state.removeProduct);
   const updateProductCount = useCartStore((state) => state.updateProductCount);
-  const [photo, setPhoto] = useState<string | undefined>(undefined);
-  const [photoLoading, setPhotoLoading] = useState(false);
-
-  useEffect(() => {
-    const getPhotoF = async (img: string) => {
-      try {
-        setPhotoLoading(true);
-        const response = await api.getPhoto(img);
-
-        // Create an object URL from the Blob
-        const imageUrl = URL.createObjectURL(response.data);
-
-        return imageUrl;
-      } catch (error) {
-        console.error("Error fetching photo:", error);
-        return undefined;
-      }
-    };
-
-    const fetchPhoto = async () => {
-      const fetchedPhoto = await getPhotoF(product.variant.photos[0]);
-      setPhoto(fetchedPhoto);
-      setPhotoLoading(false);
-    };
-
-    product && fetchPhoto(); // Call the function to fetch the photo
-  }, [product.variant.photos[0]]);
 
   const handleDelete = () => {
     removeProduct(product);
@@ -60,13 +31,11 @@ const CartItem = React.memo(({ product }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.product}>
-        {photoLoading ? (
-          <div className={styles.img}>
-            <LoaderSVG />
-          </div>
-        ) : (
-          <img className={styles.img} src={photo} alt={product.name} />
-        )}
+        <img
+          className={styles.img}
+          src={product.variant.photos[0]}
+          alt={product.name}
+        />
         <div className={styles.info}>
           <div>
             <p className={styles.name}>{product.name}</p>

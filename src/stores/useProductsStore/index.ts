@@ -88,30 +88,7 @@ export const useProductsStore = create<State & Actions>()((set, get) => ({
       set(() => ({ currentProductLoading: true }));
       const { data: product } = await api.getProduct(id, "x");
 
-      async function updateProductVariants(product: Product): Promise<Product> {
-        // Обновляем каждый вариант продукта
-        for (const variant of product.variants) {
-          const updatedPhotos: string[] = [];
-
-          // Обновляем каждый фото для текущего варианта
-          for (const img of variant.photos) {
-            const response = await api.getPhoto(img);
-
-            // Create an object URL from the Blob
-            const imageUrl = URL.createObjectURL(response.data);
-
-            // Добавляем новый URL в массив фотографий
-            updatedPhotos.push(imageUrl);
-          }
-
-          // Заменяем старые фотографии на новые
-          variant.photos = updatedPhotos;
-        }
-
-        return product;
-      }
-
-      const currentProduct = await updateProductVariants(product);
+      const currentProduct = product;
       set(() => ({ currentProduct }));
       set(() => ({ currentProductLoading: false }));
     } catch (e) {
